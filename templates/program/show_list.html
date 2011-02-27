@@ -1,0 +1,76 @@
+<html>
+<head>
+    <title>Show list</title>
+</head>
+<body>
+
+<div id="show-topic-list">
+    {% for topic in show_topic_list %}
+    <div class="show-topic">
+        <span class="abbrev">{{ topic.abbrev }}</span>
+        <span class="topic">{{ topic }}</span>
+    </div>
+    {% endfor %}
+</div>
+
+<div id="show-information-list">
+    {% for information in show_information_list %}
+    <div class="show-information">
+        <span class="abbrev">{{ information.abbrev }}</span>
+        <span class="information">{{ information }}</span>
+    </div>
+    {% endfor %}
+</div>
+
+<div id="music-focus-list">
+    {% for focus in music_focus_list %}
+    <div class="music-focus">
+        <span class="abbrev">{{ focus.abbrev }}</span>
+        <span class="focus">{{ focus }}</span>
+    </div>
+    {% endfor %}
+</div>
+
+<div id="show-list">
+    {% for show in show_list %}
+    <div class="show">
+        <div class="abbrevs">
+            {% for topic in show.show_topic.all %}
+                <span class="topic-abbrev">{{ topic.abbrev }}</span>
+            {% endfor %}
+
+            {% for information in show.show_information.all %}
+                <span class="information-abbrev">{{ information.abbrev }}</span>
+            {% endfor %}
+
+            {% for focus in show.music_focus.all %}
+                <span class="focus-abbrev">{{ focus.abbrev }}</span>
+            {% endfor %}
+
+            <span class="broadcast-format-abbrev">{{ show.broadcast_format.abbrev }}</span>
+        </div>
+        <div class="name">
+            <a href="{% url show-detail show.slug %} ">{{ show.name }}</a>
+        </div>
+        <div class="program-slots">
+            {% for slot in show.program_slots.all %}
+                <div class="program-slot">{{ slot }}</div>
+            {% endfor %}
+        </div>
+        <div class="short-description">
+            {{ show.short_description }}
+        </div>
+     </div>
+    {% endfor %}
+</div>
+
+<div id="broadcast-format-list">
+    {% for format in broadcast_format_list %}
+        <div class="broadcast-format">
+            {{ format }}
+        </div>
+    {% endfor %}
+</div>
+
+</body>
+</html>

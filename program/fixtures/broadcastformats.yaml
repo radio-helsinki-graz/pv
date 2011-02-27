@@ -1,0 +1,35 @@
+- model: program.broadcastformat
+  pk:
+  fields:
+    format: Talk
+    slug: talk
+- model: program.broadcastformat
+  pk:
+  fields:
+    format: Musiksendung
+    slug: musiksendung
+- model: program.broadcastformat
+  pk:
+  fields:
+    format: Unmoderiertes Musikprogramm
+    slug: unmoderiertes-musikprogramm
+- model: program.broadcastformat
+  pk:
+  fields:
+    format: Feature/Magazin
+    slug: feature-magazin
+- model: program.broadcastformat
+  pk:
+  fields:
+    format: Experimentell
+    slug: experimentell
+- model: program.broadcastformat
+  pk:
+  fields:
+    format: Hörspiel/Literatur
+    slug: horspiel-literatur
+- model: program.broadcastformat
+  pk:
+  fields:
+    format: Vortrag/Diskussion
+    slug: vortrag-diskussion

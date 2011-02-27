@@ -1,0 +1,60 @@
+- model: program.musicfocus
+  pk:
+  fields:
+    focus: Jazz
+    abbrev: J
+    slug: jazz
+- model: program.musicfocus
+  pk:
+  fields:
+    focus: Volksmusik/Folk
+    abbrev: V
+    slug: volksmusik-folk
+- model: program.musicfocus
+  pk:
+  fields:
+    focus: Experimentelle Musik
+    abbrev: Ex
+    slug: expermentelle-musik
+- model: program.musicfocus
+  pk:
+  fields:
+    focus: Rock/Indie
+    abbrev: R
+    slug: rock-indie
+- model: program.musicfocus
+  pk:
+  fields:
+    focus: Metal/Hardrock
+    abbrev: M
+    slug: metal-hardrock
+- model: program.musicfocus
+  pk:
+  fields:
+    focus: Electronic
+    abbrev: E
+    slug: electronic
+- model: program.musicfocus
+  pk:
+  fields:
+    focus: Klassik
+    abbrev: K
+    slug: klassik
+- model: program.musicfocus
+  pk:
+  fields:
+    focus: Oldies
+    abbrev: O
+    slug: oldies
+- model: program.musicfocus
+  pk:
+  fields:
+    focus: Reggae/Ska
+    abbrev: Re
+    slug: reggae-ska
+- model: program.musicfocus
+  pk:
+  fields:
+    focus: Hiphop
+    abbrev: H
+    slug: hiphop

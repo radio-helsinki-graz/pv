@@ -1,0 +1,30 @@
+- model: program.showtopic
+  pk:
+  fields:
+    topic: Politik/Gesellschaft
+    abbrev: P
+    slug: politik-gesellschaft
+- model: program.showtopic
+  pk:
+  fields:
+    topic: Natur/Klima/Tiere
+    abbrev: N
+    slug: natur-klima-tiere
+- model: program.showtopic
+  pk:
+  fields:
+    topic: Kultur/Kunst
+    abbrev: K
+    slug: kultur-kunst
+- model: program.showtopic
+  pk:
+  fields:
+    topic: Soziales
+    abbrev: S
+    slug: soziales
+- model: program.showtopic
+  pk:
+  fields:
+    topic: Wissenschaft/Philosophie
+    abbrev: W
+    slug: wissenschaft-philosophie

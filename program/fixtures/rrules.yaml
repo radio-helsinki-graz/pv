@@ -1,0 +1,25 @@
+- model: program.rrule
+  pk:
+  fields:
+    name: einmalig
+    freq: 0
+    count: 1
+    bysetpos: 1
+- model: program.rrule
+  pk:
+  fields:
+    name: wöchentlich
+    freq: 2
+    interval: 1
+- model: program.rrule
+  pk:
+  fields:
+    name: zweiwöchentlich
+    freq: 2
+    interval: 2
+- model: program.rrule
+  pk:
+  fields:
+    name: vierwöchentlich
+    freq: 2
+    interval: 4

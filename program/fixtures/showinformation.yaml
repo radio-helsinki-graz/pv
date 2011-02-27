@@ -1,0 +1,48 @@
+- model: program.showinformation
+  pk:
+  fields:
+    information: Interkulturell
+    abbrev: I
+    slug: interkulturell
+- model: program.showinformation
+  pk:
+  fields:
+    information: Lokalbezug
+    abbrev: L
+    slug: lokalbezug
+- model: program.showinformation
+  pk:
+  fields:
+    information: Minderheiten
+    abbrev: Mi
+    slug: minderheiten
+- model: program.showinformation
+  pk:
+  fields:
+    information: Wiederholung
+    abbrev: W
+    slug: wiederholung
+- model: program.showinformation
+  pk:
+  fields:
+    information: Mehr-/Fremdsprachig
+    abbrev: M
+    slug: mehr-fremdsprachig
+- model: program.showinformation
+  pk:
+  fields:
+    information: Frauenschwerpunkt
+    abbrev: F
+    slug: frauenschwerpunkt
+- model: program.showinformation
+  pk:
+  fields:
+    information: Österreichische Musik
+    abbrev: Ö
+    slug: osterreichische-musik
+- model: program.showinformation
+  pk:
+  fields:
+    information: Sendungsübernahme
+    abbrev: U
+    slug: sendungsubernahme
