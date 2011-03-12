@@ -1,0 +1,520 @@
+- model: program.host
+  pk: 0
+  fields:
+    name: N.N.
+- model: program.host
+  pk:
+  fields:
+    name: Franz Schopper
+- model: program.host
+  pk:
+  fields:
+    name:  Michael Haberz
+- model: program.host
+  pk:
+  fields:
+    name: Tarek Al-Ubaidi
+- model: program.host
+  pk:
+  fields:
+    name: Otmar Klammer
+- model: program.host
+  pk:
+  fields:
+    name: Burschi Wachsmann
+- model: program.host
+  pk:
+  fields:
+    name: Rupert Kittinger
+- model: program.host
+  pk:
+  fields:
+    name: Frant Hofer & Literaturgruppe 112/31
+- model: program.host
+  pk:
+  fields:
+    name: Martin Schemitsch
+- model: program.host
+  pk:
+  fields:
+    name: Dr. Johannes Schmidt
+- model: program.host
+  pk:
+  fields:
+    name: Amos Schmidt
+- model: program.host
+  pk:
+  fields:
+    name: Franz 'Fratl' Hofer
+- model: program.host
+  pk:
+  fields:
+    name: Moke Klengel
+- model: program.host
+  pk:
+  fields:
+    name: Claudia Holzer
+- model: program.host
+  pk:
+  fields:
+    name: Gerhard Buchinger
+- model: program.host
+  pk:
+  fields:
+    name: Judith Wlaschitz
+- model: program.host
+  pk:
+  fields:
+    name: Hannes Knierzinger
+- model: program.host
+  pk:
+  fields:
+    name: Gerhard Gutschi
+- model: program.host
+  pk:
+  fields:
+    name: Angelika Hofmann
+- model: program.host
+  pk:
+  fields:
+    name: Gisi Linschinger
+- model: program.host
+  pk:
+  fields:
+    name: Andreas Lehrner
+- model: program.host
+  pk:
+  fields:
+    name: Georg Brenner
+- model: program.host
+  pk:
+  fields:
+    name: Leo Kühberger
+- model: program.host
+  pk:
+  fields:
+    name: Dr. Roman Koller
+- model: program.host
+  pk:
+  fields:
+    name: Anita Inzinger
+- model: program.host
+  pk:
+  fields:
+    name: Jetter Musger
+- model: program.host
+  pk:
+  fields:
+    name: Mike Schneider
+- model: program.host
+  pk:
+  fields:
+    name: Reni Hofmüller
+- model: program.host
+  pk:
+  fields:
+    name: Heimo Ranzenbacher
+- model: program.host
+  pk:
+  fields:
+    name: Nara Niemetz
+- model: program.host
+  pk:
+  fields:
+    name: Harald Weidacher
+- model: program.host
+  pk:
+  fields:
+    name: Mag. Vilja Neuwirth
+- model: program.host
+  pk:
+  fields:
+    name: Sirin Sivan
+- model: program.host
+  pk:
+  fields:
+    name: Erich Zib
+- model: program.host
+  pk:
+  fields:
+    name: Popkorn / KIM
+- model: program.host
+  pk:
+  fields:
+    name: Benedikt Kaiser
+- model: program.host
+  pk:
+  fields:
+    name: Romeo Ried
+- model: program.host
+  pk:
+  fields:
+    name: Florian Raggam
+- model: program.host
+  pk:
+  fields:
+    name: Erich Jägger
+- model: program.host
+  pk:
+  fields:
+    name: Wolfram Märzendorfer
+- model: program.host
+  pk:
+  fields:
+    name: Water Lang
+- model: program.host
+  pk:
+  fields:
+    name: MMag. Tünde Primus-Kövendi
+- model: program.host
+  pk:
+  fields:
+    name: Georg Wissa
+- model: program.host
+  pk:
+  fields:
+    name: Robert Suchar
+- model: program.host
+  pk:
+  fields:
+    name: Wolfgang Schmidt
+- model: program.host
+  pk:
+  fields:
+    name: Romana Scheiblmaier
+- model: program.host
+  pk:
+  fields:
+    name: Andreas Polz
+- model: program.host
+  pk:
+  fields:
+    name: Rita Obergschwandner
+- model: program.host
+  pk:
+  fields:
+    name: Josef J. Schmelz-Ziringer
+- model: program.host
+  pk:
+  fields:
+    name: Lonestaer / KIM
+- model: program.host
+  pk:
+  fields:
+    name: Ionel Mircea Popi
+- model: program.host
+  pk:
+  fields:
+    name: Cristina Popi
+- model: program.host
+  pk:
+  fields:
+    name: Dipl.-Päd. DI Markus Ehrenpaat
+- model: program.host
+  pk:
+  fields:
+    name: Helga Maria Lang
+- model: program.host
+  pk:
+  fields:
+    name: Redaktion A
+- model: program.host
+  pk:
+  fields:
+    name: Thomas Kerekes
+- model: program.host
+  pk:
+  fields:
+    name: Moser
+- model: program.host
+  pk:
+  fields:
+    name: Leuprecht
+- model: program.host
+  pk:
+  fields:
+    name: Handler
+- model: program.host
+  pk:
+  fields:
+    name: Joeller
+- model: program.host
+  pk:
+  fields:
+    name: Märzendorfer
+- model: program.host
+  pk:
+  fields:
+    name: Christian Berger (aufdraht)
+- model: program.host
+  pk:
+  fields:
+    name: bright night light
+- model: program.host
+  pk:
+  fields:
+    name: furth van der haam
+- model: program.host
+  pk:
+  fields:
+    name: neonlike
+- model: program.host
+  pk:
+  fields:
+    name: saus'n'browse
+- model: program.host
+  pk:
+  fields:
+    name: Peter Schabler
+- model: program.host
+  pk:
+  fields:
+    name: Sabine Schabler-Urban
+- model: program.host
+  pk:
+  fields:
+    name: Martin Gupper
+- model: program.host
+  pk:
+  fields:
+    name: Lila
+- model: program.host
+  pk:
+  fields:
+    name: Marco Schretter
+- model: program.host
+  pk:
+  fields:
+    name: Daniel Mayrhofer
+- model: program.host
+  pk:
+  fields:
+    name: Dompreh Kwesi
+- model: program.host
+  pk:
+  fields:
+    name: DJ Selchfleisch
+- model: program.host
+  pk:
+  fields:
+    name: Robert Lepenik
+- model: program.host
+  pk:
+  fields:
+    name: Markus
+- model: program.host
+  pk:
+  fields:
+    name: Johanna
+- model: program.host
+  pk:
+  fields:
+    name: Thomas Dörflinger
+- model: program.host
+  pk:
+  fields:
+    name: Anita Hofer
+- model: program.host
+  pk:
+  fields:
+    name: Wolfram Scheucher
+- model: program.host
+  pk:
+  fields:
+    name: Martina Pusterhofer
+- model: program.host
+  pk:
+  fields:
+    name: Andrei Reyes Huamantico
+- model: program.host
+  pk:
+  fields:
+    name: Sebastian Zhuber-Okrog
+- model: program.host
+  pk:
+  fields:
+    name: Daniela List
+- model: program.host
+  pk:
+  fields:
+    name: Thomas Fassler
+- model: program.host
+  pk:
+  fields:
+    name: Manfred Krejcik
+- model: program.host
+  pk:
+  fields:
+    name: Mezopotamya Team
+- model: program.host
+  pk:
+  fields:
+    name: Adrian C.S. Kainz
+- model: program.host
+  pk:
+  fields:
+    name: Francesco Königsberger
+- model: program.host
+  pk:
+  fields:
+    name: kat.ee a.k.a. Katarina Pekic
+- model: program.host
+  pk:
+  fields:
+    name: fabsab a.k.a. Sabine Omann
+- model: program.host
+  pk:
+  fields:
+    name: Flo Müller
+- model: program.host
+  pk:
+  fields:
+    name: Max Höfler
+- model: program.host
+  pk:
+  fields:
+    name: Livia Sellin
+- model: program.host
+  pk:
+  fields:
+    name: Christine Jeindl
+- model: program.host
+  pk:
+  fields:
+    name: Martin Brunner
+- model: program.host
+  pk:
+  fields:
+    name: Initiative Minderheiten / Radio Orange
+- model: program.host
+  pk:
+  fields:
+    name: Timo Scheuer und Rene Schuster für Vereine aus Graz
+- model: program.host
+  pk:
+  fields:
+    name: David Donnerer
+- model: program.host
+  pk:
+  fields:
+    name: Thomas Burgstaller
+- model: program.host
+  pk:
+  fields:
+    name: Martin Dopler
+- model: program.host
+  pk:
+  fields:
+    name: Patrick Kern
+- model: program.host
+  pk:
+  fields:
+    name: Klaus, Sigi und David Lax
+- model: program.host
+  pk:
+  fields:
+    name: Alexander Gutmann
+- model: program.host
+  pk:
+  fields:
+    name: Claudia Klemm
+- model: program.host
+  pk:
+  fields:
+    name: Christian Stani
+- model: program.host
+  pk:
+  fields:
+    name: Student*innen der Universität Graz
+- model: program.host
+  pk:
+  fields:
+    name: Gruppe rund um Roman Schweidlenka
+- model: program.host
+  pk:
+  fields:
+    name: Joseph Dim
+- model: program.host
+  pk:
+  fields:
+    name: Felix von Bally
+- model: program.host
+  pk:
+  fields:
+    name: Die Radio Helsinki Filmredaktion
+- model: program.host
+  pk:
+  fields:
+    name: Teresa Falk
+- model: program.host
+  pk:
+  fields:
+    name: Stefan Schmitzer
+- model: program.host
+  pk:
+  fields:
+    name: Institut für Volksmusikforschung an der Universität für Musik und darstellende Kust Wien
+- model: program.host
+  pk:
+  fields:
+    name: Gert Enzi
+- model: program.host
+  pk:
+  fields:
+    name: Wolfgang Zeyringer
+- model: program.host
+  pk:
+  fields:
+    name: Ulli Stranka
+- model: program.host
+  pk:
+  fields:
+    name: Thomas Kapun
+- model: program.host
+  pk:
+  fields:
+    name: Leni Kastl
+- model: program.host
+  pk:
+  fields:
+    name: gender frequenz Redaktion
+- model: program.host
+  pk:
+  fields:
+    name: helga im Namen der spacefemfm frauen
+- model: program.host
+  pk:
+  fields:
+    name: Alex Meyer
+- model: program.host
+  pk:
+  fields:
+    name: Aviv Russ
+- model: program.host
+  pk:
+  fields:
+    name: Nico, Martin, Martin
+- model: program.host
+  pk:
+  fields:
+    name: Maria Schörgel
+- model: program.host
+  pk:
+  fields:
+    name: Alex Sieber
+- model: program.host
+  pk:
+  fields:
+    name: Günther Polanz
+- model: program.host
+  pk:
+  fields:
+    name: (vorstadttheater soundsystem)
+- model: program.host
+  pk:
+  fields:
+    name: atTRaktiv
+- model: program.host
+  pk:
+  fields:
+    name: Günther Friesinger
