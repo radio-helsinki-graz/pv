@@ -12,7 +12,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'helsinki.data',
+        'NAME': 'helsinki.sqlite',
     }
 }
 
