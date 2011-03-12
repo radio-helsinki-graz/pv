@@ -19,6 +19,7 @@ class ShowTopicAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('topic',)}
 
 class NoteAdmin(admin.ModelAdmin):
+    list_display = ('title', 'timeslot', 'status')
     list_filter = ('status',)
     ordering = ('timeslot',)
 
