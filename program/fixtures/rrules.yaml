@@ -8,6 +8,11 @@
 - model: program.rrule
   pk:
   fields:
+    name: täglich
+    freq: 3
+- model: program.rrule
+  pk:
+  fields:
     name: wöchentlich
     freq: 2
     interval: 1
