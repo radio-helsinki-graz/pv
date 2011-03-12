@@ -167,7 +167,11 @@ class ProgramSlot(models.Model):
         tstart = self.tstart.strftime('%H:%M')
         until = self.until.strftime('%d. %b %Y')
 
-        return u'%s, %s, %s - %s, %s - %s' % (self.rrule, weekday, tstart, tend, dstart, until)
+        if self.rrule.freq == 3:
+            # don't include weekday if frequency is daily
+            return u'%s, %s - %s, %s - %s' % (self.rrule, tstart, tend, dstart, until)
+        else:
+            return u'%s, %s, %s - %s, %s - %s' % (self.rrule, weekday, tstart, tend, dstart, until)
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -178,18 +182,31 @@ class ProgramSlot(models.Model):
             else:
                 byweekday = self.byweekday
 
-            starts = list(rrule(freq=self.rrule.freq,
-                dtstart=datetime.combine(self.dstart, self.tstart),
-                interval=self.rrule.interval,
-                until=self.until+relativedelta(days=+1),
-                bysetpos=self.rrule.bysetpos,
-                byweekday=self.byweekday))
-            ends = list(rrule(freq=self.rrule.freq,
-                dtstart=datetime.combine(self.dstart, self.tend),
-                interval=self.rrule.interval,
-                until=self.until+relativedelta(days=+1),
-                bysetpos=self.rrule.bysetpos,
-                byweekday=byweekday))
+            if self.rrule.freq == 3:
+                # don't include byweekday in the recurrence rule if the frequency is daily
+                starts = list(rrule(freq=self.rrule.freq,
+                    dtstart=datetime.combine(self.dstart, self.tstart),
+                    interval=self.rrule.interval,
+                    until=self.until+relativedelta(days=+1),
+                    bysetpos=self.rrule.bysetpos))
+                ends = list(rrule(freq=self.rrule.freq,
+                    dtstart=datetime.combine(self.dstart, self.tend),
+                    interval=self.rrule.interval,
+                    until=self.until+relativedelta(days=+1),
+                    bysetpos=self.rrule.bysetpos))
+            else:
+                starts = list(rrule(freq=self.rrule.freq,
+                    dtstart=datetime.combine(self.dstart, self.tstart),
+                    interval=self.rrule.interval,
+                    until=self.until+relativedelta(days=+1),
+                    bysetpos=self.rrule.bysetpos,
+                    byweekday=self.byweekday))
+                ends = list(rrule(freq=self.rrule.freq,
+                    dtstart=datetime.combine(self.dstart, self.tend),
+                    interval=self.rrule.interval,
+                    until=self.until+relativedelta(days=+1),
+                    bysetpos=self.rrule.bysetpos,
+                    byweekday=byweekday))
 
             for k in range(len(starts)):
                 time_slot = TimeSlot(program_slot=self, start=starts[k], end=ends[k])
@@ -240,3 +257,4 @@ class Note(models.Model):
 
     def __unicode__(self):
         return u'%s - %s' % (self.title, self.time_slot)
+    
