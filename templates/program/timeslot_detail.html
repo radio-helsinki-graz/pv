@@ -10,25 +10,28 @@
     <div id="name">{{ timeslot.show.name }}</div>
 
     <div id="abbrevs">
-    {% for topic in timeslot.show.show_topic.all %}
+    {% for topic in timeslot.show.showtopic.all %}
         <span class="topic-abbrev">{{ topic.abbrev }}</span>
     {% endfor %}
-    {% for information in timeslot.show.show_information.all %}
+
+    {% for information in timeslot.show.showinformation.all %}
         <span class="information-abbrev">{{ information.abbrev }}</span>
     {% endfor %}
-    {% for focus in timeslot.show.music_focus.all %}
+
+    {% for focus in timeslot.show.musicfocus.all %}
         <span class="focus-abbrev">{{ focus.abbrev }}</span>
     {% endfor %}
-        <span class="broadcast-format-abbrev">{{ timeslot.show.broadcast_format.abbrev }}</span>
+
+        <span class="broadcastformat-abbrev">{{ timeslot.show.broadcastformat.abbrev }}</span>
     </div>
 
     <div id="program-slots">
-    {% for slot in timeslot.show.program_slots.all %}
+    {% for slot in timeslot.show.programslots.all %}
         <div class="program-slot">{{ slot }}</div>
     {% endfor %}
     </div>
 
-    <div id="broadcast-format">{{ timeslot.show.broadcast_format.format }}</div>
+    <div id="broadcastformat">{{ timeslot.show.broadcastformat.format }}</div>
 
     <div id="hosts">
     {% for host in timeslot.show.hosts.all %}
@@ -37,6 +40,7 @@
     </div>
 
     <div id="short-description">{{ timeslot.show.short_description }}</div>
+
     <div id="description">{{ timeslot.show.description }}</div>
 
     <div id="note">

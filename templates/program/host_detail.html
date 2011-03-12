@@ -5,9 +5,16 @@
 <body>
 
 <div id="host-detail">
-    {{ host.name }}
-    {{ host.email }}
-    {{ host.website }}
+    <div id="name">{{ host.name }}</div>
+
+    {% if host.email %}
+    <div id="email">{{ host.email }}</div>
+    {% endif %}
+
+    {% if host.website %}
+    <div id="website">{{ host.website }}</div>
+    {% endif %}
 </div>
+
 </body>
 </html>

@@ -20,7 +20,7 @@ class ShowTopicAdmin(admin.ModelAdmin):
 
 class NoteAdmin(admin.ModelAdmin):
     list_filter = ('status',)
-    ordering = ('time_slot',)
+    ordering = ('timeslot',)
 
 class TimeSlotInline(admin.TabularInline):
     model = TimeSlot
@@ -28,7 +28,7 @@ class TimeSlotInline(admin.TabularInline):
 class ProgramSlotAdmin(admin.ModelAdmin):
     date_hierarchy = 'dstart'
     inlines = (TimeSlotInline,)
-    list_display = ('show', 'byweekday', 'rrule', 'tstart', 'tend', 'dstart', 'until')
+    list_display = ('show', 'byweekday', 'rrule', 'tstart', 'tend', 'dstart', 'until', 'timeslot_count')
     list_filter = ('byweekday', 'rrule', 'is_repetition')
     ordering = ('byweekday', 'dstart')
     search_fields = ('show__name',)
@@ -37,10 +37,10 @@ class ProgramSlotInline(admin.TabularInline):
     model = ProgramSlot
 
 class ShowAdmin(admin.ModelAdmin):
-    filter_horizontal = ('hosts', 'owners', 'music_focus', 'show_information', 'show_topic')
+    filter_horizontal = ('hosts', 'owners', 'musicfocus', 'showinformation', 'showtopic')
     inlines = (ProgramSlotInline,)
-    list_display = ('name', 'short_description', 'broadcast_format')
-    list_filter = ('broadcast_format', 'show_information', 'show_topic', 'music_focus',)
+    list_display = ('name', 'short_description', 'broadcastformat')
+    list_filter = ('broadcastformat', 'showinformation', 'showtopic', 'musicfocus',)
     ordering = ('slug',)
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ('name', 'short_description', 'description')

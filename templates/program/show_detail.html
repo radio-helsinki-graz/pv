@@ -10,25 +10,28 @@
     <div id="name">{{ show.name }}</div>
 
     <div id="abbrevs">
-    {% for topic in show.show_topic.all %}
+    {% for topic in show.showtopic.all %}
         <span class="topic-abbrev">{{ topic.abbrev }}</span>
     {% endfor %}
-    {% for information in show.show_information.all %}
+
+    {% for information in show.showinformation.all %}
         <span class="information-abbrev">{{ information.abbrev }}</span>
     {% endfor %}
-    {% for focus in show.music_focus.all %}
+
+        {% for focus in show.musicfocus.all %}
         <span class="focus-abbrev">{{ focus.abbrev }}</span>
     {% endfor %}
-        <span class="broadcast-format-abbrev">{{ show.broadcast_format.abbrev }}</span>
+
+        <span class="broadcastformat-abbrev">{{ show.broadcastformat.abbrev }}</span>
     </div>
 
     <div id="program-slots">
-    {% for slot in show.program_slots.all %}
-        <div class="program-slot">{{ slot }}</div>
+    {% for slot in show.programslots.all %}
+        <div class="programslot">{{ slot }}</div>
     {% endfor %}
     </div>
 
-    <div id="broadcast-format">{{ show.broadcast_format.format }}</div>
+    <div id="broadcastformat">{{ show.broadcastformat.format }}</div>
 
     <div id="hosts">
     {% for host in show.hosts.all %}
@@ -37,18 +40,21 @@
     </div>
 
     <div id="short-description">{{ show.short_description }}</div>
+
     <div id="description">{{ show.description }}</div>
+
     {% if show.email %}
     <div id="email"><a href="mailto:{{ show.email }}">{{ show.email }}</a></div>
     {% endif %}
+
     {% if show.website %}
     <div id="website"><a href="{{ show.website }}">{{ show.website }}</a></div>
     {% endif %}
+
     {% if show.cba_series_id %}
     <div id="cba-series-id"><a href="http://cba.fro.at/series/{{ show.cba_series_id }}">CBA</a></div>
     {% endif %}
 </div>
 
 </body>
-
 </html>

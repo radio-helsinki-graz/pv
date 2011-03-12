@@ -1,0 +1,20 @@
+<html>
+<head>
+    <title>Recomendations</title>
+</head>
+<body>
+
+<div id="recommendations">
+{% for note in recommendation_list %}
+    <div class="show">
+        <div class="broadcast-format">{{ note.show.broadcastformat }}</div>
+        <div class="time-slot">{{ note.timeslot.start }}</div>
+        <div class="show-name"><a href="{%  url show-detail note.show.slug %}">{{ note.show.name }}</a></div>
+        <div class="show-short-description">{{ note.show.short_description }}</div>
+        <div class="note-title"><a href="{%  url timeslot-detail note.timeslot.id %}">{{ note.title }}</a></div>
+    </div>
+{% endfor %}
+</div>
+
+</body>
+</html>

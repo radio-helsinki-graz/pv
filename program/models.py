@@ -78,10 +78,10 @@ class Show(models.Model):
     predecessor = models.ForeignKey('self', blank=True, null=True, related_name='successors', verbose_name=_("Predecessor"))
     hosts = models.ManyToManyField(Host, blank=True, null=True, related_name='shows', verbose_name=_("Hosts"))
     owners = models.ManyToManyField(User, blank=True, null=True, related_name='shows', verbose_name=_("Owners"))
-    broadcast_format = models.ForeignKey(BroadcastFormat, related_name='shows', verbose_name=_("Broadcast format"))
-    show_information = models.ManyToManyField(ShowInformation, blank=True, null=True, related_name='shows', verbose_name=_("Show information"))
-    show_topic = models.ManyToManyField(ShowTopic, blank=True, null=True, related_name='shows', verbose_name=_("Show topic"))
-    music_focus = models.ManyToManyField(MusicFocus, blank=True, null=True, related_name='shows', verbose_name=_("Music focus"))
+    broadcastformat = models.ForeignKey(BroadcastFormat, related_name='shows', verbose_name=_("Broadcast format"))
+    showinformation = models.ManyToManyField(ShowInformation, blank=True, null=True, related_name='shows', verbose_name=_("Show information"))
+    showtopic = models.ManyToManyField(ShowTopic, blank=True, null=True, related_name='shows', verbose_name=_("Show topic"))
+    musicfocus = models.ManyToManyField(MusicFocus, blank=True, null=True, related_name='shows', verbose_name=_("Music focus"))
     name = models.CharField(_("Name"), max_length=256)
     slug = models.CharField(_("Slug"), max_length=256, unique=True)
     image = models.ImageField(_("Image"), blank=True, null=True, upload_to='show_images')
@@ -143,9 +143,9 @@ class ProgramSlot(models.Model):
         (5, _("Saturday")),
         (6, _("Sunday")),
     )
-    rrule = models.ForeignKey(RRule, related_name='program_slots', verbose_name=_("Recurrence rule"))
+    rrule = models.ForeignKey(RRule, related_name='programslots', verbose_name=_("Recurrence rule"))
     byweekday = models.IntegerField(_("Weekday"), choices=BYWEEKDAY_CHOICES)
-    show = models.ForeignKey(Show, related_name='program_slots', verbose_name=_("Show"))
+    show = models.ForeignKey(Show, related_name='programslots', verbose_name=_("Show"))
     dstart = models.DateField(_("First date"))
     tstart = models.TimeField(_("Start time"))
     tend = models.TimeField(_("End time"))
@@ -209,11 +209,15 @@ class ProgramSlot(models.Model):
                     byweekday=byweekday))
 
             for k in range(len(starts)):
-                time_slot = TimeSlot(program_slot=self, start=starts[k], end=ends[k])
-                time_slot.save()
+                timeslot = TimeSlot(programslot=self, start=starts[k], end=ends[k])
+                timeslot.save()
 
+    def timeslot_count(self):
+        return self.timeslots.count()
+    timeslot_count.description = _("Time slot count")
+    
 class TimeSlot(models.Model):
-    program_slot = models.ForeignKey(ProgramSlot, related_name='time_slots', verbose_name=_("Program slot"))
+    programslot = models.ForeignKey(ProgramSlot, related_name='timeslots', verbose_name=_("Program slot"))
     start = models.DateTimeField(_("Start time"))
     end = models.DateTimeField(_("End time"))
 
@@ -229,7 +233,7 @@ class TimeSlot(models.Model):
         return u'%s: %s - %s' % (self.show(), start, end)
 
     def show(self):
-        return self.program_slot.show
+        return self.programslot.show
 
     @models.permalink
     def get_absolute_url(self):
@@ -241,7 +245,7 @@ class Note(models.Model):
         (1, _("Recommendation")),
         (2, _("Repetition")),
     )
-    time_slot = models.OneToOneField(TimeSlot, verbose_name=_("Time slot"))
+    timeslot = models.OneToOneField(TimeSlot, verbose_name=_("Time slot"))
     owner = models.ForeignKey(User, related_name='notes', verbose_name=_("Owner"))
     title = models.CharField(_("Title"), max_length=128)
     content = models.TextField(_("Content"))
@@ -251,10 +255,12 @@ class Note(models.Model):
     last_updated = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
-        ordering = ('time_slot',)
+        ordering = ('timeslot',)
         verbose_name = _("Note")
         verbose_name_plural = _("Notes")
 
     def __unicode__(self):
-        return u'%s - %s' % (self.title, self.time_slot)
-    
+        return u'%s - %s' % (self.title, self.timeslot)
+
+    def show(self):
+        return self.timeslot.programslot.show
