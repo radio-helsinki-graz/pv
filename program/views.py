@@ -1,4 +1,4 @@
-from django.views.generic import ListView
+from django.views.generic.list import ListView
 
 from models import BroadcastFormat, MusicFocus, Note, Show, ShowInformation, ShowTopic
 
@@ -17,15 +17,13 @@ class ShowListView(ListView):
         context['showtopic_list'] = ShowTopic.objects.all()
 
         return context
-
+    
 class RecommendationsView(ListView):
-    now = datetime.now()
-    in_one_week = now + timedelta(weeks=1)
-    context_object_name = 'recommendation_list'
+    context_object_name = 'recommendations'
     template_name = 'program/recommendations.html'
-    queryset = Note.objects.filter(status=1, timeslot__start__range=(now, in_one_week))[:10]
 
-class RecommendationsBoxView(RecommendationsView):
-    now = datetime.now()
-    in_one_week = now + timedelta(weeks=1)
-    queryset = Note.objects.filter(status=1, timeslot__start__range=(now, in_one_week))[:3]
+    def get_queryset(self):
+        now = datetime.now()
+        in_one_week = now + timedelta(weeks=1)
+
+        return Note.objects.filter(status=1, timeslot__start__range=(now, in_one_week))[:10]
