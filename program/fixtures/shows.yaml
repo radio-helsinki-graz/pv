@@ -1,0 +1,9 @@
+- model: program.show
+  pk: 0
+  fields:
+    hosts: [1]
+    broadcastformat: 3
+    name: Musikprogramm
+    slug: musikprogramm
+    description: Unmoderiertes Musikprogramm
+    short_description: Unmoderiertes Musikprogramm
