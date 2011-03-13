@@ -1,3 +1,5 @@
+import os
+
 # Django settings for helsinki project.
 
 DEBUG = True
@@ -62,7 +64,9 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'helsinki.urls'
 
-TEMPLATE_DIRS = ('templates',)
+TEMPLATE_DIRS = (
+    os.path.join(os.path.dirname(__file__), "templates"),
+)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
