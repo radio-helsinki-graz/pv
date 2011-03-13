@@ -1,7 +1,11 @@
 - model: program.host
   pk: 0
   fields:
-    name: N.N.
+    name: N. N.
+- model: program.host
+  pk: 1
+  fields:
+    name: Musikredaktion
 - model: program.host
   pk:
   fields:
