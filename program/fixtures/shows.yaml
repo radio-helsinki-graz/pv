@@ -1,5 +1,5 @@
 - model: program.show
-  pk: 0
+  pk: 1
   fields:
     hosts: [1]
     broadcastformat: 3
@@ -7,3 +7,4 @@
     slug: musikprogramm
     description: Unmoderiertes Musikprogramm
     short_description: Unmoderiertes Musikprogramm
+    email: musikredaktion@helsinki.at
