@@ -4,7 +4,6 @@
     name: einmalig
     freq: 0
     count: 1
-    bysetpos: 1
 - model: program.rrule
   pk: 2
   fields:
