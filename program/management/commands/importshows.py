@@ -36,25 +36,30 @@ ORDER BY titel, beginn, ende""")
             hosts = []
 
             for macher in macher.decode('latin1').encode('utf8').split(','):
+                macher = macher.strip()
                 try:
-                    host = Host.objects.get(name=macher.strip())
-                    hosts.append(host)
+                    host = Host.objects.get(name=macher)
                 except MultipleObjectsReturned:
                     print 'multiple hosts with name "%s" found' % macher
                 except ObjectDoesNotExist:
                     print 'host with name "%s" not found' % macher
+                else:
+                    hosts.append(host)
 
             try:
                 show = Show.objects.get(name=titel)
                 print 'sendung "%s" already imported as show "%s"' % (titel, show)
             except ObjectDoesNotExist:
                 show = Show(broadcastformat=TALK, name=titel, slug=slug, short_description='FIXME', description=beschreibung)
-                show.save()
-                counter += 1
-
-                for h in hosts:
-                    show.hosts.add(h)
+                try:
                     show.save()
+                    counter += 1
+                except:
+                    print 'ERR: sendung "%s" could not be imported' % titel
+                else:
+                    for h in hosts:
+                        show.hosts.add(h)
+                        show.save()
 
         cursor.close()
         connection.close()
