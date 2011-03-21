@@ -41,7 +41,7 @@ class ProgramSlotInline(admin.TabularInline):
 class ShowAdmin(admin.ModelAdmin):
     filter_horizontal = ('hosts', 'owners', 'musicfocus', 'showinformation', 'showtopic')
     inlines = (ProgramSlotInline,)
-    list_display = ('name', 'short_description', 'broadcastformat')
+    list_display = ('name', 'short_description', 'broadcastformat', 'has_active_programslots')
     list_filter = ('broadcastformat', 'showinformation', 'showtopic', 'musicfocus',)
     ordering = ('slug',)
     prepopulated_fields = {'slug': ('name',)}

@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from datetime import datetime
+from datetime import date, datetime
 from dateutil.relativedelta import relativedelta
 from dateutil.rrule import rrule
 
@@ -104,6 +104,11 @@ class Show(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return ('show-detail', [self.slug])
+
+    def has_active_programslots(self):
+         return self.programslots.filter(until__gt=date.today()).count() > 0
+    has_active_programslots.boolean = True
+    has_active_programslots.short_description = _("Has active program slots")
 
 class RRule(models.Model):
     FREQ_CHOICES = (
