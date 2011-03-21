@@ -242,12 +242,15 @@ class Note(models.Model):
         (1, _("Recommendation")),
         (2, _("Repetition")),
     )
-    timeslot = models.OneToOneField(TimeSlot, verbose_name=_("Time slot"))
+    timeslot = models.OneToOneField(TimeSlot, limit_choices_to={'start__gte': datetime.now}, verbose_name=_("Time slot"))
     owner = models.ForeignKey(User, related_name='notes', verbose_name=_("Owner"))
     title = models.CharField(_("Title"), max_length=128)
     content = models.TextField(_("Content"))
     status = models.IntegerField(_("Status"), choices=STATUS_CHOICES, default=1)
     cba_entry_id = models.IntegerField(_("CBA entry ID"), blank=True, null=True)
+    start = models.DateTimeField(editable=False)
+    end = models.DateTimeField(editable=False)
+    show = models.ForeignKey(Show, editable=False)
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_updated = models.DateTimeField(auto_now=True, editable=False)
 
@@ -259,5 +262,9 @@ class Note(models.Model):
     def __unicode__(self):
         return u'%s - %s' % (self.title, self.timeslot)
 
-    def show(self):
-        return self.timeslot.programslot.show
+    def save(self, *args, **kwargs):
+        super(Note, self).save(*args, **kwargs)
+
+        self.start =  self.timeslot.start
+        self.end = self.timeslot.end
+        self.show = self.timeslot.programslot.show
