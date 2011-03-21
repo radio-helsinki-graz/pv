@@ -241,7 +241,7 @@ class TimeSlotManager(models.Manager):
 
 class TimeSlot(models.Model):
     programslot = models.ForeignKey(ProgramSlot, related_name='timeslots', verbose_name=_("Program slot"))
-    start = models.DateTimeField(_("Start time"))
+    start = models.DateTimeField(_("Start time"), unique=True)
     end = models.DateTimeField(_("End time"))
     show = models.ForeignKey(Show, editable=False)
 
