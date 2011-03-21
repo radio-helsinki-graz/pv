@@ -1,20 +1,22 @@
 from django.views.generic.list import ListView
+from django.views.generic.base import TemplateView
+from django.views.generic.dates import DayArchiveView, TodayArchiveView
 from django.shortcuts import get_object_or_404
 
-from models import BroadcastFormat, MusicFocus, Note, Show, ShowInformation, ShowTopic
+from models import BroadcastFormat, MusicFocus, Note, Show, ShowInformation, ShowTopic, TimeSlot
 
-from datetime import datetime, timedelta
+from datetime import date, datetime, time, timedelta
 
 class ShowListView(ListView):
-    context_object_name = 'show_list'
+    context_object_name = 'shows'
 
     def get_context_data(self, **kwargs):
         context = super(ShowListView, self).get_context_data(**kwargs)
 
-        context['broadcastformat_list'] = BroadcastFormat.objects.all()
-        context['musicfocus_list'] = MusicFocus.objects.all()
-        context['showinformation_list'] = ShowInformation.objects.all()
-        context['showtopic_list'] = ShowTopic.objects.all()
+        context['broadcastformats'] = BroadcastFormat.objects.all()
+        context['musicfoci'] = MusicFocus.objects.all()
+        context['showinformations'] = ShowInformation.objects.all()
+        context['showtopics'] = ShowTopic.objects.all()
 
         return context
 
@@ -47,3 +49,53 @@ class RecommendationsView(ListView):
         in_one_week = now + timedelta(weeks=1)
 
         return Note.objects.filter(status=1, timeslot__start__range=(now, in_one_week))[:10]
+
+class TodayScheduleView(TodayArchiveView):
+    model = TimeSlot
+    allow_future = True
+    date_field = 'start'
+    context_object_name = 'timeslots'
+    template_name = 'program/today_schedule.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(TodayScheduleView, self).get_context_data(**kwargs)
+
+        now = datetime.now()
+        midnight = datetime.combine(date.today(), time(23, 59))
+
+        context['broadcastformats'] = BroadcastFormat.objects.all()
+        context['recommendations'] = Note.objects.filter(status=1, timeslot__start__range=(now, midnight))
+
+        return context
+
+class DayScheduleView(DayArchiveView):
+    model = TimeSlot
+    allow_future = True
+    date_field = 'start'
+    month_format = '%m'
+    context_object_name = 'timeslots'
+    template_name = 'program/day_schedule.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(DayScheduleView, self).get_context_data(**kwargs)
+
+        year, month, day = map(int, [self.get_year(), self.get_month(), self.get_day()])
+        this_day = datetime(year, month, day, 0, 0)
+        midnight = datetime(year, month, day, 23, 59)
+        
+        context['broadcastformats'] = BroadcastFormat.objects.all()
+        context['recommendations'] = Note.objects.filter(status=1, timeslot__start__range=(this_day, midnight))
+
+        return context
+    
+class CurrentShowView(TemplateView):
+    template_name = 'program/current.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CurrentShowView, self).get_context_data(**kwargs)
+
+        context['current'] = TimeSlot.objects.get_or_create_current()
+        context['next'] = TimeSlot.objects.get_or_create_current().get_next_by_start()
+        context['after_next'] = TimeSlot.objects.get_or_create_current().get_next_by_start().get_next_by_start()
+
+        return context
