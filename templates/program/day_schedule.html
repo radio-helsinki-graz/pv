@@ -1,0 +1,48 @@
+
+
+<div id="calendar">
+</div>
+
+<div id="recommendations">
+    {% for recommendation in recommendations %}
+        <div>{{ recommendation.timeslot.start|date:"H:i" }}</div>
+        <div>{{ recommendation.timeslot.programslot.show.name }}</div>
+        <div><a href="{% url timeslot-detail recommendation.timeslot.id %}">{{ recommendation.title }}</a></div>
+    {% endfor %}
+</div>
+
+<div>
+    {% for timeslot in timeslots %}
+    <div>
+        <span class="time">{{ timeslot.start|date:"H:i" }}</span>
+        <span class="abbrev">
+            {% for showinformation in timeslot.programslot.show.showinformation.all %}
+                {{ showinformation.abbrev }}
+            {% endfor %}
+        </span>
+        <span class="abbrev">
+            {% for showtopic in timeslot.programslot.show.showtopic.all %}
+                {{ showtopic.abbrev }}
+            {% endfor %}
+        </span>
+        <span class="abbrev">
+            {% for musicfocus in timeslot.programslot.show.musicfocus.all %}
+                {{ musicfocus.abbrev }}
+            {% endfor %}
+        </span>
+        <span class="timeslot">
+            <a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show }}</a>
+            {% if timeslot.note %}
+            <span>Heute: {{ timeslot.note.title }}</span>
+        {% endif %}
+    </span>
+    {% endfor %}
+</div>
+
+<div>
+    {% for broadcastformat in broadcastformats %}
+        <div>
+            {{ broadcastformat }}
+        </div>
+    {% endfor %}
+</div>
