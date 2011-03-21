@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -217,13 +218,35 @@ class ProgramSlot(models.Model):
     def timeslot_count(self):
         return self.timeslots.count()
     timeslot_count.description = _("Time slot count")
-    
+
+class TimeSlotManager(models.Manager):
+    def get_or_create_current(self):
+        try:
+            return TimeSlot.objects.get(start__lte=datetime.now(), end__gte=datetime.now())
+        except ObjectDoesNotExist:
+            once = RRule.objects.get(pk=1)
+            today = date.today().weekday()
+            default = Show.objects.get(pk=1)
+
+            previous = TimeSlot.objects.filter(end__lte=datetime.now()).order_by('-start')[0]
+            next = TimeSlot.objects.filter(start__gte=datetime.now())[0]
+
+            dstart, tstart = previous.end.date(), previous.end.time()
+            until, tend = next.start.date(), next.start.time()
+
+            new_programslot = ProgramSlot(rrule=once, byweekday=today, show=default, dstart=dstart, tstart=tstart, tend=tend, until=until)
+            new_programslot.save()
+
+            return new_programslot.timeslots.all()[0]
+
 class TimeSlot(models.Model):
     programslot = models.ForeignKey(ProgramSlot, related_name='timeslots', verbose_name=_("Program slot"))
     start = models.DateTimeField(_("Start time"))
     end = models.DateTimeField(_("End time"))
     show = models.ForeignKey(Show, editable=False)
 
+    objects = TimeSlotManager()
+    
     class Meta:
         ordering = ('start', 'end')
         verbose_name = _("Time slot")
