@@ -217,6 +217,7 @@ class TimeSlot(models.Model):
     programslot = models.ForeignKey(ProgramSlot, related_name='timeslots', verbose_name=_("Program slot"))
     start = models.DateTimeField(_("Start time"))
     end = models.DateTimeField(_("End time"))
+    show = models.ForeignKey(Show, editable=False)
 
     class Meta:
         ordering = ('start', 'end')
@@ -227,10 +228,12 @@ class TimeSlot(models.Model):
         start = self.start.strftime('%d. %b %Y %H:%M')
         end = self.end.strftime('%H:%M')
 
-        return u'%s: %s - %s' % (self.show(), start, end)
+        return u'%s: %s - %s' % (self.show, start, end)
 
-    def show(self):
-        return self.programslot.show
+    def save(self, *args, **kwargs):
+        super(TimeSlot, self).save(*args, **kwargs)
+
+        self.show = self.programslot.show
 
     @models.permalink
     def get_absolute_url(self):
