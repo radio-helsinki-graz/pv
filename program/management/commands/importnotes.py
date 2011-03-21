@@ -50,7 +50,7 @@ WHERE n.sendung_id in (SELECT id FROM sendungen WHERE letzter_termin > current_d
                         try:
                             note.save()
                         except:
-                            print 'could not save note "%s" for show "%s"' % (ntitel, stitel)
+                            print 'could not save note "%s" for show "%s" and datum "%s"' % (ntitel, stitel, datum)
                         else:
                             counter += 1
                 except ObjectDoesNotExist:

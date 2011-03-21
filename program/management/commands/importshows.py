@@ -55,7 +55,7 @@ ORDER BY titel, beginn, ende""")
                     show.save()
                     counter += 1
                 except:
-                    print 'ERR: sendung "%s" could not be imported' % titel
+                    print 'sendung "%s" could not be imported' % titel
                 else:
                     for h in hosts:
                         show.hosts.add(h)
