@@ -5,7 +5,7 @@
 <body>
 
 <div id="showtopic-list">
-{% for topic in showtopic_list %}
+{% for topic in showtopics %}
     <div class="showtopic">
         <span class="abbrev">{{ topic.abbrev }}</span>
         <span class="topic">{{ topic }}</span>
@@ -14,7 +14,7 @@
 </div>
 
 <div id="showinformation-list">
-{% for information in showinformation_list %}
+{% for information in showinformations %}
     <div class="showinformation">
         <span class="abbrev">{{ information.abbrev }}</span>
         <span class="information">{{ information }}</span>
@@ -23,7 +23,7 @@
 </div>
 
 <div id="musicfocus-list">
-{% for focus in musicfocus_list %}
+{% for focus in musicfoci %}
     <div class="musicfocus">
         <span class="abbrev">{{ focus.abbrev }}</span>
         <span class="focus">{{ focus }}</span>
@@ -32,7 +32,7 @@
 </div>
 
 <div id="show-list">
-{% for show in show_list %}
+{% for show in shows %}
     <div class="show">
         <div class="abbrevs">
         {% for topic in show.showtopic.all %}
@@ -64,7 +64,7 @@
 </div>
 
 <div id="broadcastformat-list">
-{% for format in broadcastformat_list %}
+{% for format in broadcastformats %}
     <div class="broadcastformat">{{ format }}</div>
 {% endfor %}
 </div>
