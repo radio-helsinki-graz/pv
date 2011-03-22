@@ -1,13 +1,17 @@
+<html>
+<head>
+    <title>Day schedule</title>
+</head>
 
+<body>
 
-<div id="calendar">
-</div>
+<div id="calendar"></div>
 
 <div id="recommendations">
     {% for recommendation in recommendations %}
-        <div>{{ recommendation.timeslot.start|date:"H:i" }}</div>
-        <div>{{ recommendation.timeslot.programslot.show.name }}</div>
-        <div><a href="{% url timeslot-detail recommendation.timeslot.id %}">{{ recommendation.title }}</a></div>
+    <div>{{ recommendation.timeslot.start|date:"H:i" }}</div>
+    <div>{{ recommendation.timeslot.programslot.show.name }}</div>
+    <div><a href="{% url timeslot-detail recommendation.timeslot.id %}">{{ recommendation.title }}</a></div>
     {% endfor %}
 </div>
 
@@ -41,8 +45,11 @@
 
 <div>
     {% for broadcastformat in broadcastformats %}
-        <div>
-            {{ broadcastformat }}
-        </div>
+    <div>
+        {{ broadcastformat }}
+    </div>
     {% endfor %}
 </div>
+
+</body>
+</html>
