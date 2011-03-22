@@ -1,0 +1,87 @@
+<html>
+<head>
+    <title>Week schedule</title>
+</head>
+
+<body>
+
+<div id="week-schedule">
+    <div id="time">
+        <div class="1hour">06:00</div>
+        <div class="1hour">07:00</div>
+        <div class="1hour">08:00</div>
+        <div class="1hour">09:00</div>
+        <div class="1hour">10:00</div>
+        <div class="1hour">11:00</div>
+        <div class="1hour">12:00</div>
+        <div class="1hour">13:00</div>
+        <div class="1hour">14:00</div>
+        <div class="1hour">15:00</div>
+        <div class="1hour">16:00</div>
+        <div class="1hour">17:00</div>
+        <div class="1hour">18:00</div>
+        <div class="1hour">19:00</div>
+        <div class="1hour">20:00</div>
+        <div class="1hour">21:00</div>
+        <div class="1hour">22:00</div>
+        <div class="1hour">23:00</div>
+        <div class="1hour">00:00</div>
+        <div class="1hour">01:00</div>
+        <div class="1hour">02:00</div>
+        <div class="1hour">03:00</div>
+        <div class="1hour">04:00</div>
+        <div class="1hour">05:00</div>
+    </div>
+
+    <div id="monday">
+        <div class="weekday">{{ monday|date:"l d.m.Y" }}</div>
+        {% for timeslot in monday_timeslots %}
+            <div class="timeslot {{ timeslot.show.broadcastformat.slug }}"><a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a></div>
+        {% endfor %}
+    </div>
+
+    <div id="tuesday">
+        <div class="weekday">{{ tuesday|date:"l d.m.Y" }}</div>
+        {% for timeslot in tuesday_timeslots %}
+            <div class="timeslot {{ timeslot.show.broadcastformat.slug }}"><a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a></div>
+        {% endfor %}
+    </div>
+
+    <div id="wednesday">
+        <div class="weekday">{{ wednesday|date:"l d.m.Y" }}</div>
+        {% for timeslot in wednesday_timeslots %}
+            <div class="timeslot {{ timeslot.show.broadcastformat.slug }}"><a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a></div>
+        {% endfor %}
+    </div>
+
+    <div id="thursday">
+        <div class="weekday">{{ thursday|date:"l d.m.Y" }}</div>
+        {% for timeslot in thursday_timeslots %}
+            <div class="timeslot {{ timeslot.show.broadcastformat.slug }}"><a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a></div>
+        {% endfor %}
+    </div>
+
+    <div id="friday">
+        <div class="weekday">{{ friday|date:"l d.m.Y" }}</div>
+        {% for timeslot in friday_timeslots %}
+            <div class="timeslot {{ timeslot.show.broadcastformat.slug }}"><a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a></div>
+        {% endfor %}
+    </div>
+
+    <div id="saturday">
+        <div class="weekday">{{ saturday|date:"l d.m.Y" }}</div>
+        {% for timeslot in saturday_timeslots %}
+            <div class="timeslot {{ timeslot.show.broadcastformat.slug }}"><a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a></div>
+        {% endfor %}
+    </div>
+
+    <div id="sunday">
+        <div class="weekday">{{ sunday|date:"l d.m.Y" }}</div>
+        {% for timeslot in sunday_timeslots %}
+            <div class="timeslot {{ timeslot.show.broadcastformat.slug }}"><a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a></div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>

@@ -3,11 +3,12 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
 from models import Host, Show, TimeSlot
-from views import CurrentShowView, DayScheduleView, RecommendationsView, ShowListView, TodayScheduleView
+from views import CurrentShowView, DayScheduleView, RecommendationsView, ShowListView, TodayScheduleView, WeekScheduleView
 
 urlpatterns = patterns('',
     ('^$', TodayScheduleView.as_view()),
     ('^(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})/$', DayScheduleView.as_view()),
+    ('^(?P<year>\d{4})/(?P<week>\d{1,2})/$', WeekScheduleView.as_view()),
     ('^current/$', CurrentShowView.as_view()),
     ('^hosts/$', ListView.as_view(model=Host, context_object_name='hosts')),
     url('^host/(?P<pk>\d+)/$', DetailView.as_view(model=Host), name='host-detail'),

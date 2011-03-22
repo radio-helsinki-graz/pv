@@ -1,6 +1,6 @@
 from django.views.generic.list import ListView
 from django.views.generic.base import TemplateView
-from django.views.generic.dates import DayArchiveView, TodayArchiveView
+from django.views.generic.dates import DayArchiveView, TodayArchiveView, WeekArchiveView
 from django.shortcuts import get_object_or_404
 
 from models import BroadcastFormat, MusicFocus, Note, Show, ShowInformation, ShowTopic, TimeSlot
@@ -97,5 +97,43 @@ class CurrentShowView(TemplateView):
         context['current'] = TimeSlot.objects.get_or_create_current()
         context['next'] = TimeSlot.objects.get_or_create_current().get_next_by_start()
         context['after_next'] = TimeSlot.objects.get_or_create_current().get_next_by_start().get_next_by_start()
+
+        return context
+
+class WeekScheduleView(TemplateView):
+    template_name = 'program/week_schedule.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(WeekScheduleView, self).get_context_data(**kwargs)
+
+        year = context['params']['year']
+        week = context['params']['week']
+
+        # start the day at 6
+        monday = datetime.strptime('%s__%s__1__06__00' % (year, week), '%Y__%W__%w__%H__%M')
+
+        tuesday = monday+timedelta(days=1)
+        wednesday = monday+timedelta(days=2)
+        thursday = monday+timedelta(days=3)
+        friday = monday+timedelta(days=4)
+        saturday = monday+timedelta(days=5)
+        sunday = monday+timedelta(days=6)
+        next_monday = monday+timedelta(days=7)
+
+        context['monday'] = monday
+        context['tuesday'] = tuesday
+        context['wednesday'] = wednesday
+        context['thursday'] = thursday
+        context['friday'] = friday
+        context['saturday'] = saturday
+        context['sunday'] = sunday
+        
+        context['monday_timeslots'] = TimeSlot.objects.filter(start__range=(monday, tuesday))
+        context['tuesday_timeslots'] = TimeSlot.objects.filter(start__range=(tuesday, wednesday))
+        context['wednesday_timeslots'] = TimeSlot.objects.filter(start__range=(wednesday, thursday))
+        context['thursday_timeslots'] = TimeSlot.objects.filter(start__range=(thursday, friday))
+        context['friday_timeslots'] = TimeSlot.objects.filter(start__range=(friday, saturday))
+        context['saturday_timeslots'] = TimeSlot.objects.filter(start__range=(saturday, sunday))
+        context['sunday_timeslots'] = TimeSlot.objects.filter(start__range=(sunday, next_monday))
 
         return context
