@@ -50,42 +50,39 @@ class RecommendationsView(ListView):
 
         return Note.objects.filter(status=1, timeslot__start__range=(now, in_one_week))[:10]
 
-class TodayScheduleView(TodayArchiveView):
-    model = TimeSlot
-    allow_future = True
-    date_field = 'start'
-    context_object_name = 'timeslots'
-    template_name = 'program/today_schedule.html'
+class TodayScheduleView(TemplateView):
+    template_name = 'program/day_schedule.html'
 
     def get_context_data(self, **kwargs):
         context = super(TodayScheduleView, self).get_context_data(**kwargs)
 
         now = datetime.now()
-        midnight = datetime.combine(date.today(), time(23, 59))
+        today = datetime.combine(date.today(), time(6, 0))
+        tomorrow = datetime.combine(date.today()+timedelta(days=1), time(6, 0))
 
         context['broadcastformats'] = BroadcastFormat.objects.all()
-        context['recommendations'] = Note.objects.filter(status=1, timeslot__start__range=(now, midnight))
+        context['recommendations'] = Note.objects.filter(status=1, timeslot__start__range=(now, tomorrow))
+        context['timeslots'] = TimeSlot.objects.filter(start__range=(today, tomorrow))
 
         return context
 
-class DayScheduleView(DayArchiveView):
-    model = TimeSlot
-    allow_future = True
-    date_field = 'start'
-    month_format = '%m'
-    context_object_name = 'timeslots'
+class DayScheduleView(TemplateView):
     template_name = 'program/day_schedule.html'
 
     def get_context_data(self, **kwargs):
         context = super(DayScheduleView, self).get_context_data(**kwargs)
 
-        year, month, day = map(int, [self.get_year(), self.get_month(), self.get_day()])
-        this_day = datetime(year, month, day, 0, 0)
-        midnight = datetime(year, month, day, 23, 59)
-        
-        context['broadcastformats'] = BroadcastFormat.objects.all()
-        context['recommendations'] = Note.objects.filter(status=1, timeslot__start__range=(this_day, midnight))
+        year = context['params']['year']
+        month = context['params']['month']
+        day = context['params']['day']
 
+        # start the day at 6
+        this_day = datetime.strptime('%s__%s__%s__06__00' % (year, month, day), '%Y__%m__%d__%H__%M')
+        that_day = this_day+timedelta(days=1)
+
+        context['broadcastformats'] = BroadcastFormat.objects.all()
+        context['recommendations'] = Note.objects.filter(status=1, timeslot__start__range=(this_day, that_day))
+        context['timeslots'] = TimeSlot.objects.filter(start__range=(this_day, that_day))
         return context
     
 class CurrentShowView(TemplateView):
