@@ -6,3 +6,4 @@ Requirements
 - python-dateutil: http://pypi.python.org/pypi/python-dateutil/1.5
 - PyYAML: http://pypi.python.org/pypi/PyYAML/3.09
 - MySQL-python: http://pypi.python.org/pypi/MySQL-python/1.2.3
+- django-haystack: http://pypi.python.org/pypi/django-haystack/1.1.0
