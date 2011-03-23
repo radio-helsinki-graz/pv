@@ -1,3 +1,5 @@
+* create style sheet and update templates
+* integrate django-haystack
 * integrate calendar into day schedule view
 * integrate tinyMCE into admin site
 * integrate open ID
