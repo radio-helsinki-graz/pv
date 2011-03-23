@@ -1,7 +1,8 @@
 Requirements
 ============
 
-- Django 1.3: http://www.djangoproject.com/download/
-- PIL: http://www.pythonware.com/products/pil/
+- Django 1.3: http://pypi.python.org/pypi/Django/1.3
+- PIL: http://pypi.python.org/pypi/PIL/1.1.6
 - python-dateutil: http://pypi.python.org/pypi/python-dateutil/1.5
 - PyYAML: http://pypi.python.org/pypi/PyYAML/3.09
+- MySQL-python: http://pypi.python.org/pypi/MySQL-python/1.2.3
