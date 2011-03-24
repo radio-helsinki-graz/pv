@@ -44,15 +44,18 @@ WHERE letzter_termin > current_date AND titel NOT LIKE 'Musikprogramm' AND titel
 
             try:
                 rrule = RRULES[rhytmus]
-
                 try:
                     show = Show.objects.get(name=titel)
-
-                    programslot = ProgramSlot(rrule=rrule, byweekday=termin, show=show, dstart=erster_termin, tstart=tstart, tend=tend, until=letzter_termin)
-                    programslot.save()
-                    counter += 1
                 except ObjectDoesNotExist:
                     print 'show with name "%s" not found' % titel
+                else:
+                    programslot = ProgramSlot(rrule=rrule, byweekday=termin, show=show, dstart=erster_termin, tstart=tstart,
+                                              tend=tend, until=letzter_termin)
+                    try:
+                        programslot.save()
+                        counter += 1
+                    except:
+                        pass
             except KeyError:
                 print 'rhythmus "%i" is not supported for sendung "%s"' % (rhytmus, titel)
 
@@ -73,15 +76,17 @@ WHERE letzter_termin > current_date AND titel LIKE '%%(Wiederholung)'""")
 
             try:
                 rrule = RRULES[rhytmus]
-
                 try:
                     show = Show.objects.get(name=titel)
-
-                    programslot = ProgramSlot(rrule=rrule, byweekday=termin, show=show, dstart=erster_termin, tstart=tstart, tend=tend, until=letzter_termin, is_repetition=True)
-                    programslot.save()
-                    counter += 1
                 except ObjectDoesNotExist:
                     print 'show with name "%s" not found' % titel
+                else:
+                    programslot = ProgramSlot(rrule=rrule, byweekday=termin, show=show, dstart=erster_termin, tstart=tstart, tend=tend, until=letzter_termin, is_repetition=True)
+                    try:
+                        programslot.save()
+                        counter += 1
+                    except:
+                        pass
             except KeyError:
                 print 'rhythmus "%i" is not supported for sendung "%s"' % (rhytmus, titel)
 
