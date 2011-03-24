@@ -13,10 +13,19 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'helsinki.sqlite',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'helsinki2',
+        'USER': 'helsinki',
+        'PASSWORD': 'helsinki'
     }
 }
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': 'helsinki.sqlite',
+#    }
+#}
+
 
 TIME_ZONE = 'Europe/Vienna'
 
