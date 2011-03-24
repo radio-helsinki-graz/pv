@@ -5,7 +5,7 @@ from django.utils.html import clean_html, strip_tags
 
 import MySQLdb
 
-from program.models import BroadcastFormat, Host, Show
+from helsinki.program.models import BroadcastFormat, Host, Show
 
 USER = 'helsinki'
 PASSWD = 'helsinki'
