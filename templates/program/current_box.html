@@ -1,0 +1,39 @@
+<html>
+<head>
+    <title>Current program box</title>
+    <link href="/site_media/styles/base.css" media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<div id="current">
+    <div id="current-title">Programm derzeit</div>
+
+    <div id="current-timeslot">
+        <div class="start">{{ current.start|date:"H:i" }}</div>
+        <div class="show {{ current.show.broadcastformat.slug }}">
+            <div class="name"><a href="{% url timeslot-detail current.id %}">{{ current.show.name }}</a></div>
+        {% if current.note %}
+            <div class="note-title">{{ current.note.title }}</div>
+        {% else %}
+            <div class="short-description">{{ current.show.short_description }}</div>
+        {% endif %}
+        </div>
+    </div>
+
+    <div id="next-timeslot">
+        <div class="start">{{ next.start|date:"H:i" }}</div>
+        <div class="show {{ next.show.broadcastformat.slug }}">
+            <div class="name"><a href="{% url timeslot-detail next.id %}">{{ next.show.name }}</a></div>
+        </div>
+    </div>
+
+    <div id="after-next-timeslot">
+        <div class="start"> {{ after_next.start|date:"H:i" }}</div>
+        <div class="show {{ after_next.show.broadcastformat.slug }}">
+            <div class="name"><a href="{% url timeslot-detail after_next.id %}">{{ after_next.show.name }}</div></a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

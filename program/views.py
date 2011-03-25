@@ -1,6 +1,5 @@
 from django.views.generic.list import ListView
 from django.views.generic.base import TemplateView
-from django.views.generic.dates import DayArchiveView, TodayArchiveView, WeekArchiveView
 from django.shortcuts import get_object_or_404
 
 from models import BroadcastFormat, MusicFocus, Note, Show, ShowInformation, ShowTopic, TimeSlot
@@ -60,9 +59,16 @@ class TodayScheduleView(TemplateView):
         today = datetime.combine(date.today(), time(6, 0))
         tomorrow = datetime.combine(date.today()+timedelta(days=1), time(6, 0))
 
+        context['day'] = today
         context['broadcastformats'] = BroadcastFormat.objects.all()
         context['recommendations'] = Note.objects.filter(status=1, timeslot__start__range=(now, tomorrow))
-        context['timeslots'] = TimeSlot.objects.filter(start__range=(today, tomorrow))
+
+        if 'broadcastformat' in self.request.GET:
+            broadcastformat = get_object_or_404(BroadcastFormat, slug=self.request.GET['broadcastformat'])
+
+            context['timeslots'] = TimeSlot.objects.filter(start__range=(today, tomorrow), show__broadcastformat=broadcastformat)
+        else:
+            context['timeslots'] = TimeSlot.objects.filter(start__range=(today, tomorrow))
 
         return context
 
@@ -80,13 +86,21 @@ class DayScheduleView(TemplateView):
         this_day = datetime.strptime('%s__%s__%s__06__00' % (year, month, day), '%Y__%m__%d__%H__%M')
         that_day = this_day+timedelta(days=1)
 
+        context['day'] = this_day
         context['broadcastformats'] = BroadcastFormat.objects.all()
         context['recommendations'] = Note.objects.filter(status=1, timeslot__start__range=(this_day, that_day))
-        context['timeslots'] = TimeSlot.objects.filter(start__range=(this_day, that_day))
+
+        if 'broadcastformat' in self.request.GET:
+            broadcastformat = get_object_or_404(BroadcastFormat, slug=self.request.GET['broadcastformat'])
+
+            context['timeslots'] = TimeSlot.objects.filter(start__range=(this_day, that_day), show__broadcastformat=broadcastformat)
+        else:
+            context['timeslots'] = TimeSlot.objects.filter(start__range=(this_day, that_day))
+
         return context
     
 class CurrentShowView(TemplateView):
-    template_name = 'program/current.html'
+    template_name = 'program/current_box.html'
 
     def get_context_data(self, **kwargs):
         context = super(CurrentShowView, self).get_context_data(**kwargs)
