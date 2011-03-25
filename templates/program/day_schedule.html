@@ -1,6 +1,7 @@
 <html>
 <head>
-    <title>Day schedule</title>
+    <title>Day schedule: {{ day|date:"l, d.m.Y" }}</title>
+    <link href="/site_media/styles/base.css" media="screen" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -8,45 +9,52 @@
 <div id="calendar"></div>
 
 <div id="recommendations">
+    <div id="recommendations-title">Programmhinweise</div>
     {% for recommendation in recommendations %}
-    <div>{{ recommendation.timeslot.start|date:"H:i" }}</div>
-    <div>{{ recommendation.timeslot.programslot.show.name }}</div>
-    <div><a href="{% url timeslot-detail recommendation.timeslot.id %}">{{ recommendation.title }}</a></div>
+    <div class="recommendation {{ recommendation.show.broadcastformat.slug }}">
+        <div class="timeslot-start-end">{{ recommendation.timeslot.start|date:"d.m. H:i" }} - {{ recommendation.timeslot.end|date:"H:i" }}</div>
+        <div class="show-name"><a href="{%  url show-detail recommendation.show.slug %}">{{ recommendation.show.name }}</a></div>
+        <div class="note-title"><a href="{%  url timeslot-detail recommendation.timeslot.id %}">{{ recommendation.title }}</a></div>
+    </div>
     {% endfor %}
 </div>
 
-<div>
+<div id="day-schedule">
+    <div id="title">Tagesansicht</div>
+    <div id="date">{{ day|date:"l, d.m.Y" }}</div>
+    <div id="timeslots">
     {% for timeslot in timeslots %}
-    <div>
-        <span class="time">{{ timeslot.start|date:"H:i" }}</span>
-        <span class="abbrev">
-            {% for showinformation in timeslot.programslot.show.showinformation.all %}
-                {{ showinformation.abbrev }}
-            {% endfor %}
-        </span>
-        <span class="abbrev">
-            {% for showtopic in timeslot.programslot.show.showtopic.all %}
-                {{ showtopic.abbrev }}
-            {% endfor %}
-        </span>
-        <span class="abbrev">
-            {% for musicfocus in timeslot.programslot.show.musicfocus.all %}
-                {{ musicfocus.abbrev }}
-            {% endfor %}
-        </span>
-        <span class="timeslot">
-            <a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show }}</a>
+    <div class="timeslot {{ timeslot.show.broadcastformat }}">
+        <div class="start">{{ timeslot.start|date:"H:i" }}</div>
+        <div class="show-abbrevs">&nbsp;
+        {% for showinformation in timeslot.show.showinformation.all %}
+            {{ showinformation.abbrev }}
+        {% endfor %}
+        {% for showtopic in timeslot.show.showtopic.all %}
+            {{ showtopic.abbrev }}
+        {% endfor %}
+        {% for musicfocus in timeslot.show.musicfocus.all %}
+            {{ musicfocus.abbrev }}
+        {% endfor %}
+        </div>
+        <div class="show">
+            <div class="name"><a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a></div>
             {% if timeslot.note %}
-            <span>Heute: {{ timeslot.note.title }}</span>
-        {% endif %}
-    </span>
+            <div class="note-title">Heute: {{ timeslot.note.title }}</div>
+            {% else %}
+            <div class="short-description">{{ timeslot.show.short_description }}</div>
+            {% endif %}
+        </div>
+    </div>
     {% endfor %}
+    </div>
 </div>
 
-<div>
+<div id="broadcastformats">
+    <div id="broadcastformats-title">Legende</div>
     {% for broadcastformat in broadcastformats %}
-    <div>
-        {{ broadcastformat }}
+    <div class="{{ broadcastformat.slug }}">
+        <a href="?broadcastformat={{ broadcastformat.slug }}">{{ broadcastformat.format }}</a>
     </div>
     {% endfor %}
 </div>
