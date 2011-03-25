@@ -1,19 +1,19 @@
 <html>
 <head>
-    <title>Recomendations Box</title>
+    <title>Recomendations box</title>
+    <link href="/site_media/styles/base.css" media="screen" rel="stylesheet" type="text/css" />
 </head>
 <body>
 
 <div id="recommendations">
-{% for note in recommendations %}
-    <div class="show">
-        <div class="broadcastformat">{{ note.show.broadcastformat }}</div>
-        <div class="timeslot">{{ note.timeslot.start }}</div>
-        <div class="show-name"><a href="{%  url show-detail note.show.slug %}">{{ note.show.name }}</a></div>
-        <div class="show-short-description">{{ note.show.short_description }}</div>
-        <div class="note-title"><a href="{%  url timeslot-detail note.timeslot.id %}">{{ note.title }}</a></div>
+    <div id="recommendations-title">Programmhinweise</div>
+    {% for recommendation in recommendations %}
+    <div class="recommendation {{ recommendation.show.broadcastformat.slug }}">
+        <div class="timeslot-start-end">{{ recommendation.timeslot.start|date:"d.m. H:i" }}-{{ recommendation.timeslot.end|date:"H:i" }}</div>
+        <div class="show-name"><a href="{%  url show-detail recommendation.show.slug %}">{{ recommendation.show.name }}</a></div>
+        <div class="note-title"><a href="{%  url timeslot-detail recommendation.timeslot.id %}">{{ recommendation.title }}</a></div>
     </div>
-{% endfor %}
+    {% endfor %}
 </div>
 
 </body>
