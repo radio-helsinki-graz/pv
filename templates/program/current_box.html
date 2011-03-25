@@ -28,7 +28,7 @@
     </div>
 
     <div id="after-next-timeslot">
-        <div class="start"> {{ after_next.start|date:"H:i" }}</div>
+        <div class="start">{{ after_next.start|date:"H:i" }}</div>
         <div class="show {{ after_next.show.broadcastformat.slug }}">
             <div class="name"><a href="{% url timeslot-detail after_next.id %}">{{ after_next.show.name }}</div></a>
         </div>
