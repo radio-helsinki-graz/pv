@@ -28,14 +28,14 @@ ORDER BY titel, beginn, ende""")
         counter = 0
 
         for titel, beschreibung, web, macher in cursor.fetchall():
-            titel = strip_tags(titel.decode('latin1').encode('utf8'))
-            beschreibung = clean_html(beschreibung.decode('latin1').encode('utf8'))
+            titel = strip_tags(titel)
+            beschreibung = clean_html(beschreibung)
 
             slug = slugify(titel)
 
             hosts = []
 
-            for macher in macher.decode('latin1').encode('utf8').split(','):
+            for macher in macher.split(','):
                 macher = macher.strip()
                 try:
                     host = Host.objects.get(name=macher)

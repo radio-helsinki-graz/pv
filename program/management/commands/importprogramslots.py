@@ -32,7 +32,7 @@ WHERE letzter_termin > current_date AND titel NOT LIKE 'Musikprogramm' AND titel
         counter = 0
 
         for titel, beginn, ende, erster_termin, letzter_termin, rhytmus, termin in cursor.fetchall():
-            titel = strip_tags(titel.decode('latin1').encode('utf8'))
+            titel = strip_tags(titel)
 
             hours, seconds = divmod(beginn.seconds, 3600)
             minutes, seconds = divmod(seconds, 60)
@@ -64,7 +64,7 @@ FROM sendungen
 WHERE letzter_termin > current_date AND titel LIKE '%%(Wiederholung)'""")
 
         for titel, beginn, ende, erster_termin, letzter_termin, rhytmus, termin in cursor.fetchall():
-            titel = titel.decode('latin1').encode('utf8')[:-15]
+            titel = strip_tags(titel[:-15])
 
             hours, seconds = divmod(beginn.seconds, 3600)
             minutes, seconds = divmod(seconds, 60)

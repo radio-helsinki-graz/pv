@@ -26,9 +26,9 @@ WHERE n.sendung_id in (SELECT id FROM sendungen WHERE letzter_termin > current_d
 
         counter = 0
         for ntitel, datum, stitel, notiz in cursor.fetchall():
-            ntitel = strip_tags(ntitel.decode('latin1').encode('utf8'))
-            stitel = strip_tags(stitel.decode('latin1').encode('utf8'))
-            notiz = clean_html(notiz.decode('latin1').encode('utf8'))
+            ntitel = strip_tags(ntitel)
+            stitel = strip_tags(stitel)
+            notiz = clean_html(notiz)
             
             if stitel.endswith('(Wiederholung)'):
                 stitel = stitel[:-15]

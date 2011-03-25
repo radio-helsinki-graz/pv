@@ -22,7 +22,7 @@ WHERE letzter_termin > current_date AND macher != '' AND titel NOT LIKE 'Musikpr
         counter = 0
 
         for row in cursor.fetchall():
-            for macher in row[0].decode('latin1').encode('utf8').split(','):
+            for macher in row[0].split(','):
                 host = Host(name=macher.strip())
                 host.save()
 
