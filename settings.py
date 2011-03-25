@@ -19,13 +19,6 @@ DATABASES = {
         'PASSWORD': 'helsinki'
     }
 }
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': 'helsinki.sqlite',
-#    }
-#}
-
 
 TIME_ZONE = 'Europe/Vienna'
 
