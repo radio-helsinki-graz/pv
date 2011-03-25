@@ -171,14 +171,13 @@ class ProgramSlot(models.Model):
         tend = self.tend.strftime('%H:%M')
         dstart = self.dstart.strftime('%d. %b %Y')
         tstart = self.tstart.strftime('%H:%M')
-        until = self.until.strftime('%d. %b %Y')
 
         if self.rrule.freq == 0:
-            return u'%s - %s, %s - %s' % (tstart, tend, dstart, until)
+            return u'%s, %s - %s' % (dstart, tstart, tend)
         if self.rrule.freq == 3:
-            return u'%s, %s - %s, %s - %s' % (self.rrule, tstart, tend, dstart, until)
+            return u'%s, %s - %s' % (self.rrule, tstart, tend)
         else:
-            return u'%s, %s, %s - %s, %s - %s' % (self.rrule, weekday, tstart, tend, dstart, until)
+            return u'%s, %s, %s - %s' % (weekday, self.rrule, tstart, tend)
 
     def save(self, *args, **kwargs):
         if not self.pk:
