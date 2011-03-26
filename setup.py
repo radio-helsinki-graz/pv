@@ -16,10 +16,10 @@ setup(name='helsinki.program',
       keywords='django radio',
       author='Ernesto Rico-Schmidt',
       author_email='',
-      url='',
-      license='',
+      url='https://github.com/nnrcschmdt/helsinki/',
+      license='GPL',
       packages=find_packages(exclude=['ez_setup']),
-      namespace_packages=[],
+      namespace_packages=['helsinki',],
       include_package_data=True,
       zip_safe=False,
       install_requires=[
@@ -30,7 +30,4 @@ setup(name='helsinki.program',
           'PyYAML',
           'MySQL-python',
       ],
-      entry_points="""
-      # -*- Entry points: -*-
-      """,
       )
