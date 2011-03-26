@@ -25,7 +25,10 @@ setup(name='helsinki.program',
       install_requires=[
           'setuptools',
           # -*- Extra requirements: -*-
+          'Django',
           'python-dateutil',
+          'PyYAML',
+          'MySQL-python',
       ],
       entry_points="""
       # -*- Entry points: -*-
