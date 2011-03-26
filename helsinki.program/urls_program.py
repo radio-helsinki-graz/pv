@@ -2,8 +2,8 @@ from django.conf.urls.defaults import *
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
-from models import Host, Show, TimeSlot
-from views import CurrentShowView, DayScheduleView, RecommendationsView, ShowListView, TodayScheduleView, WeekScheduleView
+from helsinki.program.models import Host, Show, TimeSlot
+from helsinki.program.views import CurrentShowView, DayScheduleView, RecommendationsView, ShowListView, TodayScheduleView, WeekScheduleView
 
 urlpatterns = patterns('',
     ('^$', TodayScheduleView.as_view()),

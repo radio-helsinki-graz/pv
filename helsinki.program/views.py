@@ -2,7 +2,7 @@ from django.views.generic.list import ListView
 from django.views.generic.base import TemplateView
 from django.shortcuts import get_object_or_404
 
-from models import BroadcastFormat, MusicFocus, Note, Show, ShowInformation, ShowTopic, TimeSlot
+from helsinki.program.models import BroadcastFormat, MusicFocus, Note, Show, ShowInformation, ShowTopic, TimeSlot
 
 from datetime import date, datetime, time, timedelta
 
