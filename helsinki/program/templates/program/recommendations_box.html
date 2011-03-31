@@ -1,20 +1,20 @@
+<!doctype html>
 <html>
 <head>
-    <title>Recomendations box</title>
-    <link href="/site_media/styles/base.css" media="screen" rel="stylesheet" type="text/css" />
+  <meta charset="utf-8"/>
+  <title>Recomendations box</title>
+  <link href="/site_media/styles/base.css" media="screen" rel="stylesheet" type="text/css" />
 </head>
 <body>
-
-<div id="recommendations">
-    <div id="recommendations-title">Programmhinweise</div>
+  <dl id="recommendations" class="portlet">
+    <dt id="recommendations-title" class="portletHeader">Programmhinweise</dt>
     {% for recommendation in recommendations %}
-    <div class="recommendation {{ recommendation.show.broadcastformat.slug }}">
-        <div class="timeslot-start-end">{{ recommendation.timeslot.start|date:"d.m. H:i" }}-{{ recommendation.timeslot.end|date:"H:i" }}</div>
-        <div class="show-name"><a href="{%  url show-detail recommendation.show.slug %}">{{ recommendation.show.name }}</a></div>
-        <div class="note-title"><a href="{%  url timeslot-detail recommendation.timeslot.id %}">{{ recommendation.title }}</a></div>
-    </div>
+    <dd class="portletItem recommendation {{ recommendation.show.broadcastformat.slug }}">
+        <h3 class="show-name"><a href="{%  url show-detail recommendation.show.slug %}">{{ recommendation.show.name }}</a></h3>
+        <p class="timeslot-start-end">{{ recommendation.timeslot.start|date:"d.m. H:i" }}-{{ recommendation.timeslot.end|date:"H:i" }}</p>
+        <p class="note-title"><a href="{%  url timeslot-detail recommendation.timeslot.id %}">{{ recommendation.title }}</a></p>
+    </dd>
     {% endfor %}
-</div>
-
+  </dl>
 </body>
 </html>
