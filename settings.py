@@ -66,4 +66,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.admin',
     'helsinki.program',
+    'haystack',
 )
+
+HAYSTACK_SITECONF = 'helsinki.search_sites'
+HAYSTACK_SEARCH_ENGINE = 'solr'
+HAYSTACK_SOLR_URL = 'http://localhost:8983/solr'
