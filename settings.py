@@ -34,7 +34,7 @@ MEDIA_ROOT = ''
 
 MEDIA_URL = ''
 
-ADMIN_MEDIA_PREFIX = '/static/admin/'
+ADMIN_MEDIA_PREFIX = '/media/'
 
 SECRET_KEY = 'oepk-$!=)c)7+y%cdz-x46_h5bp!o-*9%dv!(sf=3r4zfqk_(t'
 
@@ -67,21 +67,3 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'helsinki.program',
 )
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler'
-        }
-    },
-    'loggers': {
-        'django.request':{
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
-    }
-}
