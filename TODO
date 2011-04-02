@@ -1,4 +1,5 @@
 * create style sheet and update templates
+* back-port to Django 1.2
 * integrate django-haystack
 * integrate calendar into day schedule view
 * integrate tinyMCE into admin site
