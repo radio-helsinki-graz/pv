@@ -34,19 +34,7 @@ MEDIA_ROOT = ''
 
 MEDIA_URL = ''
 
-STATIC_ROOT = ''
-
-STATIC_URL = '/static/'
-
 ADMIN_MEDIA_PREFIX = '/static/admin/'
-
-STATICFILES_DIRS = ()
-
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
-)
 
 SECRET_KEY = 'oepk-$!=)c)7+y%cdz-x46_h5bp!o-*9%dv!(sf=3r4zfqk_(t'
 
@@ -76,7 +64,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
     'django.contrib.admin',
     'helsinki.program',
 )
