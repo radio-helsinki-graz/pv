@@ -1,18 +1,27 @@
 <html>
 <head>
     <title>Host detail: {{ host.name }}</title>
+    <link href="/site_media/styles/base.css" media="screen" rel="stylesheet" type="text/css" />
 </head>
 <body>
 
 <div id="host-detail">
     <div id="name">{{ host.name }}</div>
 
+    <div id="shows">
+        <div id="shows-title">Sendungen</div>
+
+    {% for show in host.shows.all %}
+        <div class="show {{ show.broadcastformat.slug }}"><a href="{% url show-detail show.slug %}">{{ show }}</a></div>
+    {% endfor %}
+    </div>
+
     {% if host.email %}
-    <div id="email">{{ host.email }}</div>
+    <div id="email">E-Mail Adresse: <a href="{{ host.email }}">{{ host.email }}</a></div>
     {% endif %}
 
     {% if host.website %}
-    <div id="website">{{ host.website }}</div>
+    <div id="website">Website: <a href="{{ host.website }}">{{ host.website }}</a></div>
     {% endif %}
 </div>
 

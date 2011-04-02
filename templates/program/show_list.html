@@ -1,72 +1,87 @@
 <html>
 <head>
     <title>Show list</title>
+    <link href="/site_media/styles/base.css" media="screen" rel="stylesheet" type="text/css" />
 </head>
 <body>
 
-<div id="showtopic-list">
-{% for topic in showtopics %}
-    <div class="showtopic">
-        <span class="abbrev">{{ topic.abbrev }}</span>
-        <span class="topic">{{ topic }}</span>
+<div id="filter">
+    <div id="filter-title">Filter</div>
+
+    <div id="showtopics">
+        <div id="showtopics-title">Thema/Schwerpunkt</div>
+        {% for topic in showtopics %}
+        <div class="showtopic">
+            <span class="abbrev">{{ topic.abbrev }}</span>
+            <span class="topic"><a href="?showtopic={{ topic.slug }}">{{ topic }}</a></span>
+        </div>
+        {% endfor %}
     </div>
-{% endfor %}
+
+    <div id="showinformations">
+        <div id="showinformations-title"></div>
+        {% for information in showinformations %}
+        <div class="showinformation">
+            <span class="abbrev">{{ information.abbrev }}</span>
+            <span class="information"><a href="?showinformation={{ information.slug }}">{{ information }}</a></span>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div id="musicfoci">
+        <div id="musicfoci-title">Musiktendenz</div>
+        {% for focus in musicfoci %}
+        <div class="musicfocus">
+            <span class="abbrev">{{ focus.abbrev }}</span>
+            <span class="focus"><a href="?musicfocus={{ focus.slug }}">{{ focus }}</a></span>
+        </div>
+    {% endfor %}
+    </div>
 </div>
 
-<div id="showinformation-list">
-{% for information in showinformations %}
-    <div class="showinformation">
-        <span class="abbrev">{{ information.abbrev }}</span>
-        <span class="information">{{ information }}</span>
-    </div>
-{% endfor %}
-</div>
-
-<div id="musicfocus-list">
-{% for focus in musicfoci %}
-    <div class="musicfocus">
-        <span class="abbrev">{{ focus.abbrev }}</span>
-        <span class="focus">{{ focus }}</span>
-    </div>
-{% endfor %}
-</div>
-
-<div id="show-list">
+<div id="shows">
 {% for show in shows %}
     <div class="show">
-        <div class="abbrevs">
-        {% for topic in show.showtopic.all %}
+        <div class="abbrevs">&nbsp;
+            {% for topic in show.showtopic.all %}
             <span class="topic-abbrev">{{ topic.abbrev }}</span>
-        {% endfor %}
+            {% endfor %}
 
-        {% for information in show.showinformation.all %}
+            {% for information in show.showinformation.all %}
             <span class="information-abbrev">{{ information.abbrev }}</span>
-        {% endfor %}
+            {% endfor %}
 
-        {% for focus in show.musicfocus.all %}
+            {% for focus in show.musicfocus.all %}
             <span class="focus-abbrev">{{ focus.abbrev }}</span>
-        {% endfor %}
+            {% endfor %}
 
             <span class="broadcastformat-abbrev">{{ show.broadcastformat.abbrev }}</span>
         </div>
 
-        <div class="name"><a href="{% url show-detail show.slug %} ">{{ show.name }}</a></div>
+        <div class="details">
+            <div class="name"><a href="{% url show-detail show.slug %}">{{ show.name }}</a></div>
 
-        <div class="programslots">
-        {% for slot in show.programslots.all %}
-            <div class="programslot">{{ slot }}</div>
-        {% endfor %}
+            <div class="programslots">
+            {% for slot in show.programslots.all %}
+                <div class="programslot">{{ slot }}</div>
+            {% endfor %}
+            </div>
+
+            {% if show.short_description != 'FIXME' %}
+            <div class="short-description">{{ show.short_description }}</div>
+            {% endif %}
         </div>
-
-        <div class="short-description">{{ show.short_description }}</div>
     </div>
 {% endfor %}
 </div>
 
-<div id="broadcastformat-list">
-{% for format in broadcastformats %}
-    <div class="broadcastformat">{{ format }}</div>
-{% endfor %}
+<div id="broadcastformats">
+    <div id="broadcastformats-title">Legende</div>
+    {% for broadcastformat in broadcastformats %}
+    <div class="{{ broadcastformat.slug }}">
+        <a href="?broadcastformat={{ broadcastformat.slug }}">{{ broadcastformat.format }}</a>
+    </div>
+    {% endfor %}
 </div>
 
 </body>
