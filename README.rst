@@ -7,3 +7,4 @@ Requirements
 - PyYAML: http://pypi.python.org/pypi/PyYAML/3.09
 - MySQL-python: http://pypi.python.org/pypi/MySQL-python/1.2.3
 - django-haystack: http://pypi.python.org/pypi/django-haystack/1.1.0
+- pysolr: http://pypi.python.org/pypi/pysolr/2.0.13
