@@ -6,7 +6,7 @@
 <body>
 
 <div id="recommendations">
-{% for recommendation in recommendations %}
+{% for recommendation in recommendation_list %}
     <div class="recommendation">
         <div class="timeslot-start-end">{{ recommendation.timeslot.start|date:"d.m.Y H:i" }} - {{ recommendation.timeslot.end|date:"H:i" }}</div>
         <div class="show-name"><a href="{%  url show-detail recommendation.show.slug %}">{{ recommendation.show.name }}</a></div>

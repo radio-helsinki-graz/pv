@@ -7,7 +7,7 @@
 
 <div id="recommendations-box">
     <div id="recommendations-title">Programmhinweise</div>
-    {% for recommendation in recommendations %}
+    {% for recommendation in recommendation_list %}
     <div class="recommendation {{ recommendation.show.broadcastformat.slug }}">
         <div class="timeslot-start-end">{{ recommendation.timeslot.start|date:"d.m. H:i" }}-{{ recommendation.timeslot.end|date:"H:i" }}</div>
         <div class="show-name"><a href="{%  url show-detail recommendation.show.slug %}">{{ recommendation.show.name }}</a></div>

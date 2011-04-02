@@ -6,7 +6,7 @@
 <body>
 
 <div id="host-list">
-{% for host in hosts %}
+{% for host in host_list %}
     <div class="host">
         <a href="{% url host-detail host.id %}">{{ host.name }}</a>
     </div>
