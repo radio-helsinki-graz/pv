@@ -221,7 +221,7 @@ class ProgramSlot(models.Model):
 class TimeSlotManager(models.Manager):
     def get_or_create_current(self):
         try:
-            return TimeSlot.objects.get(start__lte=datetime.now(), end__gte=datetime.now())
+            return TimeSlot.objects.get(start__lte=datetime.now(), end__gt=datetime.now())
         except ObjectDoesNotExist:
             once = RRule.objects.get(pk=1)
             today = date.today().weekday()
