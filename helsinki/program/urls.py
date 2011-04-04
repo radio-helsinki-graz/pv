@@ -5,5 +5,5 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
-    (r'^program/', include('helsinki.program.urls_program')),
+    (r'^program', include('helsinki.program.urls_program')),
 )
