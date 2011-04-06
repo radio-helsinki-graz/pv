@@ -271,7 +271,7 @@ class Note(models.Model):
         (1, _("Recommendation")),
         (2, _("Repetition")),
     )
-    timeslot = models.OneToOneField(TimeSlot, limit_choices_to={'start__gte': datetime.now}, verbose_name=_("Time slot"))
+    timeslot = models.OneToOneField(TimeSlot, verbose_name=_("Time slot"))
     owner = models.ForeignKey(User, related_name='notes', verbose_name=_("Owner"))
     title = models.CharField(_("Title"), max_length=128)
     content = models.TextField(_("Content"))
