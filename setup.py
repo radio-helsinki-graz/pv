@@ -29,5 +29,7 @@ setup(name='helsinki.program',
           'python-dateutil',
           'PyYAML',
           'MySQL-python',
+          'django-haystack',
+          'pysolr'
       ],
-      )
+)
