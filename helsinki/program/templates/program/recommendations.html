@@ -1,18 +1,20 @@
 <html>
 <head>
     <title>Recomendations</title>
+    <link href="/site_media/styles/base.css" media="screen" rel="stylesheet" type="text/css" />
 </head>
 <body>
 
 <div id="recommendations">
-{% for note in recommendations %}
-    <div class="show">
-        <div class="broadcastformat">{{ note.show.broadcastformat }}</div>
-        <div class="timeslot">{{ note.timeslot.start }}</div>
-        <div class="show-name"><a href="{%  url show-detail note.show.slug %}">{{ note.show.name }}</a></div>
-        <div class="show-short-description">{{ note.show.short_description }}</div>
-        <div class="note-title">{{ note.title }}</div>
-        <div class="note-content">{{ note.content }}</div>
+{% for recommendation in recommendations %}
+    <div class="recommendation">
+        <div class="timeslot-start-end">{{ recommendation.timeslot.start|date:"d.m.Y H:i" }} - {{ recommendation.timeslot.end|date:"H:i" }}</div>
+        <div class="show-name"><a href="{%  url show-detail recommendation.show.slug %}">{{ recommendation.show.name }}</a></div>
+        {% if recommendation.show.short_description != 'FIXME' %}
+        <div class="show-short-description">{{ recommendation.show.short_description }}</div>
+        {% endif %}
+        <div class="note-title"><a href="{%  url timeslot-detail recommendation.timeslot.id %}">{{ recommendation.title }}</a></div>
+        <div class="note-content">{{ recommendation.content|safe}}</div>
     </div>
 {% endfor %}
 </div>

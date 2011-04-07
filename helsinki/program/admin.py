@@ -1,5 +1,7 @@
 from django.contrib import admin
 
+from datetime import datetime
+
 from models import BroadcastFormat, MusicFocus, ShowInformation, ShowTopic, Host, Note, ProgramSlot, Show, TimeSlot
 
 class BroadcastFormatAdmin(admin.ModelAdmin):
@@ -20,9 +22,31 @@ class ShowTopicAdmin(admin.ModelAdmin):
 
 class NoteAdmin(admin.ModelAdmin):
     date_hierarchy = 'start'
-    list_display = ('title', 'show', 'status')
+    list_display = ('title', 'show', 'start', 'status')
     list_filter = ('status',)
     ordering = ('timeslot',)
+
+    def queryset(self, request):
+        qs = super(NoteAdmin, self).queryset(request)
+
+        if request.user.is_superuser:
+            return qs
+        else:
+            return qs.filter(owner=request.user)
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'timeslot':
+            if request.user.is_superuser:
+                kwargs['queryset'] = TimeSlot.objects.filter(start__gt=datetime.now)
+            else:
+                shows = request.user.shows.all()
+                kwargs['queryset'] = TimeSlot.objects.filter(show__in=shows, start__gt=datetime.now)
+
+        return super(NoteAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
+    def save_model(self, request, obj, form, change):
+        obj.owner = request.user
+        obj.save()
 
 class TimeSlotInline(admin.TabularInline):
     model = TimeSlot

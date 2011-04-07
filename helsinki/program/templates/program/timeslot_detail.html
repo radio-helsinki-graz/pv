@@ -1,13 +1,12 @@
 <html>
 <head>
     <title>Timeslot detail: {{ timeslot }}</title>
+    <link href="/site_media/styles/base.css" media="screen" rel="stylesheet" type="text/css" />
 </head>
 <body>
 
-<div id="calendar"></div>
-
 <div id="timeslot-detail">
-    <div id="name">{{ timeslot.show.name }}</div>
+    <div id="show-name">{{ timeslot.show.name }}</div>
 
     <div id="abbrevs">
     {% for topic in timeslot.show.showtopic.all %}
@@ -35,19 +34,21 @@
 
     <div id="hosts">
     {% for host in timeslot.show.hosts.all %}
-        <div class="host">{{ host }}</div>
+        <div class="host"><a href="{% url host-detail host.id %}">{{ host }}</a></div>
     {% endfor %}
     </div>
 
+    {% if timeslot.show.short_description != 'FIXME' %}
     <div id="short-description">{{ timeslot.show.short_description }}</div>
+    {% endif %}
 
-    <div id="description">{{ timeslot.show.description }}</div>
+    <div id="description">{{ timeslot.show.description|safe }}</div>
 
     <div id="note">
     {% if timeslot.note %}
         <div class="note">
             <div class="title">{{ timeslot.note.title }}</div>
-            <div class="content">{{ timeslot.note.content }}</div>
+            <div class="content">{{ timeslot.note.content|safe }}</div>
         </div>
     {% endif %}
     </div>

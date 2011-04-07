@@ -17,7 +17,9 @@
         {% if current.note %}
             <div class="note-title">{{ current.note.title }}</div>
         {% else %}
-            <div class="short-description">{{ current.show.short_description }}</div>
+            {% if current.show.short_description != 'FIMXE' %}
+                <div class="short-description">{{ current.show.short_description }}</div>
+            {% endif %}
         {% endif %}
         </div>
     </dd>

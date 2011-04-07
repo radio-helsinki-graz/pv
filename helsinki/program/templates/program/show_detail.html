@@ -39,9 +39,11 @@
     {% endfor %}
     </div>
 
+    {% if show.short_description != 'FIXME' %}
     <div id="short-description">{{ show.short_description }}</div>
+    {% endif %}
 
-    <div id="description">{{ show.description }}</div>
+    <div id="description">{{ show.description|safe }}</div>
 
     {% if show.email %}
     <div id="email"><a href="mailto:{{ show.email }}">{{ show.email }}</a></div>
