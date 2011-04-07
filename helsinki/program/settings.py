@@ -69,6 +69,6 @@ INSTALLED_APPS = (
     'haystack',
 )
 
-HAYSTACK_SITECONF = 'helsinki.search_sites'
+HAYSTACK_SITECONF = 'helsinki.program.search_sites'
 HAYSTACK_SEARCH_ENGINE = 'solr'
 HAYSTACK_SOLR_URL = 'http://localhost:8983/solr'
