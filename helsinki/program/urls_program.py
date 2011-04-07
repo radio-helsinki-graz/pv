@@ -1,23 +1,20 @@
 from django.conf.urls.defaults import *
-from django.views.generic.detail import DetailView
-from django.views.generic.list import ListView
 
-from helsinki.program.models import Host, Show, TimeSlot
-from helsinki.program.views import CurrentShowView, DayScheduleView, RecommendationsView, ShowListView, TodayScheduleView, WeekScheduleView
+from django.views.generic.list_detail import object_detail, object_list
+
+from models import Host, Show, TimeSlot
+from views import current_show, day_schedule, recommendations, show_list, today_schedule, week_schedule
 
 urlpatterns = patterns('',
-    ('^/today/?$', TodayScheduleView.as_view()),
-    ('^/(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})/?$', DayScheduleView.as_view()),
-    ('^/(?P<year>\d{4})/(?P<week>\d{1,2})/?$', WeekScheduleView.as_view()),
-    ('^/current_box/?$', CurrentShowView.as_view()),
-    ('^/hosts/?$', ListView.as_view(model=Host, context_object_name='hosts')),
-    url('^/hosts/(?P<pk>\d+)/?$', DetailView.as_view(model=Host), name='host-detail'),
-    ('^/tips/?$', RecommendationsView.as_view()),
-    ('^/tips_box/?$', RecommendationsView.as_view(template_name='program/recommendations_box.html')),
-    ('^/shows/?$', ShowListView.as_view()),
-    url('^/shows/(?P<slug>[\w-]+)/?$', DetailView.as_view(model=Show), name='show-detail'),
-    url('^/(?P<pk>\d+)/?$', DetailView.as_view(model=TimeSlot), name='timeslot-detail'),
-    # TODO: implement
-    ('^/week/?$', TodayScheduleView.as_view()),
-    ('^/topics/?$', RecommendationsView.as_view(template_name='program/recommendations_box.html')),
+    ('^/today/$', today_schedule),
+    ('^/(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})/$', day_schedule),
+    ('^/(?P<year>\d{4})/(?P<week>\d{1,2})/$', week_schedule),
+    ('^/current_box/$', current_show),
+    ('^/hosts/$', object_list, dict(template_object_name='host', queryset=Host.objects.all())),
+    url('^/hosts/(?P<object_id>\d+)/$', object_detail, dict(template_object_name='host', queryset=Host.objects.all()), name='host-detail'),
+    ('^/tips/$', recommendations),
+    ('^/tips_box/$', recommendations, dict(template_name='program/recommendations_box.html')),
+    ('^/shows/$', show_list),
+    url('^/shows/(?P<slug>[\w-]+)/$', object_detail, dict(template_object_name='show', queryset=Show.objects.all()), name='show-detail'),
+    url('^/(?P<object_id>\d+)/$', object_detail, dict(template_object_name='timeslot', queryset=TimeSlot.objects.all()), name='timeslot-detail'),
 )

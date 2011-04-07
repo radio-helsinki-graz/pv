@@ -1,150 +1,113 @@
-from django.views.generic.list import ListView
-from django.views.generic.base import TemplateView
+from django.views.generic import list_detail
+from django.views.generic import simple
 from django.shortcuts import get_object_or_404
 
 from helsinki.program.models import BroadcastFormat, MusicFocus, Note, Show, ShowInformation, ShowTopic, TimeSlot
 
 from datetime import date, datetime, time, timedelta
 
-class ShowListView(ListView):
-    context_object_name = 'shows'
+def show_list(request):
+    broadcastformats = BroadcastFormat.objects.all()
+    musicfoci = MusicFocus.objects.all()
+    showinformation = ShowInformation.objects.all()
+    showtopics = ShowTopic.objects.all()
 
-    def get_context_data(self, **kwargs):
-        context = super(ShowListView, self).get_context_data(**kwargs)
-
-        context['broadcastformats'] = BroadcastFormat.objects.all()
-        context['musicfoci'] = MusicFocus.objects.all()
-        context['showinformations'] = ShowInformation.objects.all()
-        context['showtopics'] = ShowTopic.objects.all()
-
-        return context
-
-    def get_queryset(self):
-        if 'broadcastformat' in self.request.GET:
-            broadcastformat = get_object_or_404(BroadcastFormat, slug=self.request.GET['broadcastformat'])
-
-            return Show.objects.filter(broadcastformat=broadcastformat)
-        elif 'musicfocus' in self.request.GET:
-            musicfocus = get_object_or_404(MusicFocus, slug=self.request.GET['musicfocus'])
-
-            return Show.objects.filter(musicfocus=musicfocus)
-        elif 'showinformation' in self.request.GET:
-            showinformation = get_object_or_404(ShowInformation, slug=self.request.GET['showinformation'])
-
-            return Show.objects.filter(showinformation=showinformation)
-        elif 'showtopic' in self.request.GET:
-            showtopic = get_object_or_404(ShowTopic, slug=self.request.GET['showtopic'])
-
-            return Show.objects.filter(showtopic=showtopic)
-        else:
-            return Show.objects.all()
-
-class RecommendationsView(ListView):
-    context_object_name = 'recommendations'
-    template_name = 'program/recommendations.html'
-
-    def get_queryset(self):
-        now = datetime.now()
-        in_one_week = now + timedelta(weeks=1)
-
-        return Note.objects.filter(status=1, timeslot__start__range=(now, in_one_week))[:10]
-
-class TodayScheduleView(TemplateView):
-    template_name = 'program/day_schedule.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(TodayScheduleView, self).get_context_data(**kwargs)
-
-        now = datetime.now()
-        today = datetime.combine(date.today(), time(6, 0))
-        tomorrow = datetime.combine(date.today()+timedelta(days=1), time(6, 0))
-
-        context['day'] = today
-        context['broadcastformats'] = BroadcastFormat.objects.all()
-        context['recommendations'] = Note.objects.filter(status=1, timeslot__start__range=(now, tomorrow))
-
-        if 'broadcastformat' in self.request.GET:
-            broadcastformat = get_object_or_404(BroadcastFormat, slug=self.request.GET['broadcastformat'])
-
-            context['timeslots'] = TimeSlot.objects.filter(start__range=(today, tomorrow), show__broadcastformat=broadcastformat)
-        else:
-            context['timeslots'] = TimeSlot.objects.filter(start__range=(today, tomorrow))
-
-        return context
-
-class DayScheduleView(TemplateView):
-    template_name = 'program/day_schedule.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(DayScheduleView, self).get_context_data(**kwargs)
-
-        year = context['params']['year']
-        month = context['params']['month']
-        day = context['params']['day']
-
-        # start the day at 6
-        this_day = datetime.strptime('%s__%s__%s__06__00' % (year, month, day), '%Y__%m__%d__%H__%M')
-        that_day = this_day+timedelta(days=1)
-
-        context['day'] = this_day
-        context['broadcastformats'] = BroadcastFormat.objects.all()
-        context['recommendations'] = Note.objects.filter(status=1, timeslot__start__range=(this_day, that_day))
-
-        if 'broadcastformat' in self.request.GET:
-            broadcastformat = get_object_or_404(BroadcastFormat, slug=self.request.GET['broadcastformat'])
-
-            context['timeslots'] = TimeSlot.objects.filter(start__range=(this_day, that_day), show__broadcastformat=broadcastformat)
-        else:
-            context['timeslots'] = TimeSlot.objects.filter(start__range=(this_day, that_day))
-
-        return context
+    extra_context = dict(broadcastformats=broadcastformats, musicfoci=musicfoci, showinformation=showinformation, showtopics=showtopics)
     
-class CurrentShowView(TemplateView):
-    template_name = 'program/current_box.html'
+    if 'broadcastformat' in request.GET:
+        broadcastformat = get_object_or_404(BroadcastFormat, slug=request.GET['broadcastformat'])
 
-    def get_context_data(self, **kwargs):
-        context = super(CurrentShowView, self).get_context_data(**kwargs)
+        queryset = Show.objects.filter(broadcastformat=broadcastformat)
+    elif 'musicfocus' in request.GET:
+        musicfocus = get_object_or_404(MusicFocus, slug=request.GET['musicfocus'])
 
-        context['current'] = TimeSlot.objects.get_or_create_current()
-        context['next'] = TimeSlot.objects.get_or_create_current().get_next_by_start()
-        context['after_next'] = TimeSlot.objects.get_or_create_current().get_next_by_start().get_next_by_start()
+        queryset = Show.objects.filter(musicfocus=musicfocus)
+    elif 'showinformation' in request.GET:
+        showinformation = get_object_or_404(ShowInformation, slug=request.GET['showinformation'])
 
-        return context
+        queryset = Show.objects.filter(showinformation=showinformation)
+    elif 'showtopic' in request.GET:
+        showtopic = get_object_or_404(ShowTopic, slug=request.GET['showtopic'])
 
-class WeekScheduleView(TemplateView):
-    template_name = 'program/week_schedule.html'
+        queryset = Show.objects.filter(showtopic=showtopic)
+    else:
+        queryset = Show.objects.all()
 
-    def get_context_data(self, **kwargs):
-        context = super(WeekScheduleView, self).get_context_data(**kwargs)
 
-        year = context['params']['year']
-        week = context['params']['week']
+    return list_detail.object_list(request, queryset=queryset, extra_context=extra_context, template_object_name='show')
 
-        # start the day at 6
-        monday = datetime.strptime('%s__%s__1__06__00' % (year, week), '%Y__%W__%w__%H__%M')
+def recommendations(request, template_name='program/recommendations.html'):
+    now = datetime.now()
+    in_one_week = now + timedelta(weeks=1)
 
-        tuesday = monday+timedelta(days=1)
-        wednesday = monday+timedelta(days=2)
-        thursday = monday+timedelta(days=3)
-        friday = monday+timedelta(days=4)
-        saturday = monday+timedelta(days=5)
-        sunday = monday+timedelta(days=6)
-        next_monday = monday+timedelta(days=7)
+    queryset = Note.objects.filter(status=1, timeslot__start__range=(now, in_one_week))[:10]
 
-        context['monday'] = monday
-        context['tuesday'] = tuesday
-        context['wednesday'] = wednesday
-        context['thursday'] = thursday
-        context['friday'] = friday
-        context['saturday'] = saturday
-        context['sunday'] = sunday
-        
-        context['monday_timeslots'] = TimeSlot.objects.filter(start__range=(monday, tuesday))
-        context['tuesday_timeslots'] = TimeSlot.objects.filter(start__range=(tuesday, wednesday))
-        context['wednesday_timeslots'] = TimeSlot.objects.filter(start__range=(wednesday, thursday))
-        context['thursday_timeslots'] = TimeSlot.objects.filter(start__range=(thursday, friday))
-        context['friday_timeslots'] = TimeSlot.objects.filter(start__range=(friday, saturday))
-        context['saturday_timeslots'] = TimeSlot.objects.filter(start__range=(saturday, sunday))
-        context['sunday_timeslots'] = TimeSlot.objects.filter(start__range=(sunday, next_monday))
+    return list_detail.object_list(request, queryset=queryset, template_name=template_name, template_object_name='recommendation')
 
-        return context
+def today_schedule(request):
+    now = datetime.now()
+    today = datetime.combine(date.today(), time(6, 0))
+    tomorrow = today + timedelta(days=1)
+
+    broadcastformats = BroadcastFormat.objects.all()
+    recommendations = Note.objects.filter(status=1, timeslot__start__range=(now, tomorrow))
+
+    extra_context = dict(day=today, broadcastformats=broadcastformats, recommendations=recommendations)
+
+    if 'broadcastformat' in request.GET:
+        broadcastformat = get_object_or_404(BroadcastFormat, slug=request.GET['broadcastformat'])
+
+        extra_context['timeslots'] = TimeSlot.objects.filter(start__range=(today, tomorrow), show__broadcastformat=broadcastformat)
+    else:
+        extra_context['timeslots'] = TimeSlot.objects.filter(start__range=(today, tomorrow))
+
+    return simple.direct_to_template(request, extra_context=extra_context, template='program/day_schedule.html')
+
+def day_schedule(request, year, month, day):
+    this_day = datetime.strptime('%s__%s__%s__06__00' % (year, month, day), '%Y__%m__%d__%H__%M')
+    that_day = this_day+timedelta(days=1)
+
+    broadcastformats = BroadcastFormat.objects.all()
+    recommendations = Note.objects.filter(status=1, timeslot__start__range=(this_day, that_day))
+
+    extra_context = dict(day=this_day, broadcastformats=broadcastformats, recommendations=recommendations)
+
+    if 'broadcastformat' in request.GET:
+        broadcastformat = get_object_or_404(BroadcastFormat, slug=request.GET['broadcastformat'])
+
+        extra_context['timeslots'] = TimeSlot.objects.filter(start__range=(this_day, that_day), show__broadcastformat=broadcastformat)
+    else:
+        extra_context['timeslots'] = TimeSlot.objects.filter(start__range=(this_day, that_day))
+
+    return simple.direct_to_template(request, extra_context=extra_context, template='program/day_schedule.html')
+
+def current_show(request):
+    current = TimeSlot.objects.get_or_create_current()
+    next = current.get_next_by_start()
+    after_next = next.get_next_by_start()
+
+    extra_context = dict(current=current, next=next, after_next=after_next)
+
+    return simple.direct_to_template(request, template='program/current_box.html', extra_context=extra_context)
+
+def week_schedule(request, year, week):
+    monday = datetime.strptime('%s__%s__1__06__00' % (year, week), '%Y__%W__%w__%H__%M')
+    tuesday = monday+timedelta(days=1)
+    wednesday = monday+timedelta(days=2)
+    thursday = monday+timedelta(days=3)
+    friday = monday+timedelta(days=4)
+    saturday = monday+timedelta(days=5)
+    sunday = monday+timedelta(days=6)
+    next_monday = monday+timedelta(days=7)
+
+    extra_context = dict(monday=monday, tuesday=tuesday, wednesday=wednesday, thursday=thursday, friday=friday, saturday=saturday, sunday=sunday)
+
+    extra_context['monday_timeslots'] = TimeSlot.objects.filter(start__range=(monday, tuesday))
+    extra_context['tuesday_timeslots'] = TimeSlot.objects.filter(start__range=(tuesday, wednesday))
+    extra_context['wednesday_timeslots'] = TimeSlot.objects.filter(start__range=(wednesday, thursday))
+    extra_context['thursday_timeslots'] = TimeSlot.objects.filter(start__range=(thursday, friday))
+    extra_context['friday_timeslots'] = TimeSlot.objects.filter(start__range=(friday, saturday))
+    extra_context['saturday_timeslots'] = TimeSlot.objects.filter(start__range=(saturday, sunday))
+    extra_context['sunday_timeslots'] = TimeSlot.objects.filter(start__range=(sunday, next_monday))
+
+    return simple.direct_to_template(request, template='program/week_schedule.html', extra_context=extra_context)
