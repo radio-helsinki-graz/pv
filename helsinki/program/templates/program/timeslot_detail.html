@@ -6,7 +6,11 @@
 <body>
 
 <div id="timeslot-detail">
-    <div id="show-name">{{ timeslot.show.name }}</div>
+    <h1 id="show-name">{{ timeslot.show.name }}</h1>
+
+    {% if timeslot.show.short_description != 'FIXME' %}
+    <div id="short-description" class="documentDescription">{{ timeslot.show.short_description }}</div>
+    {% endif %}
 
     <div id="abbrevs">
     {% for topic in timeslot.show.showtopic.all %}
@@ -37,10 +41,6 @@
         <div class="host"><a href="{% url host-detail host.id %}">{{ host }}</a></div>
     {% endfor %}
     </div>
-
-    {% if timeslot.show.short_description != 'FIXME' %}
-    <div id="short-description">{{ timeslot.show.short_description }}</div>
-    {% endif %}
 
     <div id="description">{{ timeslot.show.description|safe }}</div>
 

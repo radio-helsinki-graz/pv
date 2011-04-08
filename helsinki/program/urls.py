@@ -7,7 +7,7 @@ import os
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    (r'^admin/', include(admin.site.urls)),
+        (r'^admin/', include(admin.site.urls)),
     (r'^program', include('helsinki.program.urls_program')),
 )
 if settings.DEBUG:

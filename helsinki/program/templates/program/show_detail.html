@@ -7,7 +7,12 @@
 <div id="calendar"></div>
 
 <div id="show-detail">
-    <div id="name">{{ show.name }}</div>
+
+    <h1 id="name">{{ show.name }}</h1>
+
+    {% if show.short_description != 'FIXME' %}
+    <div id="short-description" class="documentDescription">{{ show.short_description }}</div>
+    {% endif %}
 
     <div id="abbrevs">
     {% for topic in show.showtopic.all %}
@@ -39,9 +44,6 @@
     {% endfor %}
     </div>
 
-    {% if show.short_description != 'FIXME' %}
-    <div id="short-description">{{ show.short_description }}</div>
-    {% endif %}
 
     <div id="description">{{ show.description|safe }}</div>
 

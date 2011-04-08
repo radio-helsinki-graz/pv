@@ -3,7 +3,7 @@ from django.conf.urls.defaults import *
 from django.views.generic.list_detail import object_detail, object_list
 
 from models import Host, Show, TimeSlot
-from views import current_show, day_schedule, recommendations, show_list, today_schedule, week_schedule
+from views import current_show, day_schedule, recommendations, show_list, today_schedule, week_schedule, bcformats
 
 urlpatterns = patterns('',
     ('^/today/?$', today_schedule),
@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     ('^/shows/?$', show_list),
     url('^/shows/(?P<slug>[\w-]+)/?$', object_detail, dict(template_object_name='show', queryset=Show.objects.all()), name='show-detail'),
     url('^/(?P<object_id>\d+)/?$', object_detail, dict(template_object_name='timeslot', queryset=TimeSlot.objects.all()), name='timeslot-detail'),
+    ('^/bcformats_box/?$', bcformats),
     # TODO: implement
     ('^/week/?$', today_schedule),
     ('^/topics/?$', recommendations),

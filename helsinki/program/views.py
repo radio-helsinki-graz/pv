@@ -111,3 +111,12 @@ def week_schedule(request, year, week):
     extra_context['sunday_timeslots'] = TimeSlot.objects.filter(start__range=(sunday, next_monday))
 
     return simple.direct_to_template(request, template='program/week_schedule.html', extra_context=extra_context)
+
+
+def bcformats(request):
+    broadcastformats = BroadcastFormat.objects.all()
+    extra_context = dict(broadcastformats=broadcastformats)
+    return simple.direct_to_template(
+            request,
+            template='program/bcformats_box.html',
+            extra_context=extra_context)
