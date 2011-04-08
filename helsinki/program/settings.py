@@ -71,4 +71,6 @@ INSTALLED_APPS = (
 
 HAYSTACK_SITECONF = 'helsinki.program.search_sites'
 HAYSTACK_SEARCH_ENGINE = 'solr'
-HAYSTACK_SOLR_URL = 'http://localhost:8983/solr'
+HAYSTACK_SOLR_URL = 'http://localhost:8988/solr'
+# plone integration
+HAYSTACK_ID_FIELD = 'docid'
