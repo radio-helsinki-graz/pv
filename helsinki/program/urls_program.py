@@ -3,7 +3,7 @@ from django.conf.urls.defaults import *
 from django.views.generic.list_detail import object_detail, object_list
 
 from models import Host, Show, TimeSlot
-from views import current_show, day_schedule, recommendations, show_list, today_schedule, week_schedule, bcformats
+from views import current_show, day_schedule, recommendations, show_list, today_schedule, week_schedule
 
 urlpatterns = patterns('',
     ('^/today/?$', today_schedule),

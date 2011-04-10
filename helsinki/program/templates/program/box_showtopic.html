@@ -1,0 +1,10 @@
+{% if showtopics %}
+<dl id="box_showtopic" class="portlet">
+  <dt class="portletHeader"><span>Thema / Schwerpunkt<span></dt>
+  {% for item in showtopics %}
+  <dd class="portletItem showtopic st-{{ item.abbrev }}">
+    <a href="?showtopic={{ item.slug }}">{{ item }}</a>
+  </dd>
+  {% endfor %}
+</dl>
+{% endif %}

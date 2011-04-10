@@ -5,41 +5,15 @@
 </head>
 <body>
 
-{% load content_boxes %}
-{% broadcastformats %}
-
 <div id="filter">
     <div id="filter-title">Filter</div>
 
-    <div id="showtopics">
-        <div id="showtopics-title">Thema/Schwerpunkt</div>
-        {% for topic in showtopics %}
-        <div class="showtopic">
-            <span class="abbrev">{{ topic.abbrev }}</span>
-            <span class="topic"><a href="?showtopic={{ topic.slug }}">{{ topic }}</a></span>
-        </div>
-        {% endfor %}
-    </div>
+{% load content_boxes %}
+{% broadcastformat %}
+{% musicfocus %}
+{% showinformation %}
+{% showtopic %}
 
-    <div id="showinformations">
-        <div id="showinformations-title"></div>
-        {% for information in showinformations %}
-        <div class="showinformation">
-            <span class="abbrev">{{ information.abbrev }}</span>
-            <span class="information"><a href="?showinformation={{ information.slug }}">{{ information }}</a></span>
-        </div>
-        {% endfor %}
-    </div>
-
-    <div id="musicfoci">
-        <div id="musicfoci-title">Musiktendenz</div>
-        {% for focus in musicfoci %}
-        <div class="musicfocus">
-            <span class="abbrev">{{ focus.abbrev }}</span>
-            <span class="focus"><a href="?musicfocus={{ focus.slug }}">{{ focus }}</a></span>
-        </div>
-    {% endfor %}
-    </div>
 </div>
 
 <div id="shows">
