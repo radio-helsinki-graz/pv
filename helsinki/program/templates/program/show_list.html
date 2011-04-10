@@ -5,6 +5,9 @@
 </head>
 <body>
 
+{% load content_boxes %}
+{% broadcastformats %}
+
 <div id="filter">
     <div id="filter-title">Filter</div>
 
@@ -75,14 +78,6 @@
 {% endfor %}
 </div>
 
-<div id="broadcastformats">
-    <div id="broadcastformats-title">Legende</div>
-    {% for broadcastformat in broadcastformats %}
-    <div class="{{ broadcastformat.slug }}">
-        <a href="?broadcastformat={{ broadcastformat.slug }}">{{ broadcastformat.format }}</a>
-    </div>
-    {% endfor %}
-</div>
 
 </body>
 </html>
