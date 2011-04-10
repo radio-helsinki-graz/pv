@@ -6,10 +6,10 @@
   <link href="/site_media/styles/base.css" media="screen" rel="stylesheet" type="text/css" />
 </head>
 <body>
-  {% if broadcastformats %}
+  {% if broadcastformat_list %}
   <dl id="bcformats" class="portlet program-bcformats">
-    <dt class="portletHeader"><span>Legende<span></dt>
-    {% for broadcastformat in broadcastformats %}
+    <dt class="portletHeader"><span>Legende</span></dt>
+    {% for broadcastformat in broadcastformat_list %}
     <dd class="portletItem bcformat bcformat-{{ broadcastformat.slug }}">
         <a href="?broadcastformat={{ broadcastformat.slug }}">{{ broadcastformat.format }}</a>
     </dd>
