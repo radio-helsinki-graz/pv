@@ -20,5 +20,5 @@ urlpatterns = patterns('',
     ('^/bcformats_box/?$', bcformats),
     # TODO: implement
     ('^/week/?$', today_schedule),
-    ('^/topics/?$', recommendations),
+    ('^/broadcast_formats/?$', recommendations),
 )
