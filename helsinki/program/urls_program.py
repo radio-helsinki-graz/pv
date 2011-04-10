@@ -17,7 +17,6 @@ urlpatterns = patterns('',
     ('^/shows/?$', show_list),
     url('^/shows/(?P<slug>[\w-]+)/?$', object_detail, dict(template_object_name='show', queryset=Show.objects.all()), name='show-detail'),
     url('^/(?P<object_id>\d+)/?$', object_detail, dict(template_object_name='timeslot', queryset=TimeSlot.objects.all()), name='timeslot-detail'),
-    ('^/bcformats_box/?$', bcformats),
     # TODO: implement
     ('^/week/?$', today_schedule),
     ('^/broadcast_formats/?$', recommendations),
