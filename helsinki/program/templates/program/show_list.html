@@ -5,18 +5,20 @@
 </head>
 <body>
 
-<div id="filter">
-    <div id="filter-title">Filter</div>
-
 {% load content_boxes %}
+<div id="filter-format">
 {% broadcastformat %}
+</div>
+<div id="filter-topic">
+  <dl id="filter-header" class="portlet">
+    <dt class="portletHeader"><span>Filter<span></dt>
+  </dl>
 {% musicfocus %}
 {% showinformation %}
 {% showtopic %}
-
 </div>
 
-<div id="shows">
+<div id="content-main" class="show-list">
 {% for show in show_list %}
     <div class="show">
         <div class="abbrevs">&nbsp;
@@ -51,7 +53,6 @@
     </div>
 {% endfor %}
 </div>
-
 
 </body>
 </html>

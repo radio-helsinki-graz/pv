@@ -8,7 +8,20 @@
 
 <div id="calendar"></div>
 
-<div id="content-main">
+{% load content_boxes %}
+<div id="filter-format">
+{% broadcastformat %}
+</div>
+<div id="filter-topic">
+  <dl id="filter-header" class="portlet">
+    <dt class="portletHeader"><span>Filter<span></dt>
+  </dl>
+{% musicfocus %}
+{% showinformation %}
+{% showtopic %}
+</div>
+
+<div id="content-main" class="day-schedule">
     <h2>Tagesansicht</h2>
     <h1 id="date">{{ day|date:"l, d.m.Y" }}</h1>
 

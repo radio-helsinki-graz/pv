@@ -2,17 +2,18 @@ from django.views.generic import list_detail
 from django.views.generic import simple
 from django.shortcuts import get_object_or_404
 
-from helsinki.program.models import BroadcastFormat, MusicFocus, Note, Show, ShowInformation, ShowTopic, TimeSlot
+from helsinki.program.models import (
+        BroadcastFormat,
+        MusicFocus,
+        Note,
+        Show,
+        ShowInformation,
+        ShowTopic,
+        TimeSlot)
 
 from datetime import date, datetime, time, timedelta
 
 def show_list(request):
-    broadcastformats = BroadcastFormat.objects.all()
-    musicfoci = MusicFocus.objects.all()
-    showinformation = ShowInformation.objects.all()
-    showtopics = ShowTopic.objects.all()
-
-    extra_context = dict(broadcastformats=broadcastformats, musicfoci=musicfoci, showinformation=showinformation, showtopics=showtopics)
     
     if 'broadcastformat' in request.GET:
         broadcastformat = get_object_or_404(BroadcastFormat, slug=request.GET['broadcastformat'])
@@ -34,7 +35,7 @@ def show_list(request):
         queryset = Show.objects.all()
 
 
-    return list_detail.object_list(request, queryset=queryset, extra_context=extra_context, template_object_name='show')
+    return list_detail.object_list(request, queryset=queryset, template_object_name='show')
 
 def recommendations(request, template_name='program/recommendations.html'):
     now = datetime.now()
@@ -49,10 +50,9 @@ def today_schedule(request):
     today = datetime.combine(date.today(), time(6, 0))
     tomorrow = today + timedelta(days=1)
 
-    broadcastformats = BroadcastFormat.objects.all()
     recommendations = Note.objects.filter(status=1, timeslot__start__range=(now, tomorrow))
 
-    extra_context = dict(day=today, broadcastformats=broadcastformats, recommendations=recommendations)
+    extra_context = dict(day=today, recommendations=recommendations)
 
     if 'broadcastformat' in request.GET:
         broadcastformat = get_object_or_404(BroadcastFormat, slug=request.GET['broadcastformat'])
@@ -67,10 +67,9 @@ def day_schedule(request, year, month, day):
     this_day = datetime.strptime('%s__%s__%s__06__00' % (year, month, day), '%Y__%m__%d__%H__%M')
     that_day = this_day+timedelta(days=1)
 
-    broadcastformats = BroadcastFormat.objects.all()
     recommendations = Note.objects.filter(status=1, timeslot__start__range=(this_day, that_day))
 
-    extra_context = dict(day=this_day, broadcastformats=broadcastformats, recommendations=recommendations)
+    extra_context = dict(day=this_day, recommendations=recommendations)
 
     if 'broadcastformat' in request.GET:
         broadcastformat = get_object_or_404(BroadcastFormat, slug=request.GET['broadcastformat'])

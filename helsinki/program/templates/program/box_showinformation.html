@@ -1,10 +1,14 @@
 {% if showinformations %}
 <dl id="box_showinformation" class="portlet">
   <dt class="portletHeader"><span>Schwerpunkt<span></dt>
-  {% for item in showinformations %}
-  <dd class="portletItem showinformation mf-{{ item.abbrev }}">
-    <a href="?showinformation={{ item.slug }}">{{ item }}</a>
+  <dd class="portletItem">
+    <ul>
+      {% for item in showinformations %}
+      <li class="si-{{ item.abbrev }}">
+        <a href="?showinformation={{ item.slug }}">{{ item }}</a>
+      </li>
+      {% endfor %}
+    </ul>
   </dd>
-  {% endfor %}
 </dl>
 {% endif %}

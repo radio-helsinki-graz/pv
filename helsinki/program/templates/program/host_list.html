@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<div id="host-list">
+<div id="content-main" class="host-list">
 {% for host in host_list %}
     <div class="host">
         <a href="{% url host-detail host.id %}">{{ host.name }}</a>

@@ -1,10 +1,14 @@
 {% if musicfoci %}
 <dl id="box_musicfocus" class="portlet">
   <dt class="portletHeader"><span>Musiktendenz<span></dt>
-  {% for item in musicfoci %}
-  <dd class="portletItem musicfocus mf-{{ item.abbrev }}">
-    <a href="?musicfocus={{ item.slug }}">{{ item }}</a>
+  <dd class="portletItem">
+    <ul>
+      {% for item in musicfoci %}
+      <li class="mf-{{ item.abbrev }}">
+        <a href="?musicfocus={{ item.slug }}">{{ item }}</a>
+      </li>
+      {% endfor %}
+    </ul>
   </dd>
-  {% endfor %}
 </dl>
 {% endif %}

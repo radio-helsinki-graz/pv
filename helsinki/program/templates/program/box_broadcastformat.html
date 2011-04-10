@@ -1,8 +1,8 @@
 {% if broadcastformats %}
-<dl id="bcformats" class="portlet program-bcformats">
+<dl id="broadcastformat" class="portlet">
   <dt class="portletHeader"><span>Legende<span></dt>
   {% for broadcastformat in broadcastformats %}
-  <dd class="portletItem bcformat bcformat-{{ broadcastformat.slug }}">
+  <dd class="portletItem bcformat bf-{{ broadcastformat.slug }}">
     <a href="?broadcastformat={{ broadcastformat.slug }}">{{ broadcastformat.format }}</a>
   </dd>
   {% endfor %}
