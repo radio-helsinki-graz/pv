@@ -17,11 +17,6 @@ timeslot_dict = {
     'queryset': TimeSlot.objects.all(),
     'template_object_name': 'timeslot'
 }
-broadcastformart_dict = {
-    'queryset': BroadcastFormat.objects.all(),
-    'template_name': 'program/broadcastformats_box.html',
-    'template_object_name': 'broadcastformat'
-}
 recommendation_dict = {'template_name': 'program/recommendations_box.html'}
 
 urlpatterns = patterns('',
@@ -36,6 +31,5 @@ urlpatterns = patterns('',
     (r'^shows/?$', show_list),
     url(r'^shows/(?P<slug>[\w-]+)/?$', object_detail, show_dict, name='show-detail'),
     url(r'^(?P<object_id>\d+)/?$', object_detail, timeslot_dict, name='timeslot-detail'),
-    (r'^broadcastformats_box/?$', object_list, broadcastformart_dict,),
     (r'^week/?$', week_schedule)
 )
