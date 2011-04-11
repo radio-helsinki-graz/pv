@@ -6,10 +6,10 @@
   <link href="/site_media/styles/base.css" media="screen" rel="stylesheet" type="text/css" />
 </head>
 <body>
-  {% if recommendations %}
+  {% if recommendation_list %}
   <dl id="recommendations" class="portlet program-recommendations">
     <dt class="portletHeader">Programmhinweise</dt>
-    {% for recommendation in recommendations %}
+    {% for recommendation in recommendation_list %}
     <dd class="portletItem program-recommendation {{ recommendation.show.broadcastformat.slug }}">
         <h3 class="show-name"><a href="{%  url show-detail recommendation.show.slug %}">{{ recommendation.show.name }}</a></h3>
         <p class="timeslot-start-end">{{ recommendation.timeslot.start|date:"d.m. H:i" }}-{{ recommendation.timeslot.end|date:"H:i" }}</p>

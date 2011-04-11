@@ -14,7 +14,7 @@ from helsinki.program.models import (
 from datetime import date, datetime, time, timedelta
 
 def show_list(request):
-    
+
     if 'broadcastformat' in request.GET:
         broadcastformat = get_object_or_404(BroadcastFormat, slug=request.GET['broadcastformat'])
 
@@ -34,7 +34,6 @@ def show_list(request):
     else:
         queryset = Show.objects.all()
 
-
     return list_detail.object_list(request, queryset=queryset, template_object_name='show')
 
 def recommendations(request, template_name='program/recommendations.html'):
@@ -45,12 +44,15 @@ def recommendations(request, template_name='program/recommendations.html'):
 
     return list_detail.object_list(request, queryset=queryset, template_name=template_name, template_object_name='recommendation')
 
-def today_schedule(request):
-    now = datetime.now()
-    today = datetime.combine(date.today(), time(6, 0))
-    tomorrow = today + timedelta(days=1)
+def day_schedule(request, year=None, month=None, day=None):
+    if year is None and month is None and day is None:
+        today = datetime.combine(date.today(), time(6, 0))
+    else:
+        today = datetime.strptime('%s__%s__%s__06__00' % (year, month, day), '%Y__%m__%d__%H__%M')
 
-    recommendations = Note.objects.filter(status=1, timeslot__start__range=(now, tomorrow))
+    tomorrow = today+timedelta(days=1)
+
+    recommendations = Note.objects.filter(status=1, timeslot__start__range=(today, tomorrow))
 
     extra_context = dict(day=today, recommendations=recommendations)
 
@@ -63,23 +65,6 @@ def today_schedule(request):
 
     return simple.direct_to_template(request, extra_context=extra_context, template='program/day_schedule.html')
 
-def day_schedule(request, year, month, day):
-    this_day = datetime.strptime('%s__%s__%s__06__00' % (year, month, day), '%Y__%m__%d__%H__%M')
-    that_day = this_day+timedelta(days=1)
-
-    recommendations = Note.objects.filter(status=1, timeslot__start__range=(this_day, that_day))
-
-    extra_context = dict(day=this_day, recommendations=recommendations)
-
-    if 'broadcastformat' in request.GET:
-        broadcastformat = get_object_or_404(BroadcastFormat, slug=request.GET['broadcastformat'])
-
-        extra_context['timeslots'] = TimeSlot.objects.filter(start__range=(this_day, that_day), show__broadcastformat=broadcastformat)
-    else:
-        extra_context['timeslots'] = TimeSlot.objects.filter(start__range=(this_day, that_day))
-
-    return simple.direct_to_template(request, extra_context=extra_context, template='program/day_schedule.html')
-
 def current_show(request):
     current = TimeSlot.objects.get_or_create_current()
     next = current.get_next_by_start()
@@ -89,8 +74,12 @@ def current_show(request):
 
     return simple.direct_to_template(request, template='program/current_box.html', extra_context=extra_context)
 
-def week_schedule(request, year, week):
+def week_schedule(request, year=None, week=None):
+    if year is None and week is None:
+        year, week = datetime.strftime(datetime.today(), '%Y__%W').split('__')
+
     monday = datetime.strptime('%s__%s__1__06__00' % (year, week), '%Y__%W__%w__%H__%M')
+
     tuesday = monday+timedelta(days=1)
     wednesday = monday+timedelta(days=2)
     thursday = monday+timedelta(days=3)
@@ -110,4 +99,3 @@ def week_schedule(request, year, week):
     extra_context['sunday_timeslots'] = TimeSlot.objects.filter(start__range=(sunday, next_monday))
 
     return simple.direct_to_template(request, template='program/week_schedule.html', extra_context=extra_context)
-
