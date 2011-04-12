@@ -4,8 +4,8 @@
   <dd class="portletItem">
     <ul>
       {% for item in musicfoci %}
-      <li class="mf-{{ item.abbrev }}">
-        <a href="?musicfocus={{ item.slug }}">{{ item }}</a>
+      <li>
+        <a class="filteritem mf-{{ item.abbrev }}" href="?musicfocus={{ item.slug }}">{{ item }}</a>
       </li>
       {% endfor %}
     </ul>
