@@ -4,8 +4,8 @@
   <dd class="portletItem">
     <ul>
       {% for item in showtopics %}
-      <li class="st-{{ item.abbrev }}">
-        <a href="../?showtopic={{ item.slug }}">{{ item }}</a>
+      <li>
+        <a class="filteritem st-{{ item.abbrev }}" href="?showtopic={{ item.slug }}">{{ item }}</a>
       </li>
       {% endfor %}
     </ul>

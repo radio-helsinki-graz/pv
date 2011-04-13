@@ -4,8 +4,8 @@
   <dd class="portletItem">
     <ul>
       {% for item in showinformations %}
-      <li class="si-{{ item.abbrev }}">
-        <a href="../?showinformation={{ item.slug }}">{{ item }}</a>
+      <li>
+        <a class="filteritem si-{{ item.abbrev }}" href="?showinformation={{ item.slug }}">{{ item }}</a>
       </li>
       {% endfor %}
     </ul>

@@ -27,8 +27,8 @@
 
     <div id="timeslots">
     {% for timeslot in timeslots %}
-    <div class="timeslot bcformat-{{ timeslot.show.broadcastformat.slug }}">
-        <div class="start">{{ timeslot.start|date:"H:i" }}</div>
+    <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}">
+        <div class="show-start">{{ timeslot.start|date:"H:i" }}</div>
         <div class="show-abbrevs">
         {% for showinformation in timeslot.show.showinformation.all %}
             <span class="si-{{ showinformation.abbrev }}">{{ showinformation.abbrev }}</span>
@@ -41,12 +41,12 @@
         {% endfor %}
         </div>
         <div class="show">
-            <h3 class="name"><a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a></h3>
+            <h3 class="show-title"><a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a></h3>
             {% if timeslot.note %}
             <p class="note-title"><strong>Heute:</strong> {{ timeslot.note.title }}</p>
             {% else %}
                 {% if timeslot.show.short_description != 'FIXME' %}
-            <p class="short-description">{{ timeslot.show.short_description }}</p>
+            <p class="show-description">{{ timeslot.show.short_description }}</p>
                 {% endif %}
             {% endif %}
         </div>
