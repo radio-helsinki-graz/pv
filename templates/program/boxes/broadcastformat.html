@@ -3,7 +3,7 @@
   <dt class="portletHeader"><span>Legende<span></dt>
   {% for broadcastformat in broadcastformats %}
   <dd class="portletItem bcformat bf-{{ broadcastformat.slug }}">
-    <a href="?broadcastformat={{ broadcastformat.slug }}">{{ broadcastformat.format }}</a>
+    <a href="../?broadcastformat={{ broadcastformat.slug }}">{{ broadcastformat.format }}</a>
   </dd>
   {% endfor %}
 </dl>

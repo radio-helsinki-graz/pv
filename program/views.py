@@ -1,20 +1,11 @@
-from django.views.generic import list_detail
-from django.views.generic import simple
+from django.views.generic import list_detail, simple
 from django.shortcuts import get_object_or_404
 
-from helsinki.program.models import (
-        BroadcastFormat,
-        MusicFocus,
-        Note,
-        Show,
-        ShowInformation,
-        ShowTopic,
-        TimeSlot)
+from models import BroadcastFormat, MusicFocus, Note, Show, ShowInformation, ShowTopic, TimeSlot
 
 from datetime import date, datetime, time, timedelta
 
 def show_list(request):
-
     if 'broadcastformat' in request.GET:
         broadcastformat = get_object_or_404(BroadcastFormat, slug=request.GET['broadcastformat'])
 
@@ -72,7 +63,7 @@ def current_show(request):
 
     extra_context = dict(current=current, next=next, after_next=after_next)
 
-    return simple.direct_to_template(request, template='program/current_box.html', extra_context=extra_context)
+    return simple.direct_to_template(request, template='program/boxes/current.html', extra_context=extra_context)
 
 def week_schedule(request, year=None, week=None):
     if year is None and week is None:

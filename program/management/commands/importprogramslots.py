@@ -5,7 +5,7 @@ from django.utils.html import strip_tags
 from datetime import time
 import MySQLdb
 
-from helsinki.program.models import Show, ProgramSlot, RRule
+from models import Show, ProgramSlot, RRule
 
 USER = 'helsinki'
 PASSWD = 'helsinki'

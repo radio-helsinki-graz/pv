@@ -1,19 +1,39 @@
+=================================
 Radio Helsinki Program Management
 =================================
 
-Requirements
-------------
+Installation
+============
 
-- Django 1.2.5: http://pypi.python.org/pypi/Django/1.2.5
-- PIL: http://pypi.python.org/pypi/PIL/1.1.6
-- python-dateutil: http://pypi.python.org/pypi/python-dateutil/1.5
-- PyYAML: http://pypi.python.org/pypi/PyYAML/3.09
-- MySQL-python: http://pypi.python.org/pypi/MySQL-python/1.2.3
-- django-haystack: http://pypi.python.org/pypi/django-haystack/1.1.0
-- pysolr: http://pypi.python.org/pypi/pysolr/2.0.13
+To get setup you must have the following installed:
 
-Author
-------
+ * Python 2.6
+ * virtualenv 1.5
 
-Ernesto Rico-Schmidt
-Contributions: Johannes Raggam
+Setting up the environment
+--------------------------
+
+Create a virtual environment where the dependencies will live::
+
+    $ virtualenv --no-site-packages helsinki
+    $ source helsinki/bin/activate
+    (helsinki)$
+
+Install the project dependencies::
+
+    (helsinki)$ pip install -r requirements.txt
+
+Setting up the database
+-----------------------
+
+By default the project is set up to run on a SQLite database.  You can run::
+
+    (helsinki)$ python manage.py syncdb
+    (helsinki)$ python manage.py loaddata program/fixtures/*.yaml
+
+Running a web server
+--------------------
+
+In development you should run::
+
+    (helsinki)$ python manage.py runserver

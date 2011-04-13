@@ -1,22 +1,19 @@
-import os
-
 # Django settings for helsinki project.
+
+import os.path
+PROJECT_DIR = os.path.dirname(__file__)
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
-)
+ADMINS = ( )
 
 MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'helsinki2',
-        'USER': 'helsinki',
-        'PASSWORD': 'helsinki'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(PROJECT_DIR, 'dev_data.sqlite'),
     }
 }
 
@@ -27,16 +24,14 @@ LANGUAGE_CODE = 'de'
 SITE_ID = 1
 
 USE_I18N = True
-
 USE_L10N = True
 
 MEDIA_ROOT = ''
-
 MEDIA_URL = ''
 
 ADMIN_MEDIA_PREFIX = '/media/'
 
-SECRET_KEY = 'oepk-$!=)c)7+y%cdz-x46_h5bp!o-*9%dv!(sf=3r4zfqk_(t'
+SECRET_KEY = ''
 
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
@@ -52,10 +47,10 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'helsinki.program.urls'
+ROOT_URLCONF = 'helsinki.urls'
 
 TEMPLATE_DIRS = (
-    os.path.join(os.path.dirname(__file__), "templates"),
+    os.path.join(PROJECT_DIR, "templates"),
 )
 
 INSTALLED_APPS = (
@@ -65,12 +60,16 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
-    'helsinki.program',
+    'program',
     'haystack',
 )
 
-HAYSTACK_SITECONF = 'helsinki.program.search_sites'
+HAYSTACK_SITECONF = 'helsinki.search_sites'
 HAYSTACK_SEARCH_ENGINE = 'solr'
 HAYSTACK_SOLR_URL = 'http://localhost:8988/solr'
-# plone integration
 HAYSTACK_ID_FIELD = 'docid'
+
+try:
+    from local_settings import *
+except ImportError:
+    pass

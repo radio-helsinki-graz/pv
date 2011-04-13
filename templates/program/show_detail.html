@@ -40,10 +40,9 @@
 
     <div id="hosts">
     {% for host in show.hosts.all %}
-        <div class="host">{{ host }}</div>
+        <div class="host"><a href="{% url host-detail host.id %}">{{ host }}</a></div>
     {% endfor %}
     </div>
-
 
     <div id="description">{{ show.description|safe }}</div>
 
