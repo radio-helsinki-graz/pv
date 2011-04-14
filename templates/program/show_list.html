@@ -19,39 +19,37 @@
 </div>
 
 <div id="content-main" class="show-list">
-{% for show in show_list %}
-    <div class="show">
-        <div class="abbrevs">&nbsp;
-            {% for topic in show.showtopic.all %}
-            <span class="topic-abbrev">{{ topic.abbrev }}</span>
-            {% endfor %}
+  <h1>Sendungen</h1>
 
-            {% for information in show.showinformation.all %}
-            <span class="information-abbrev">{{ information.abbrev }}</span>
-            {% endfor %}
-
-            {% for focus in show.musicfocus.all %}
-            <span class="focus-abbrev">{{ focus.abbrev }}</span>
-            {% endfor %}
-
-            <span class="broadcastformat-abbrev">{{ show.broadcastformat.abbrev }}</span>
+  <div id="shows">
+    {% for show in show_list %}
+    <div class="show bf-{{ show.broadcastformat.slug }}">
+        <div class="show-abbrevs">
+        {% for showinformation in show.showinformation.all %}
+            <span class="si-{{ showinformation.abbrev }}">{{ showinformation.abbrev }}</span>
+        {% endfor %}
+        {% for showtopic in show.showtopic.all %}
+            <span class="st-{{ showtopic.abbrev }}">{{ showtopic.abbrev }}</span>
+        {% endfor %}
+        {% for musicfocus in show.musicfocus.all %}
+            <span class="mf-{{ musicfocus.abbrev }}">{{ musicfocus.abbrev }}</span>
+        {% endfor %}
         </div>
-
-        <div class="details">
-            <div class="name"><a href="{% url show-detail show.slug %}">{{ show.name }}</a></div>
-
-            <div class="programslots">
+        <div class="show-detail">
+            <h3 class="show-title"><a href="{% url show-detail show.slug %}">{{ show.name }}</a></h3>
+            <div class="show-programslots">
             {% for slot in show.programslots.all %}
-                <div class="programslot">{{ slot }}</div>
+                <p class="show-programslot">{{ slot }}</p>
             {% endfor %}
             </div>
-
             {% if show.short_description != 'FIXME' %}
-            <div class="short-description">{{ show.short_description }}</div>
+            <p class="show-description">{{ show.short_description }}</p>
             {% endif %}
         </div>
     </div>
-{% endfor %}
+  {% endfor %}
+  </div>
+
 </div>
 
 </body>
