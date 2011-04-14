@@ -25,14 +25,14 @@
     {% for show in show_list %}
     <div class="show bf-{{ show.broadcastformat.slug }}">
         <div class="show-abbrevs">
-        {% for showinformation in show.showinformation.all %}
-            <span class="abbrev si-{{ showinformation.abbrev }}"><span>{{ showinformation.abbrev }}</span></span>
+        {% for item in show.showinformation.all %}
+          <span title="{{item.information}}" class="abbrev si-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
         {% endfor %}
-        {% for showtopic in show.showtopic.all %}
-            <span class="abbrev st-{{ showtopic.abbrev }}"><span>{{ showtopic.abbrev }}</span></span>
+        {% for item in show.showtopic.all %}
+          <span title="{{item.topic}}" class="abbrev st-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
         {% endfor %}
-        {% for musicfocus in show.musicfocus.all %}
-            <span class="abbrev mf-{{ musicfocus.abbrev }}"><span>{{ musicfocus.abbrev }}</span></span>
+        {% for item in show.musicfocus.all %}
+          <span title="{{item.focus}}" class="abbrev mf-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
         {% endfor %}
         </div>
         <div class="show-detail">

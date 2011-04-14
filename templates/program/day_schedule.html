@@ -29,14 +29,14 @@
     <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}">
         <div class="show-start">{{ timeslot.start|date:"H:i" }}</div>
         <div class="show-abbrevs">
-        {% for showinformation in timeslot.show.showinformation.all %}
-        <span class="abbrev si-{{ showinformation.abbrev }}"><span>{{ showinformation.abbrev }}</span></span>
+        {% for item in timeslot.show.showinformation.all %}
+          <span title="{{item.information}}" class="abbrev si-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
         {% endfor %}
-        {% for showtopic in timeslot.show.showtopic.all %}
-            <span class="abbrev st-{{ showtopic.abbrev }}"><span>{{ showtopic.abbrev }}</span></span>
+        {% for item in timeslot.show.showtopic.all %}
+          <span title="{{item.topic}}" class="abbrev st-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
         {% endfor %}
-        {% for musicfocus in timeslot.show.musicfocus.all %}
-            <span class="abbrev mf-{{ musicfocus.abbrev }}"><span>{{ musicfocus.abbrev }}</span></span>
+        {% for item in timeslot.show.musicfocus.all %}
+          <span title="{{item.focus}}" class="abbrev mf-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
         {% endfor %}
         </div>
         <div class="show-detail">

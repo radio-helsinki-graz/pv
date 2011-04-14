@@ -5,7 +5,7 @@
     <ul>
       {% for item in showinformations %}
       <li>
-        <a class="abbrev si-{{ item.abbrev }}" href="?showinformation={{ item.slug }}">{{ item }}</a>
+        <a title="Sendungen mit der Information {{item.information}} anzeigen." class="abbrev si-{{ item.abbrev }}" href="?showinformation={{ item.slug }}">{{ item }}</a>
       </li>
       {% endfor %}
     </ul>

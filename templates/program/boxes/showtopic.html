@@ -5,7 +5,7 @@
     <ul>
       {% for item in showtopics %}
       <li>
-        <a class="abbrev st-{{ item.abbrev }}" href="?showtopic={{ item.slug }}">{{ item }}</a>
+        <a title="Sendungen mit dem Schwerpunkt {{item.topic}} anzeigen." class="abbrev st-{{ item.abbrev }}" href="?showtopic={{ item.slug }}">{{ item }}</a>
       </li>
       {% endfor %}
     </ul>
