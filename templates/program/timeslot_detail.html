@@ -6,52 +6,52 @@
 <body>
 
 <div id="content-main" class="timeslot-detail">
-    <h1 id="show-name">{{ timeslot.show.name }}</h1>
+
+  <div class="show-detail-header bf-{{timeslot.show.broadcastformat.slug}}">
+      <h1 id="name">{{ timeslot.show.name }}</h1>
+
+      <div class="show-abbrevs">
+      {% for item in timeslot.show.showinformation.all %}
+        <span title="{{item.information}}" class="abbrev si-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
+      {% endfor %}
+      {% for item in timeslot.show.showtopic.all %}
+        <span title="{{item.topic}}" class="abbrev st-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
+      {% endfor %}
+      {% for item in timeslot.show.musicfocus.all %}
+        <span title="{{item.focus}}" class="abbrev mf-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
+      {% endfor %}
+      </div>
+
+      <p id="broadcastformat">{{ timeslot.show.broadcastformat.format }}</p>
+    </div>
+
+    {% if timeslot.note %}
+    <h2>{{ timeslot.note.title }}</h2>
+    <p class="timeslot-note">{{ timeslot.note.content|safe }}</p>
+    {% endif %}
 
     {% if timeslot.show.short_description != 'FIXME' %}
     <div id="short-description" class="documentDescription">{{ timeslot.show.short_description }}</div>
     {% endif %}
 
-    <div id="abbrevs">
-    {% for topic in timeslot.show.showtopic.all %}
-        <span class="topic-abbrev">{{ topic.abbrev }}</span>
-    {% endfor %}
-
-    {% for information in timeslot.show.showinformation.all %}
-        <span class="information-abbrev">{{ information.abbrev }}</span>
-    {% endfor %}
-
-    {% for focus in timeslot.show.musicfocus.all %}
-        <span class="focus-abbrev">{{ focus.abbrev }}</span>
-    {% endfor %}
-
-        <span class="broadcastformat-abbrev">{{ timeslot.show.broadcastformat.abbrev }}</span>
-    </div>
-
-    <div id="programslots">
-    {% for slot in timeslot.show.programslots.all %}
-        <div class="programslot">{{ slot }}</div>
-    {% endfor %}
-    </div>
-
-    <div id="broadcastformat">{{ timeslot.show.broadcastformat.format }}</div>
-
-    <div id="hosts">
-    {% for host in timeslot.show.hosts.all %}
-        <div class="host"><a href="{% url host-detail host.id %}">{{ host }}</a></div>
-    {% endfor %}
-    </div>
-
     <div id="description">{{ timeslot.show.description|safe }}</div>
 
-    <div id="note">
-    {% if timeslot.note %}
-        <div class="note">
-            <div class="title">{{ timeslot.note.title }}</div>
-            <div class="content">{{ timeslot.note.content|safe }}</div>
-        </div>
-    {% endif %}
-    </div>
+    <p>
+      {% for host in timeslot.show.hosts.all %}
+      <a href="{% url host-detail host.id %}">{{ host }}</a><br />
+      {% endfor %}
+      {% if timeslot.show.email %}
+      <strong>Email:</strong> <a href="mailto:{{ timeslot.show.email }}">{{ timeslot.show.email }}</a><br />
+      {% endif %}
+      {% if timeslot.show.website %}
+      <strong>Website:</strong> <a href="{{ timeslot.show.website }}">{{ timeslot.show.website }}</a><br />
+      {% endif %}
+      {% if timeslot.show.cba_series_id %}
+      <strong>CBA-Link:</strong> <a href="http://cba.fro.at/series/{{ timeslot.show.cba_series_id }}">CBA</a><br />
+      {% endif %}
+    </p>
+
+
 </div>
 
 </body>
