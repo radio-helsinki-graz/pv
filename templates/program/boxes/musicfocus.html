@@ -5,7 +5,7 @@
     <ul>
       {% for item in musicfoci %}
       <li>
-        <a class="filteritem mf-{{ item.abbrev }}" href="?musicfocus={{ item.slug }}">{{ item }}</a>
+        <a class="abbrev mf-{{ item.abbrev }}" href="?musicfocus={{ item.slug }}">{{ item }}</a>
       </li>
       {% endfor %}
     </ul>
