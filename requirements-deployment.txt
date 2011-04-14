@@ -1,7 +1,0 @@
-Django==1.2.3
-MySQL-python==1.2.2
-PIL==1.1.7
-PyYAML==3.09
-django-haystack==1.1.0
-pysolr==2.0.13
-python-dateutil==1.4.1
