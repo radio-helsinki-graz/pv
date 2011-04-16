@@ -2,7 +2,7 @@ from django.core.management.base import NoArgsCommand
 
 import MySQLdb
 
-from models import Host
+from program.models import Host
 
 USER = 'helsinki'
 PASSWD = 'helsinki'

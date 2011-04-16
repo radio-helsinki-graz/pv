@@ -5,7 +5,7 @@ from django.utils.html import clean_html, strip_tags
 
 import MySQLdb
 
-from models import Note, Show, TimeSlot
+from program.models import Note, Show, TimeSlot
 
 USER = 'helsinki'
 PASSWD = 'helsinki'
