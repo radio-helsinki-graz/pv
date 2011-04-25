@@ -26,8 +26,8 @@ SITE_ID = 1
 USE_I18N = True
 USE_L10N = True
 
-MEDIA_ROOT = ''
-MEDIA_URL = ''
+MEDIA_ROOT = os.path.join(PROJECT_DIR, 'site_media')
+MEDIA_URL = '/site_media/'
 
 ADMIN_MEDIA_PREFIX = '/media/'
 
@@ -62,12 +62,19 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'program',
     'haystack',
+    'tinymce',
 )
 
 HAYSTACK_SITECONF = 'search_sites'
 HAYSTACK_SEARCH_ENGINE = 'solr'
 HAYSTACK_SOLR_URL = 'http://localhost:8988/solr'
 HAYSTACK_ID_FIELD = 'docid'
+
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins' : 'contextmenu',
+    'theme': 'advanced',
+    'theme_advanced_toolbar_location': 'top',
+}
 
 try:
     from local_settings import *

@@ -3,6 +3,8 @@ from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from tinymce import models as tinymce_models
+
 from datetime import date, datetime, time, timedelta
 from dateutil.relativedelta import relativedelta
 from dateutil.rrule import rrule
@@ -87,7 +89,7 @@ class Show(models.Model):
     slug = models.CharField(_("Slug"), max_length=255, unique=True)
     image = models.ImageField(_("Image"), blank=True, null=True, upload_to='show_images')
     short_description = models.CharField(_("Short description"), max_length=64)
-    description = models.TextField(_("Description"))
+    description = tinymce_models.HTMLField(_("Description"))
     email = models.EmailField(_("E-Mail"), blank=True, null=True)
     website = models.URLField(_("Website"), blank=True, null=True)
     cba_series_id = models.IntegerField(_("CBA series ID"), blank=True, null=True)
@@ -284,7 +286,7 @@ class Note(models.Model):
     timeslot = models.OneToOneField(TimeSlot, verbose_name=_("Time slot"))
     owner = models.ForeignKey(User, related_name='notes', verbose_name=_("Owner"))
     title = models.CharField(_("Title"), max_length=128)
-    content = models.TextField(_("Content"))
+    content = tinymce_models.HTMLField(_("Content"))
     status = models.IntegerField(_("Status"), choices=STATUS_CHOICES, default=1)
     cba_entry_id = models.IntegerField(_("CBA entry ID"), blank=True, null=True)
     start = models.DateTimeField(editable=False)
