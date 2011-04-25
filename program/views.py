@@ -47,12 +47,14 @@ def day_schedule(request, year=None, month=None, day=None):
 
     extra_context = dict(day=today, recommendations=recommendations)
 
+    timeslots = TimeSlot.objects.get_day_timeslots(today)
+
     if 'broadcastformat' in request.GET:
         broadcastformat = get_object_or_404(BroadcastFormat, slug=request.GET['broadcastformat'])
 
-        extra_context['timeslots'] = TimeSlot.objects.filter(start__range=(today, tomorrow), show__broadcastformat=broadcastformat)
+        extra_context['timeslots'] = timeslots.filter(show__broadcastformat=broadcastformat)
     else:
-        extra_context['timeslots'] = TimeSlot.objects.filter(start__range=(today, tomorrow))
+        extra_context['timeslots'] = timeslots
 
     return simple.direct_to_template(request, extra_context=extra_context, template='program/day_schedule.html')
 
@@ -77,16 +79,15 @@ def week_schedule(request, year=None, week=None):
     friday = monday+timedelta(days=4)
     saturday = monday+timedelta(days=5)
     sunday = monday+timedelta(days=6)
-    next_monday = monday+timedelta(days=7)
 
     extra_context = dict(monday=monday, tuesday=tuesday, wednesday=wednesday, thursday=thursday, friday=friday, saturday=saturday, sunday=sunday)
 
-    extra_context['monday_timeslots'] = TimeSlot.objects.filter(start__range=(monday, tuesday))
-    extra_context['tuesday_timeslots'] = TimeSlot.objects.filter(start__range=(tuesday, wednesday))
-    extra_context['wednesday_timeslots'] = TimeSlot.objects.filter(start__range=(wednesday, thursday))
-    extra_context['thursday_timeslots'] = TimeSlot.objects.filter(start__range=(thursday, friday))
-    extra_context['friday_timeslots'] = TimeSlot.objects.filter(start__range=(friday, saturday))
-    extra_context['saturday_timeslots'] = TimeSlot.objects.filter(start__range=(saturday, sunday))
-    extra_context['sunday_timeslots'] = TimeSlot.objects.filter(start__range=(sunday, next_monday))
+    extra_context['monday_timeslots'] = TimeSlot.objects.get_day_timeslots(monday)
+    extra_context['tuesday_timeslots'] = TimeSlot.objects.get_day_timeslots(tuesday)
+    extra_context['wednesday_timeslots'] = TimeSlot.objects.get_day_timeslots(wednesday)
+    extra_context['thursday_timeslots'] = TimeSlot.objects.get_day_timeslots(thursday)
+    extra_context['friday_timeslots'] = TimeSlot.objects.get_day_timeslots(friday)
+    extra_context['saturday_timeslots'] = TimeSlot.objects.get_day_timeslots(saturday)
+    extra_context['sunday_timeslots'] = TimeSlot.objects.get_day_timeslots(sunday)
 
     return simple.direct_to_template(request, template='program/week_schedule.html', extra_context=extra_context)

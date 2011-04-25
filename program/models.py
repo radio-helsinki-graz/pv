@@ -1,9 +1,9 @@
 from django.contrib.auth.models import User
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from datetime import date, datetime
+from datetime import date, datetime, time, timedelta
 from dateutil.relativedelta import relativedelta
 from dateutil.rrule import rrule
 
@@ -234,9 +234,19 @@ class TimeSlotManager(models.Manager):
             until, tend = next.start.date(), next.start.time()
 
             new_programslot = ProgramSlot(rrule=once, byweekday=today, show=default, dstart=dstart, tstart=tstart, tend=tend, until=until)
-            new_programslot.save()
+            try:
+                new_programslot.validate_unique()
+                new_programslot.save()
+            except ValidationError:
+                pass
 
             return new_programslot.timeslots.all()[0]
+
+    def get_day_timeslots(self, day):
+        today = datetime.combine(day, time(6,0))
+        tomorrow = today + timedelta(days=1)
+
+        return TimeSlot.objects.filter(start__range=(today, tomorrow))
 
 class TimeSlot(models.Model):
     programslot = models.ForeignKey(ProgramSlot, related_name='timeslots', verbose_name=_("Program slot"))
@@ -245,7 +255,7 @@ class TimeSlot(models.Model):
     show = models.ForeignKey(Show, editable=False)
 
     objects = TimeSlotManager()
-    
+
     class Meta:
         ordering = ('start', 'end')
         verbose_name = _("Time slot")
