@@ -45,7 +45,9 @@ def day_schedule(request, year=None, month=None, day=None):
 
     recommendations = Note.objects.filter(status=1, timeslot__start__range=(today, tomorrow))
 
-    extra_context = dict(day=today, recommendations=recommendations)
+    default_show = Show.objects.get(pk=1)
+
+    extra_context = dict(day=today, recommendations=recommendations, default_show=default_show)
 
     timeslots = TimeSlot.objects.get_day_timeslots(today)
 
@@ -80,7 +82,9 @@ def week_schedule(request, year=None, week=None):
     saturday = monday+timedelta(days=5)
     sunday = monday+timedelta(days=6)
 
-    extra_context = dict(monday=monday, tuesday=tuesday, wednesday=wednesday, thursday=thursday, friday=friday, saturday=saturday, sunday=sunday)
+    default_show = Show.objects.get(pk=1)
+
+    extra_context = dict(monday=monday, tuesday=tuesday, wednesday=wednesday, thursday=thursday, friday=friday, saturday=saturday, sunday=sunday, default_show=default_show)
 
     extra_context['monday_timeslots'] = TimeSlot.objects.get_day_timeslots(monday)
     extra_context['tuesday_timeslots'] = TimeSlot.objects.get_day_timeslots(tuesday)

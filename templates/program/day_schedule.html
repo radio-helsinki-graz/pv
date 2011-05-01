@@ -29,6 +29,26 @@
 
     <div id="timeslots">
     {% for timeslot in timeslots %}
+        {% if forloop.first and timeslot.start != timeslot.get_previous_by_start.end %}
+        <div class="timeslot bf-{{ default_show.broadcastformat.slug }}">
+            <div class="show-start">{{ timeslot.get_previous_by_start.end|date:"H:i" }}</div>
+            <div class="show-abbrevs">
+            {% for item in default_show.showinformation.all %}
+              <span title="{{item.information}}" class="abbrev si-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
+            {% endfor %}
+            {% for item in default_show.showtopic.all %}
+              <span title="{{item.topic}}" class="abbrev st-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
+            {% endfor %}
+            {% for item in default_show.musicfocus.all %}
+              <span title="{{item.focus}}" class="abbrev mf-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
+            {% endfor %}
+            </div>
+            <div class="show-detail">
+                <h3 class="show-title">{{ default_show.name }}</h3>
+                <p class="show-description">{{ default_show.short_description }}</p>
+            </div>
+        </div>
+        {% endif %}
     <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}">
         <div class="show-start">{{ timeslot.start|date:"H:i" }}</div>
         <div class="show-abbrevs">
@@ -53,6 +73,26 @@
             {% endif %}
         </div>
     </div>
+        {% if timeslot.end != timeslot.get_next_by_start.start %}
+            <div class="timeslot bf-{{ default_show.broadcastformat.slug }}">
+                <div class="show-start">{{ timeslot.end|date:"H:i" }}</div>
+                <div class="show-abbrevs">
+                {% for item in default_show.showinformation.all %}
+                  <span title="{{item.information}}" class="abbrev si-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
+                {% endfor %}
+                {% for item in default_show.showtopic.all %}
+                  <span title="{{item.topic}}" class="abbrev st-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
+                {% endfor %}
+                {% for item in default_show.musicfocus.all %}
+                  <span title="{{item.focus}}" class="abbrev mf-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
+                {% endfor %}
+                </div>
+                <div class="show-detail">
+                    <h3 class="show-title">{{ default_show.name }}</h3>
+                    <p class="show-description">{{ default_show.short_description }}</p>
+                </div>
+            </div>
+        {% endif %}
     {% endfor %}
     </div>
 </div>
