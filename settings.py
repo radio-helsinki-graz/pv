@@ -14,6 +14,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(PROJECT_DIR, 'dev_data.sqlite'),
+    },
+    'nop': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(PROJECT_DIR, 'dev_nop.sqlite'),
     }
 }
 
@@ -61,6 +65,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.admin',
     'program',
+    'nop',
     'haystack',
     'tinymce',
 )
