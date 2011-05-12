@@ -55,6 +55,18 @@ def day_schedule(request, year=None, month=None, day=None):
         broadcastformat = get_object_or_404(BroadcastFormat, slug=request.GET['broadcastformat'])
 
         extra_context['timeslots'] = timeslots.filter(show__broadcastformat=broadcastformat)
+    elif 'musicfocus' in request.GET:
+        musicfocus = get_object_or_404(MusicFocus, slug=request.GET['musicfocus'])
+
+        extra_context['timeslots'] = timeslots.filter(show__musicfocus=musicfocus)
+    elif 'showinformation' in request.GET:
+        showinformation = get_object_or_404(ShowInformation, slug=request.GET['showinformation'])
+
+        extra_context['timeslots'] = timeslots.filter(show__showinformation=showinformation)
+    elif 'showtopic' in request.GET:
+        showtopic = get_object_or_404(ShowTopic, slug=request.GET['showtopic'])
+
+        extra_context['showtopic'] = timeslots.filter(show__showtopic=showtopic)
     else:
         extra_context['timeslots'] = timeslots
 
