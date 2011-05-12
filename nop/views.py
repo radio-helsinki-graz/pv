@@ -1,3 +1,4 @@
+from django.views.generic import simple
 from django.http import HttpResponse
 from models import Master
 import json
@@ -38,3 +39,9 @@ def get(request, year=None, month=None, day=None, hour=None, minute=None):
 
     #return HttpResponse(response, mimetype='application/json')
     return HttpResponse(response, mimetype='text/plain')
+
+def nop_form(request):
+    extra_context = {'year':None, 'month':None, 'day':None, 'hour':None, 'minute': None}
+    if 'year' in request.GET:
+        pass
+    return simple.direct_to_template(request, extra_context=extra_context, template='nop/nop_form.html')
