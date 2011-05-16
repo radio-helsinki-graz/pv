@@ -6,25 +6,25 @@ from models import BroadcastFormat, MusicFocus, Note, Show, ShowInformation, Sho
 from datetime import date, datetime, time, timedelta
 
 def show_list(request):
+    queryset = Show.objects.exclude(id=1)
+
     if 'broadcastformat' in request.GET:
         broadcastformat = get_object_or_404(BroadcastFormat, slug=request.GET['broadcastformat'])
 
-        queryset = Show.objects.filter(broadcastformat=broadcastformat)
+        queryset = queryset.filter(broadcastformat=broadcastformat)
     elif 'musicfocus' in request.GET:
         musicfocus = get_object_or_404(MusicFocus, slug=request.GET['musicfocus'])
 
-        queryset = Show.objects.filter(musicfocus=musicfocus)
+        queryset = queryset.filter(musicfocus=musicfocus)
     elif 'showinformation' in request.GET:
         showinformation = get_object_or_404(ShowInformation, slug=request.GET['showinformation'])
 
-        queryset = Show.objects.filter(showinformation=showinformation)
+        queryset = queryset.exfilter(showinformation=showinformation)
     elif 'showtopic' in request.GET:
         showtopic = get_object_or_404(ShowTopic, slug=request.GET['showtopic'])
 
-        queryset = Show.objects.filter(showtopic=showtopic)
-    else:
-        queryset = Show.objects.all()
-
+        queryset = queryset.filter(showtopic=showtopic)
+    
     return list_detail.object_list(request, queryset=queryset, template_object_name='show')
 
 def recommendations(request, template_name='program/recommendations.html'):
