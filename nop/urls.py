@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls.defaults import *
 from views import get, get_current, nop_form
 
 urlpatterns = patterns('',

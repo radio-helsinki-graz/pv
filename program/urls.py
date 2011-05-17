@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls.defaults import *
 
 from django.views.generic.list_detail import object_detail, object_list
 
