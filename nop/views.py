@@ -68,6 +68,8 @@ def get(request, year=None, month=None, day=None, hour=None, minute=None):
 def nop_form(request):
     context = {}
     context.update(csrf(request))
+    date = None
+    time = None
     if request.method == 'POST':
         form = NopForm(request.POST)
         if form.is_valid():
@@ -75,8 +77,8 @@ def nop_form(request):
             time = form.cleaned_data['time']
     else:
         form = NopForm()
-        date = datetime.date(datetime.now())
-        time = datetime.time(datetime.now())
+    if not date: date = datetime.date(datetime.now())
+    if not time: time = datetime.time(datetime.now())
     result = _bydate(date.year, date.month, date.day, time.hour, time.minute)
     context['nowplaying'] = result
     context['form'] = form
