@@ -10,11 +10,11 @@
 
   <script type="text/javascript"><!--
     $(document).ready(function() {
-      $(":date").dateinput({
+      $("#nop_date").dateinput({
         format: 'yyyy-mm-dd',
         firstDay: 1
         });
-      $("#time").AnyTime_picker({
+      $("#nop_time").AnyTime_picker({
         format: "%H:%i",
         labelTitle: "Zeit",
         labelHour: "Stunde",
@@ -27,10 +27,25 @@
 <body>
 
   <div id="content-main" class="show-detail">
-    <input type="date" id="date" class="date" value="" />
-    <input type="text" id="time" class="date" value="" />
+    <form action="" method="post">{% csrf_token %}
+      {{ form.as_table }}
+      <input type="submit" value="senden" />
+    </form>
+
+    {% if nowplaying %}
+    <ul>
+      {% for track in nowplaying %}
+      <li>
+        <small>{{track.datetime}}:</small>
+        <strong>{{track.artist}}</strong> -
+        {{track.title}} -
+        {{track.album}}
+        in der Sendung <em>{{track.showtitle}}</em>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
   </div>
 
 </body>
 </html>
-
