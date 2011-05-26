@@ -82,4 +82,4 @@ def nop_form(request):
     result = _bydate(date.year, date.month, date.day, time.hour, time.minute)
     context['nowplaying'] = result
     context['form'] = form
-    return render_to_response('nop/nop_form.html', context)
+    return render_to_response('nop_form.html', context)
