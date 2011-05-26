@@ -36,11 +36,21 @@
     <ul>
       {% for track in nowplaying %}
       <li>
-        <small>{{track.datetime}}:</small>
-        <strong>{{track.artist}}</strong> -
-        {{track.title}} -
-        {{track.album}}
-        in der Sendung <em>{{track.showtitle}}</em>
+        {% if track.start or track.show %}
+          <small>
+            {% if track.start %}{{track.start}}{% endif %}
+            {% if track.start and track.show %},{% endif %}
+            {% if track.show %}Sendung {{track.show}}{% endif %}
+            {% if track.artist or track.title or track.album %}:{% endif %}
+          </small>
+        {% endif %}
+        {% if track.artist %}
+          <strong>{{track.artist}}</strong>
+        {% endif %}
+        {% if track.artist and track.title or track.artist and track.album %}|{% endif %}
+        {% if track.title %}{{track.title}}{% endif %}
+        {% if track.title and track.album %}|{% endif %}
+        {% if track.album %}{{track.album}}{% endif %}
       </li>
       {% endfor %}
     </ul>
