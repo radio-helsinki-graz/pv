@@ -2,10 +2,12 @@ from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django import forms
-from models import Master
+from models import Master, Standby, State
 import json
 import time
 from datetime import datetime
+
+DB = 'nop'
 
 class NopForm(forms.Form):
     date = forms.DateField(
@@ -23,14 +25,24 @@ class NopForm(forms.Form):
                 attrs={'id':'nop_time', 'class':'date'})
             )
 
+def _which(timestamp=None):
+    if timestamp:
+        res = State.objects.using(DB).filter(timestamp__lt=timestamp)[0]
+    else:
+        res = State.objects.using(DB).all()[0]
+    if not res or res.state == 'master':
+        return Master
+    else:
+        return Standby
+
 
 def _current():
     #current = int(time.time())*1000000
-    #time.gmtime(Master.objects.using('nop').all()[6000].timestamp//1000000)
+    #time.gmtime(_which().objects.using(DB).all()[6000].timestamp//1000000)
     # select all where timestamp < givenTS, get most recent one -> order DESC
 
     # reverse sorted. get the first object = last played
-    result = Master.objects.using('nop').all()[0]
+    result = _which().objects.using(DB).all()[0]
     return {'artist': result.artist, 'title': result.title}
 
 def _bydate(year=None, month=None, day=None, hour=None, minute=None):
@@ -43,7 +55,7 @@ def _bydate(year=None, month=None, day=None, hour=None, minute=None):
                 int(hour),
                 int(minute),0,0,0,-1))) * 1000000
 
-        result = Master.objects.using('nop').filter(timestamp__lt=ts)[:5]
+        result = _which(ts).objects.using(DB).filter(timestamp__lt=ts)[:5]
         return [{'artist': item.artist, 'title': item.title, 'album': item.album,
                    'datetime': time.strftime('%Y-%m-%d %H:%M',
                        time.localtime(item.timestamp//1000000)),
