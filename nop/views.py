@@ -106,14 +106,14 @@ def _bydate(year=None, month=None, day=None, hour=None, minute=None):
 def get_current(request):
     response = json.dumps(_current())
 
-    #return HttpResponse(response, mimetype='application/json')
-    return HttpResponse(response, mimetype='text/plain')
+    return HttpResponse(response, mimetype='application/json')
+    #return HttpResponse(response, mimetype='text/plain')
 
 def get(request, year=None, month=None, day=None, hour=None, minute=None):
     response = json.dumps(_bydate(year, month, day, hour, minute))
 
-    #return HttpResponse(response, mimetype='application/json')
-    return HttpResponse(response, mimetype='text/plain')
+    return HttpResponse(response, mimetype='application/json')
+    #return HttpResponse(response, mimetype='text/plain')
 
 
 def nop_form(request):
