@@ -7,7 +7,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^program/', include('program.urls')),
-    (r'^nop/', include('nop.urls')),
+    (r'^nop', include('nop.urls')),
     (r'^tinymce/', include('tinymce.urls')),
 )
 if settings.DEBUG:
