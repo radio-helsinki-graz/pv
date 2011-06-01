@@ -122,7 +122,8 @@ def nop_form(request):
     #context.update(csrf(request)) # in django template: {% csrf_token %}
     date = None
     time = None
-    if request.method == 'GET':
+    if request.method == 'GET' and\
+            ('date' in request.GET or 'time' in request.GET):
         form = NopForm(request.GET)
         if form.is_valid():
             date = form.cleaned_data['date']
