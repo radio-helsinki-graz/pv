@@ -118,11 +118,12 @@ def get(request, year=None, month=None, day=None, hour=None, minute=None):
 
 def nop_form(request):
     context = {}
-    context.update(csrf(request))
+    # currently no csrf security for nicier forms 
+    #context.update(csrf(request)) # in django template: {% csrf_token %}
     date = None
     time = None
-    if request.method == 'POST':
-        form = NopForm(request.POST)
+    if request.method == 'GET':
+        form = NopForm(request.GET)
         if form.is_valid():
             date = form.cleaned_data['date']
             time = form.cleaned_data['time']

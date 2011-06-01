@@ -12,7 +12,7 @@
 <body>
 
   <div id="content-main" class="show-detail">
-    <form action="" method="post">{% csrf_token %}
+    <form action="/nop" method="get">
       {{ form.as_table }}
       <input type="submit" value="senden" />
     </form>

@@ -1,9 +1,9 @@
-$(document).ready(function() {
-    $("#nop_date").dateinput({
+jQuery(document).ready(function() {
+    jQuery("#nop_date").dateinput({
         format: 'yyyy-mm-dd',
         firstDay: 1
     });
-    $("#nop_time").AnyTime_picker({
+    jQuery("#nop_time").AnyTime_picker({
         format: "%H:%i",
         labelTitle: "Zeit",
         labelHour: "Stunde",
