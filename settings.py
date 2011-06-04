@@ -30,6 +30,8 @@ SITE_ID = 1
 USE_I18N = True
 USE_L10N = True
 
+LOCALE_PATHS = os.path.join(PROJECT_DIR, 'locale')
+
 MEDIA_ROOT = os.path.join(PROJECT_DIR, 'site_media')
 MEDIA_URL = '/site_media/'
 
