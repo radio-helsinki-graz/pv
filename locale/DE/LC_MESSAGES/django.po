@@ -61,7 +61,7 @@ msgstr "Tendenz"
 
 #: program/models.py:57 program/models.py:58 program/models.py:87
 msgid "Music focus"
-msgstr "Musikendenz"
+msgstr "Musiktendenz"
 
 #: program/models.py:64 program/models.py:88 program/models.py:130
 msgid "Name"
