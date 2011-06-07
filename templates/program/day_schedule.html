@@ -4,16 +4,24 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>
     <script type="text/javascript" src="http://jquery-ui.googlecode.com/svn/trunk/ui/i18n/jquery.ui.datepicker-de.js"></script>
+    <script type="text/javascript" src="/site_media/programcalendar.js"></script>
     <link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/themes/base/jquery-ui.css" rel="stylesheet" />
 </head>
 <body>
 
-<div id="calendar"></div>
+<dl id="box_calendar" class="portlet calendar">
+  <dt class="portletHeader"><span>Kalender<span></dt>
+  <dd class="portletItem">
+    <div id="calendar"></div>
+  </dd>
+</dl>
 
 {% load content_boxes %}
 <div id="filter-format">
 {% broadcastformat %}
 </div>
+
+{% comment %}
 <div id="filter-topic">
   <dl id="filter-header" class="portlet">
     <dt class="portletHeader"><span>Filter</span></dt>
@@ -22,6 +30,7 @@
 {% showinformation %}
 {% showtopic %}
 </div>
+{% endcomment %}
 
 <div id="content-main" class="day-schedule">
     <h2>Tagesansicht</h2>
@@ -96,17 +105,6 @@
     {% endfor %}
     </div>
 </div>
-
-<script>
-    $(function() {
-        $("#calendar").datepicker({
-            defaultDate: location.href.split('/').slice(4, 7).reverse().join('.'),
-            onSelect: function(dateText, inst) {
-                location = '/program/' + dateText.split('.').reverse().join('/');
-            }
-        });
-    })
-</script>
 
 </body>
 </html>
