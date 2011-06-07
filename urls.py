@@ -7,6 +7,11 @@ admin.autodiscover()
 urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^program/', include('program.urls')),
+    (r'^programm/', include('program.urls')), # programcalendar.js has to link
+        # to /programm, so that deliverance integration works. that would
+        # break django compat, so this url rule is added. come up with a bttr
+        # solution and implement it to avoid redundancy and hacks.
+        # i don't care yet.
     (r'^nop', include('nop.urls')),
     (r'^tinymce/', include('tinymce.urls')),
 )
