@@ -19,12 +19,12 @@ def show_list(request):
     elif 'showinformation' in request.GET:
         showinformation = get_object_or_404(ShowInformation, slug=request.GET['showinformation'])
 
-        queryset = queryset.exfilter(showinformation=showinformation)
+        queryset = queryset.filter(showinformation=showinformation)
     elif 'showtopic' in request.GET:
         showtopic = get_object_or_404(ShowTopic, slug=request.GET['showtopic'])
 
         queryset = queryset.filter(showtopic=showtopic)
-    
+
     return list_detail.object_list(request, queryset=queryset, template_object_name='show')
 
 def recommendations(request, template_name='program/recommendations.html'):
