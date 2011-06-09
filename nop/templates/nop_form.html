@@ -18,24 +18,26 @@
     </form>
 
     {% if nowplaying %}
-    <ul>
+    <ul class="nowplaying">
       {% for track in nowplaying %}
       <li>
         {% if track.start or track.show %}
-          <small>
+          <span class="meta">
             {% if track.start %}{{track.start}}{% endif %}
             {% if track.start and track.show %},{% endif %}
             {% if track.show %}Sendung {{track.show}}{% endif %}
             {% if track.artist or track.title or track.album %}:{% endif %}
-          </small>
+          </span><br />
         {% endif %}
         {% if track.artist %}
-          <strong>{{track.artist}}</strong>
+          <span class="artist">{{track.artist}}</span>
         {% endif %}
+        <span class="track">
         {% if track.artist and track.title or track.artist and track.album %}|{% endif %}
         {% if track.title %}{{track.title}}{% endif %}
         {% if track.title and track.album %}|{% endif %}
         {% if track.album %}{{track.album}}{% endif %}
+        </span>
       </li>
       {% endfor %}
     </ul>
