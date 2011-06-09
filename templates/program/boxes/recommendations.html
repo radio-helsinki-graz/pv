@@ -13,7 +13,8 @@
       {% for item in recommendation_list %}
         <tr>
           <td class="start">&nbsp;</td>
-          <td class="format bf-{{ item.show.broadcastformat.slug }}">&nbsp;</td>
+          <td class="format bf-{{ item.show.broadcastformat.slug }}"
+              title="{{ item.show.broadcastformat.format }}">&nbsp;</td>
           <td class="show">
             {{ item.timeslot.start|date:"d.m. H:i" }} -
             {{ item.timeslot.end|date:"H:i" }}<br />
