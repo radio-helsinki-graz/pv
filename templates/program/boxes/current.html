@@ -6,33 +6,50 @@
 </head>
 <body>
 
-  {% if current or next or after_next %}
-  <dl class="portlet program-current">
+  {% if previous or current or next or after_next %}
+  <dl class="portlet program-box">
     <dt class="portletHeader">Programm derzeit</dt>
-    <dd class="portletItem current-timeslot">
-        <div class="start">{{ current.start|date:"H:i" }}</div>
-        <div class="show {{ current.show.broadcastformat.slug }}">
-            <div class="name"><a href="{% url timeslot-detail current.id %}">{{ current.show.name }}</a></div>
-        {% if current.note %}
-            <div class="note-title">{{ current.note.title }}</div>
-        {% else %}
-            {% if current.show.short_description != 'FIXME' %}
-                <div class="short-description">{{ current.show.short_description }}</div>
+    <dd class="portletItem">
+      <table>
+        <tr class="previous">
+          <td class="start">{{ previous.start|date:"H:i" }}</td>
+          <td class="format bf-{{ previous.show.broadcastformat.slug }}">&nbsp;</td>
+          <td class="show">
+            <h3><a href="{% url timeslot-detail previous.id %}">{{ previous.show.name }}</a></h3>
+          </td>
+          <td class="show"></td>
+        </tr>
+        <tr class="current">
+          <td class="start">{{ current.start|date:"H:i" }}</td>
+          <td class="format bf-{{ current.show.broadcastformat.slug }}">&#x25B6;</td>
+          <td class="show">
+            <h3><a href="{% url timeslot-detail current.id %}">{{ current.show.name }}</a></h3>
+            {% if current.note %}
+            <p>{{ current.note.title }}</p>
+            {% else %}
+              {% if current.show.short_description != 'FIXME' %}
+            <p>{{ current.show.short_description }}</p>
+              {% endif %}
             {% endif %}
-        {% endif %}
-        </div>
-    </dd>
-    <dd class="portletItem next-timeslot">
-        <div class="start">{{ next.start|date:"H:i" }}</div>
-        <div class="show {{ next.show.broadcastformat.slug }}">
-            <div class="name"><a href="{% url timeslot-detail next.id %}">{{ next.show.name }}</a></div>
-        </div>
-    </dd>
-    <dd class="portletItem next-timeslot">
-        <div class="start">{{ after_next.start|date:"H:i" }}</div>
-        <div class="show {{ after_next.show.broadcastformat.slug }}">
-            <div class="name"><a href="{% url timeslot-detail after_next.id %}">{{ after_next.show.name }}</div></a>
-        </div>
+          </td>
+        </tr>
+        <tr class="next">
+          <td class="start">{{ next.start|date:"H:i" }}</td>
+          <td class="format bf-{{ next.show.broadcastformat.slug }}">&nbsp;</td>
+          <td class="show">
+            <h3><a href="{% url timeslot-detail next.id %}">{{ next.show.name }}</a></h3>
+          </td>
+          <td class="show"></td>
+        </tr>
+        <tr class="after_next">
+          <td class="start">{{ after_next.start|date:"H:i" }}</td>
+          <td class="format bf-{{ after_next.show.broadcastformat.slug }}">&nbsp;</td>
+          <td class="show">
+            <h3><a href="{% url timeslot-detail after_next.id %}">{{ after_next.show.name }}</a></h3>
+          </td>
+          <td class="show"></td>
+        </tr>
+        </table>
     </dd>
   </dl> 
   {% endif %}

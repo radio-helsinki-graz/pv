@@ -74,10 +74,14 @@ def day_schedule(request, year=None, month=None, day=None):
 
 def current_show(request):
     current = TimeSlot.objects.get_or_create_current()
+    previous = current.get_previous_by_start()
     next = current.get_next_by_start()
     after_next = next.get_next_by_start()
 
-    extra_context = dict(current=current, next=next, after_next=after_next)
+    extra_context = dict(current=current,
+            previous=previous,
+            next=next,
+            after_next=after_next)
 
     return simple.direct_to_template(request, template='program/boxes/current.html', extra_context=extra_context)
 
