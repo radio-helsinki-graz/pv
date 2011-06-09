@@ -9,27 +9,29 @@
 <div id="content-main" class="show-detail">
 
   <div class="show-detail-header bf-{{show.broadcastformat.slug}}">
+    <div class="show-details">
       <h1 id="name">{{ show.name }}</h1>
       <p id="programslots">
       {% for slot in show.programslots.all %}
         <span class="programslot">{{ slot }}</span><br />
       {% endfor %}
       </p>
-
-      <div class="show-abbrevs">
-      {% for item in show.showinformation.all %}
-        <span title="{{item.information}}" class="abbrev si-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
-      {% endfor %}
-      {% for item in show.showtopic.all %}
-        <span title="{{item.topic}}" class="abbrev st-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
-      {% endfor %}
-      {% for item in show.musicfocus.all %}
-        <span title="{{item.focus}}" class="abbrev mf-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
-      {% endfor %}
-      </div>
-
-      <p id="broadcastformat">{{ show.broadcastformat.format }}</p>
     </div>
+
+    <div class="show-categorization">
+      <p id="broadcastformat">{{ show.broadcastformat.format }}</p>
+    {% for item in show.showinformation.all %}
+      <span title="{{item.information}}" class="abbrev si-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
+    {% endfor %}
+    {% for item in show.showtopic.all %}
+      <span title="{{item.topic}}" class="abbrev st-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
+    {% endfor %}
+    {% for item in show.musicfocus.all %}
+      <span title="{{item.focus}}" class="abbrev mf-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
+    {% endfor %}
+    </div>
+
+  </div>
 
     {% if show.short_description != 'FIXME' %}
     <div id="short-description" class="documentDescription">{{ show.short_description }}</div>
