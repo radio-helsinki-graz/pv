@@ -10,7 +10,10 @@ import time
 from datetime import datetime
 
 DB = 'nop'
-MUSIKPROG_ID = 1 # unmodieriertes musikprogramm
+MUSIKPROG_IDS = (1,17,81)
+        # unmodieriertes musikprogramm
+        # bumbumtschak
+        # selchfleisch
 
 class NopForm(forms.Form):
     date = forms.DateField(
@@ -63,7 +66,7 @@ def _current():
     title = None
     album = None
     show = _get_show()
-    if show['id'] == MUSIKPROG_ID:
+    if show['id'] in MUSIKPROG_IDS:
         # reverse sorted. get the first object = last played
         result = _which().objects.using(DB).all()[0]
         artist = result.artist
@@ -79,7 +82,7 @@ def _bydate(year=None, month=None, day=None, hour=None, minute=None):
     #try:
         #import pdb;pdb.set_trace()
         show = _get_show(datetime(year, month, day, hour, minute))
-        if show['id'] and show['id'] != MUSIKPROG_ID:
+        if show['id'] and show['id'] not in MUSIKPROG_IDS:
             return [{'show': show['name'],
                      'start': show['start'],
                      'artist': None,
