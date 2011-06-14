@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
@@ -14,7 +16,7 @@ MUSIKPROG_IDS = (1,12,17,34,60,81,89)
         # 1 - unmodieriertes musikprogramm
         # 12 - aus den freien radios
         # 17 - bumbumtschak
-        # 34 - frühstück A
+        # 34 - fruehstück A
         # 60 - musikprogramm bunt gemischt
         # 81 - selchfleisch
         # 89 - styrian underground
