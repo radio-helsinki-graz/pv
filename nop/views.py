@@ -10,11 +10,14 @@ import time
 from datetime import datetime
 
 DB = 'nop'
-MUSIKPROG_IDS = (1,17,60,81)
+MUSIKPROG_IDS = (1,12,17,34,60,81,89)
         # 1 - unmodieriertes musikprogramm
+        # 12 - aus den freien radios
         # 17 - bumbumtschak
+        # 34 - frühstück A
         # 60 - musikprogramm bunt gemischt
         # 81 - selchfleisch
+        # 89 - styrian underground
 
 class NopForm(forms.Form):
     date = forms.DateField(
