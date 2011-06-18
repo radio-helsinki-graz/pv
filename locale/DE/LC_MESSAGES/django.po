@@ -257,7 +257,7 @@ msgstr "Ausfall"
 
 #: program/models.py:283
 msgid "Recommendation"
-msgstr "Empfhelung"
+msgstr "Empfehlung"
 
 #: program/models.py:284
 msgid "Repetition"
