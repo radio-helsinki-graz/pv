@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from models import BroadcastFormat, MusicFocus, ShowInformation, ShowTopic, Host, Note, ProgramSlot, Show, TimeSlot
 
@@ -22,8 +22,9 @@ class ShowTopicAdmin(admin.ModelAdmin):
 
 class NoteAdmin(admin.ModelAdmin):
     date_hierarchy = 'start'
+    exclude = ('owner',)
     list_display = ('title', 'show', 'start', 'status')
-    list_filter = ('status',)
+    list_filter = ('status', 'show')
     ordering = ('timeslot',)
 
     def queryset(self, request):
@@ -36,11 +37,12 @@ class NoteAdmin(admin.ModelAdmin):
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'timeslot':
+            one_year_ago = datetime.today() - timedelta(days=365)
             if request.user.is_superuser:
-                kwargs['queryset'] = TimeSlot.objects.filter(start__gt=datetime.now)
+                kwargs['queryset'] = TimeSlot.objects.filter(start__gt=one_year_ago, note__isnull=True)
             else:
                 shows = request.user.shows.all()
-                kwargs['queryset'] = TimeSlot.objects.filter(show__in=shows, start__gt=datetime.now)
+                kwargs['queryset'] = TimeSlot.objects.filter(show__in=shows, start__gt=one_year_ago, note__isnull=True)
 
         return super(NoteAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
