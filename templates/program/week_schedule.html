@@ -6,138 +6,79 @@
 <body>
 
 <div id="content-main" class="week-schedule">
-
-    <div id="weekday-starts">&nbsp;</div>
+    <div id="weekday-starts">
+        <div style="height: 47px;">&nbsp;</div>
+        <div style="height: 61px;">06:00</div>
+        <div style="height: 61px;">07:00</div>
+        <div style="height: 61px;">08:00</div>
+        <div style="height: 61px;">09:00</div>
+        <div style="height: 61px;">10:00</div>
+        <div style="height: 61px;">11:00</div>
+        <div style="height: 61px;">12:00</div>
+        <div style="height: 61px;">13:00</div>
+        <div style="height: 61px;">14:00</div>
+        <div style="height: 61px;">15:00</div>
+        <div style="height: 61px;">16:00</div>
+        <div style="height: 61px;">17:00</div>
+        <div style="height: 61px;">18:00</div>
+        <div style="height: 61px;">19:00</div>
+        <div style="height: 61px;">20:00</div>
+        <div style="height: 61px;">21:00</div>
+        <div style="height: 61px;">22:00</div>
+        <div style="height: 61px;">23:00</div>
+        <div style="height: 61px;">00:00</div>
+        <div style="height: 61px;">01:00</div>
+        <div style="height: 61px;">02:00</div>
+        <div style="height: 61px;">03:00</div>
+        <div style="height: 61px;">04:00</div>
+        <div style="height: 61px;">05:00</div>
+    </div>
     <div id="monday" class="weekday">
         <h2>{{ monday|date:"l d.m.Y" }}</h2>
         {% for timeslot in monday_timeslots %}
-            {% if forloop.first and timeslot.start != timeslot.get_previous_by_start.end %}
-        <div class="timeslot bf-{{ default_show.broadcastformat.slug }}">
-            {{ default_show.name }}
-        </div>
-            {% endif %}
-        <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}">
-            <a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a>
-        </div>
-            {% if timeslot.end != timeslot.get_next_by_start.start %}
-        <div class="timeslot bf-{{ default_show.broadcastformat.slug }}">
-            {{ default_show.name }}
-        </div>
-            {% endif %}
+            {% include "program/week_schedule_timeslot.html" %}
         {% endfor %}
     </div>
 
     <div id="tuesday" class="weekday">
         <h2>{{ tuesday|date:"l d.m.Y" }}</h2>
         {% for timeslot in tuesday_timeslots %}
-            {% if forloop.first and timeslot.start != timeslot.get_previous_by_start.end %}
-        <div class="timeslot bf-{{ default_show.broadcastformat.slug }}">
-            {{ default_show.name }}
-        </div>
-            {% endif %}
-        <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}">
-          <a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a>
-        </div>
-            {% if timeslot.end != timeslot.get_next_by_start.start %}
-        <div class="timeslot bf-{{ default_show.broadcastformat.slug }}">
-            {{ default_show.name }}
-        </div>
-            {% endif %}
+            {% include "program/week_schedule_timeslot.html" %}
         {% endfor %}
     </div>
 
     <div id="wednesday" class="weekday">
         <h2>{{ wednesday|date:"l d.m.Y" }}</h2>
         {% for timeslot in wednesday_timeslots %}
-            {% if forloop.first and timeslot.start != timeslot.get_previous_by_start.end %}
-        <div class="timeslot bf-{{ default_show.broadcastformat.slug }}">
-            {{ default_show.name }}
-        </div>
-            {% endif %}
-        <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}">
-          <a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a>
-        </div>
-            {% if timeslot.end != timeslot.get_next_by_start.start %}
-        <div class="timeslot bf-{{ default_show.broadcastformat.slug }}">
-            {{ default_show.name }}
-        </div>
-            {% endif %}
+            {% include "program/week_schedule_timeslot.html" %}
         {% endfor %}
     </div>
 
     <div id="thursday" class="weekday">
         <h2>{{ thursday|date:"l d.m.Y" }}</h2>
         {% for timeslot in thursday_timeslots %}
-            {% if forloop.first and timeslot.start != timeslot.get_previous_by_start.end %}
-        <div class="timeslot bf-{{ default_show.broadcastformat.slug }}">
-            {{ default_show.name }}
-        </div>
-            {% endif %}
-        <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}">
-          <a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a>
-        </div>
-            {% if timeslot.end != timeslot.get_next_by_start.start %}
-        <div class="timeslot bf-{{ default_show.broadcastformat.slug }}">
-            {{ default_show.name }}
-        </div>
-            {% endif %}
+            {% include "program/week_schedule_timeslot.html" %}
         {% endfor %}
     </div>
 
     <div id="friday" class="weekday">
         <h2>{{ friday|date:"l d.m.Y" }}</h2>
         {% for timeslot in friday_timeslots %}
-            {% if forloop.first and timeslot.start != timeslot.get_previous_by_start.end %}
-        <div class="timeslot bf-{{ default_show.broadcastformat.slug }}">
-            {{ default_show.name }}
-        </div>
-            {% endif %}
-        <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}">
-          <a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a>
-        </div>
-            {% if timeslot.end != timeslot.get_next_by_start.start %}
-        <div class="timeslot bf-{{ default_show.broadcastformat.slug }}">
-            {{ default_show.name }}
-        </div>
-            {% endif %}
+            {% include "program/week_schedule_timeslot.html" %}
         {% endfor %}
     </div>
 
     <div id="saturday" class="weekday">
         <h2>{{ saturday|date:"l d.m.Y" }}</h2>
         {% for timeslot in saturday_timeslots %}
-            {% if forloop.first and timeslot.start != timeslot.get_previous_by_start.end %}
-        <div class="timeslot bf-{{ default_show.broadcastformat.slug }}">
-            {{ default_show.name }}
-        </div>
-            {% endif %}
-        <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}">
-          <a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a>
-        </div>
-            {% if timeslot.end != timeslot.get_next_by_start.start %}
-        <div class="timeslot bf-{{ default_show.broadcastformat.slug }}">
-            {{ default_show.name }}
-        </div>
-            {% endif %}
+            {% include "program/week_schedule_timeslot.html" %}
         {% endfor %}
     </div>
 
     <div id="sunday" class="weekday">
         <h2>{{ sunday|date:"l d.m.Y" }}</h2>
         {% for timeslot in sunday_timeslots %}
-            {% if forloop.first and timeslot.start != timeslot.get_previous_by_start.end %}
-        <div class="timeslot bf-{{ default_show.broadcastformat.slug }}">
-            {{ default_show.name }}
-        </div>
-            {% endif %}
-        <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}">
-          <a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a>
-        </div>
-            {% if timeslot.end != timeslot.get_next_by_start.start %}
-        <div class="timeslot bf-{{ default_show.broadcastformat.slug }}">
-            {{ default_show.name }}
-        </div>
-            {% endif %}
+            {% include "program/week_schedule_timeslot.html" %}
         {% endfor %}
     </div>
 </div>
