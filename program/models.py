@@ -195,9 +195,17 @@ class ProgramSlot(models.Model):
                 byweekday_start = self.byweekday
 
                 if self.tend < self.tstart:
-                    byweekday_end = self.byweekday + 1 if self.byweekday < 6 else 0
+                    if self.byweekday < 6:
+                        byweekday_end = self.byweekday + 1
+                    else:
+                        byweekday_end = 0
                 else:
                     byweekday_end = self.byweekday
+
+            if self.tend < self.tstart:
+                dend = self.dstart + timedelta(days=+1)
+            else:
+                dend = self.dstart
 
             starts = list(rrule(freq=self.rrule.freq,
                 dtstart=datetime.combine(self.dstart, self.tstart),
@@ -206,7 +214,7 @@ class ProgramSlot(models.Model):
                 bysetpos=self.rrule.bysetpos,
                 byweekday=byweekday_start))
             ends = list(rrule(freq=self.rrule.freq,
-                dtstart=datetime.combine(self.dstart, self.tend),
+                dtstart=datetime.combine(dend, self.tend),
                 interval=self.rrule.interval,
                 until=self.until+relativedelta(days=+1),
                 bysetpos=self.rrule.bysetpos,
