@@ -2,20 +2,28 @@
 
 {% if forloop.first and timeslot.start != timeslot.get_previous_by_start.end %}
 <div class="timeslot bf-{{ default_show.broadcastformat.slug }}" {% duration_until timeslot.start %}>
-{{ default_show.name }}
+  <div>
+    {{ default_show.name }}
+  </div>
 </div>
 {% endif %}
 <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}" {% duration timeslot.start timeslot.end %}>
-  <a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a>
+  <div>
+    <a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a>
+  </div>
 </div>
 {% if timeslot.end != timeslot.get_next_by_start.start %}
     {% if not forloop.last %}
 <div class="timeslot bf-{{ default_show.broadcastformat.slug }}" {% duration timeslot.end timeslot.get_next_by_start.start %}>
-{{ default_show.name }}
+  <div>
+    {{ default_show.name }}
+  </div>
 </div>
     {% else %}
 <div class="timeslot bf-{{ default_show.broadcastformat.slug }}" {% duration_since timeslot.end %}>
-{{ default_show.name }}
+  <div>
+    {{ default_show.name }}
+  </div>
 </div>
     {% endif %}
 {% endif %}

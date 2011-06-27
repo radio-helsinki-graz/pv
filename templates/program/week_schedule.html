@@ -6,8 +6,8 @@
 <body>
 
 <div id="content-main" class="week-schedule">
-    <div id="weekday-starts">
-        <div style="height: 47px;">&nbsp;</div>
+    <div class="weekday-starts">
+        <div style="height: 43px;">&nbsp;</div>
         <div style="height: 61px;">06:00</div>
         <div style="height: 61px;">07:00</div>
         <div style="height: 61px;">08:00</div>
@@ -33,7 +33,7 @@
         <div style="height: 61px;">04:00</div>
         <div style="height: 61px;">05:00</div>
     </div>
-    <div id="monday" class="weekday">
+    <div id="monday" class="weekday weekday-first">
         <h2>{{ monday|date:"l d.m.Y" }}</h2>
         {% for timeslot in monday_timeslots %}
             {% include "program/week_schedule_timeslot.html" %}
@@ -75,12 +75,41 @@
         {% endfor %}
     </div>
 
-    <div id="sunday" class="weekday">
+    <div id="sunday" class="weekday weekday-last">
         <h2>{{ sunday|date:"l d.m.Y" }}</h2>
         {% for timeslot in sunday_timeslots %}
             {% include "program/week_schedule_timeslot.html" %}
         {% endfor %}
     </div>
+  
+    <div class="weekday-starts">
+        <div style="height: 43px;">&nbsp;</div>
+        <div style="height: 61px;">06:00</div>
+        <div style="height: 61px;">07:00</div>
+        <div style="height: 61px;">08:00</div>
+        <div style="height: 61px;">09:00</div>
+        <div style="height: 61px;">10:00</div>
+        <div style="height: 61px;">11:00</div>
+        <div style="height: 61px;">12:00</div>
+        <div style="height: 61px;">13:00</div>
+        <div style="height: 61px;">14:00</div>
+        <div style="height: 61px;">15:00</div>
+        <div style="height: 61px;">16:00</div>
+        <div style="height: 61px;">17:00</div>
+        <div style="height: 61px;">18:00</div>
+        <div style="height: 61px;">19:00</div>
+        <div style="height: 61px;">20:00</div>
+        <div style="height: 61px;">21:00</div>
+        <div style="height: 61px;">22:00</div>
+        <div style="height: 61px;">23:00</div>
+        <div style="height: 61px;">00:00</div>
+        <div style="height: 61px;">01:00</div>
+        <div style="height: 61px;">02:00</div>
+        <div style="height: 61px;">03:00</div>
+        <div style="height: 61px;">04:00</div>
+        <div style="height: 61px;">05:00</div>
+    </div>
+  
 </div>
 
 </body>
