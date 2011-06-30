@@ -7,7 +7,6 @@ from views import current_show, day_schedule, recommendations, show_list, week_s
 
 import os
 PROGRAM_STATIC_DIR = os.path.join(os.path.dirname(__file__), '../site_media')
-import pdb;pdb.set_trace()
 
 hosts_dict = {
     'queryset': Host.objects.all(),
