@@ -24,25 +24,17 @@ class NoteAdmin(admin.ModelAdmin):
     date_hierarchy = 'start'
     exclude = ('owner',)
     list_display = ('title', 'show', 'start', 'status')
-    list_filter = ('status', 'show')
+    list_filter = ('status',)
     ordering = ('timeslot',)
 
     def queryset(self, request):
-        qs = super(NoteAdmin, self).queryset(request)
-
-        if request.user.is_superuser:
-            return qs
-        else:
-            return qs.filter(owner=request.user)
+        return super(NoteAdmin, self).queryset(request).filter(owner=request.user)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'timeslot':
             one_year_ago = datetime.today() - timedelta(days=365)
-            if request.user.is_superuser:
-                kwargs['queryset'] = TimeSlot.objects.filter(start__gt=one_year_ago, note__isnull=True)
-            else:
-                shows = request.user.shows.all()
-                kwargs['queryset'] = TimeSlot.objects.filter(show__in=shows, start__gt=one_year_ago, note__isnull=True)
+            shows = request.user.shows.all()
+            kwargs['queryset'] = TimeSlot.objects.filter(show__in=shows, start__gt=one_year_ago, note__isnull=True)
 
         return super(NoteAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
