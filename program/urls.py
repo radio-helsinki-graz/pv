@@ -5,9 +5,6 @@ from django.views.generic.list_detail import object_detail, object_list
 from models import Host, Show, TimeSlot
 from views import current_show, day_schedule, recommendations, show_list, week_schedule
 
-import os
-PROGRAM_STATIC_DIR = os.path.join(os.path.dirname(__file__), '../site_media')
-
 hosts_dict = {
     'queryset': Host.objects.all(),
     'template_object_name': 'host'
@@ -35,5 +32,4 @@ urlpatterns = patterns('',
     url(r'^shows/(?P<slug>[\w-]+)/?$', object_detail, shows_dict, name='show-detail'),
     url(r'^(?P<object_id>\d+)/?$', object_detail, timeslots_dict, name='timeslot-detail'),
     url(r'^week/?$', week_schedule),
-    url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': PROGRAM_STATIC_DIR}),
 )
