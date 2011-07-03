@@ -34,7 +34,7 @@ class NoteAdmin(admin.ModelAdmin):
         if db_field.name == 'timeslot':
             one_year_ago = datetime.today() - timedelta(days=365)
             shows = request.user.shows.all()
-            kwargs['queryset'] = TimeSlot.objects.filter(show__in=shows, start__gt=one_year_ago, note__isnull=True)
+            kwargs['queryset'] = TimeSlot.objects.filter(show__in=shows, start__gt=one_year_ago)
 
         return super(NoteAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
