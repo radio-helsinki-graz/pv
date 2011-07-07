@@ -5,7 +5,7 @@
 <body>
 
 <div id="content-main" class="recommendations">
-    <div id="recommendations-title">Programmhinweise</div>
+    <h1>Programmhinweise</h1>
 {% for recommendation in recommendation_list %}
     <div class="recommendation {{ recommendation.show.broadcastformat.slug }}">
         <div class="timeslot-start-end">{{ recommendation.timeslot.start|date:"d.m. H:i" }}-{{ recommendation.timeslot.end|date:"H:i" }}</div>

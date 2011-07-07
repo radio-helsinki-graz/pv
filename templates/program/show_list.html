@@ -36,11 +36,11 @@
         </div>
         <div class="show-detail">
             <h3 class="show-title"><a href="{% url show-detail show.slug %}">{{ show.name }}</a></h3>
-            <div class="show-programslots">
+            <ul class="show-programslots">
             {% for slot in show.programslots.all %}
-                <p class="show-programslot">{{ slot }}</p>
+                <li class="show-programslot">{{ slot }}</li>
             {% endfor %}
-            </div>
+            </ul>
             {% if show.short_description != 'FIXME' %}
             <p class="show-description">{{ show.short_description }}</p>
             {% endif %}
