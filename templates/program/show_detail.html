@@ -61,7 +61,7 @@
     <h2>Sendungstipps</h2>
     <ul class="recommendations-list">
       {% for note in show.notes.all %}
-      <li><a href="{% url timeslot-detail note.timeslot.id %}" title="{{ note.title }}">{{ note.start|date:"d. M Y" }}</a>: {{ note.title }}</li>
+      <li><a href="{% url timeslot-detail note.timeslot.id %}" title="{{ note.title }}">{{ note.start|date:"d. M Y" }}:</a> {{ note.title }}</li>
       {% endfor %}
     </ul>
    {% endif %}
