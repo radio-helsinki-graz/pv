@@ -56,11 +56,15 @@
       {% endif %}
     </p>
 
+    {% if show.notes.all %}
+    <h2>Sendungstipps</h2>
     <p>
         {% for note in show.notes.all %}
-           <a href="{% url timeslot-detail note.timeslot.id %}" title="{{ note.title }}">{{ note.start|date:"d. M Y" }}</a>
+        <a href="{% url timeslot-detail note.timeslot.id %}" title="{{ note.title }}">{{ note.start|date:"d. M Y" }}</a> ({{ note.title }})<br />
         {% endfor %}
     </p>
+   {% endif %}
+
 </div>
 
 </body>
