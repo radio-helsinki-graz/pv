@@ -6,7 +6,7 @@
 
 <div id="content-main" class="recommendations">
   <h1>Programmhinweise</h1>
-  <div class="shows">
+  <div id="shows">
 {% for item in recommendation_list %}
     <div class="show recommendation  bf-{{ item.show.broadcastformat.slug }}">
         <div class="show-abbrevs">
@@ -21,7 +21,10 @@
         {% endfor %}
         </div>
         <div class="show-detail">
-          <h3 class="show-title"><a href="{% url show-detail item.show.slug %}">{{ item.show.name }}</a>: <a href="{%  url timeslot-detail item.timeslot.id %}">{{ item.title }}</a></h3>
+          <h3 class="show-title">
+            <a href="{% url show-detail item.show.slug %}">{{ item.show.name }}</a>:<br />
+            <a href="{%  url timeslot-detail item.timeslot.id %}">{{ item.title }}</a>
+          </h3>
           <h4 class="timeslot-start-end">{{ item.timeslot.start|date:"d.m. H:i" }}-{{ item.timeslot.end|date:"H:i" }}</h4>
 
           <p class="note-content">{{ item.content|safe}}</p>
