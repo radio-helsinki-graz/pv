@@ -7,7 +7,7 @@
 <div id="content-main" class="timeslot-detail">
 
   <div class="show-detail-header bf-{{timeslot.show.broadcastformat.slug}}">
-      <h1 id="name">{{ timeslot.show.name }}</h1>
+      <h1 id="name"><a href="{% url show-detail timeslot.show.slug %}">{{ timeslot.show.name }}</a></h1>
 
       <div class="show-abbrevs">
       {% for item in timeslot.show.showinformation.all %}

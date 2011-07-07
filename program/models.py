@@ -262,7 +262,7 @@ class TimeSlot(models.Model):
     programslot = models.ForeignKey(ProgramSlot, related_name='timeslots', verbose_name=_("Program slot"))
     start = models.DateTimeField(_("Start time"), unique=True)
     end = models.DateTimeField(_("End time"))
-    show = models.ForeignKey(Show, editable=False)
+    show = models.ForeignKey(Show, editable=False, related_name='timeslots')
 
     objects = TimeSlotManager()
 
@@ -298,7 +298,7 @@ class Note(models.Model):
     status = models.IntegerField(_("Status"), choices=STATUS_CHOICES, default=1)
     cba_entry_id = models.IntegerField(_("CBA entry ID"), blank=True, null=True)
     start = models.DateTimeField(editable=False)
-    show = models.ForeignKey(Show, editable=False)
+    show = models.ForeignKey(Show, editable=False, related_name='notes')
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_updated = models.DateTimeField(auto_now=True, editable=False)
 

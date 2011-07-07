@@ -11,11 +11,13 @@
   <div class="show-detail-header bf-{{show.broadcastformat.slug}}">
     <div class="show-details">
       <h1 id="name">{{ show.name }}</h1>
+    {% if show.id != 1 %}
       <p id="programslots">
       {% for slot in show.programslots.all %}
         <span class="programslot">{{ slot }}</span><br />
       {% endfor %}
       </p>
+    {% endif %}
     </div>
 
     <div class="show-categorization">
@@ -54,6 +56,11 @@
       {% endif %}
     </p>
 
+    <p>
+        {% for note in show.notes.all %}
+           <a href="{% url timeslot-detail note.timeslot.id %}" title="{{ note.title }}">{{ note.start|date:"d. M Y" }}</a>
+        {% endfor %}
+    </p>
 </div>
 
 </body>
