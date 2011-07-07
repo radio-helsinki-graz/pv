@@ -5,16 +5,34 @@
 <body>
 
 <div id="content-main" class="recommendations">
-    <h1>Programmhinweise</h1>
-{% for recommendation in recommendation_list %}
-    <div class="recommendation {{ recommendation.show.broadcastformat.slug }}">
-        <div class="timeslot-start-end">{{ recommendation.timeslot.start|date:"d.m. H:i" }}-{{ recommendation.timeslot.end|date:"H:i" }}</div>
-        <div class="show-name"><a href="{%  url show-detail recommendation.show.slug %}">{{ recommendation.show.name }}</a></div>
-        {% if recommendation.show.short_description != 'FIXME' %}
-        <div class="show-short-description">{{ recommendation.show.short_description }}</div>
-        {% endif %}
-        <div class="note-title"><a href="{%  url timeslot-detail recommendation.timeslot.id %}">{{ recommendation.title }}</a></div>
-        <div class="note-content">{{ recommendation.content|safe}}</div>
+  <h1>Programmhinweise</h1>
+  <div class="shows">
+{% for item in recommendation_list %}
+    <div class="show recommendation  bf-{{ item.show.broadcastformat.slug }}">
+        <div class="show-abbrevs">
+        {% for item in show.showinformation.all %}
+          <span title="{{item.information}}" class="abbrev si-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
+        {% endfor %}
+        {% for item in show.showtopic.all %}
+          <span title="{{item.topic}}" class="abbrev st-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
+        {% endfor %}
+        {% for item in show.musicfocus.all %}
+          <span title="{{item.focus}}" class="abbrev mf-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
+        {% endfor %}
+        </div>
+        <div class="show-detail">
+          <h3 class="show-title"><a href="{% url show-detail item.show.slug %}">{{ item.show.name }}</a></h3>
+          <p class="timeslot-start-end">{{ item.timeslot.start|date:"d.m. H:i" }}-{{ item.timeslot.end|date:"H:i" }}</p>
+
+          {% if item.show.short_description != 'FIXME' %}
+          <p class="show-description">{{ item.show.short_description }}</p>
+          {% endif %}
+
+          <h3 class="note-title"><a href="{%  url timeslot-detail item.timeslot.id %}">{{ item.title }}</a></h3>
+
+          <p class="note-content">{{ item.content|safe}}</p>
+
+        </div>
     </div>
 {% endfor %}
 </div>
