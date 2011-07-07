@@ -57,12 +57,13 @@
     </p>
 
     {% if show.notes.all %}
+    <br />
     <h2>Sendungstipps</h2>
-    <p>
-        {% for note in show.notes.all %}
-        <a href="{% url timeslot-detail note.timeslot.id %}" title="{{ note.title }}">{{ note.start|date:"d. M Y" }}</a> |
-        {% endfor %}
-    </p>
+    <ul>
+      {% for note in show.notes.all %}
+      <li><a href="{% url timeslot-detail note.timeslot.id %}" title="{{ note.title }}">{{ note.start|date:"d. M Y" }}</a>: <div>{{ note.title }}</div></li>
+      {% endfor %}
+    </ul>
    {% endif %}
 
 </div>
