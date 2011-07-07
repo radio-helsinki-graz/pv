@@ -10,14 +10,14 @@
 {% for item in recommendation_list %}
     <div class="show recommendation  bf-{{ item.show.broadcastformat.slug }}">
         <div class="show-abbrevs">
-        {% for item in item.show.showinformation.all %}
-          <span title="{{item.information}}" class="abbrev si-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
+        {% for ab in item.show.showinformation.all %}
+          <span title="{{ab.information}}" class="abbrev si-{{ ab.abbrev }}"><span>{{ ab.abbrev }}</span></span>
         {% endfor %}
-        {% for item in show.showtopic.all %}
-          <span title="{{item.topic}}" class="abbrev st-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
+        {% for ab in item.show.showtopic.all %}
+          <span title="{{ab.topic}}" class="abbrev st-{{ ab.abbrev }}"><span>{{ ab.abbrev }}</span></span>
         {% endfor %}
-        {% for item in show.musicfocus.all %}
-          <span title="{{item.focus}}" class="abbrev mf-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
+        {% for ab in item.show.musicfocus.all %}
+          <span title="{{ab.focus}}" class="abbrev mf-{{ ab.abbrev }}"><span>{{ ab.abbrev }}</span></span>
         {% endfor %}
         </div>
         <div class="show-detail">
