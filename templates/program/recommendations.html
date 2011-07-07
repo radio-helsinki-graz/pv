@@ -22,8 +22,8 @@
         </div>
         <div class="show-detail">
           <h4>
-            <a href="{% url show-detail item.show.slug %}">{{ item.show.name }}</a> vom
-            {{ item.timeslot.start|date:"d.m. H:i" }}-{{ item.timeslot.end|date:"H:i" }}
+            <a href="{% url show-detail item.show.slug %}">{{ item.show.name }}</a><br />
+            vom {{ item.timeslot.start|date:"d.m. H:i" }}-{{ item.timeslot.end|date:"H:i" }}
           </h4>
           <h3 class="show-title">
             <a href="{%  url timeslot-detail item.timeslot.id %}">{{ item.title }}</a>
