@@ -76,9 +76,7 @@
             {% if timeslot.note %}
             <p class="note-title"><strong>Heute:</strong> {{ timeslot.note.title }}</p>
             {% else %}
-                {% if timeslot.show.short_description != 'FIXME' %}
             <p class="show-description">{{ timeslot.show.short_description }}</p>
-                {% endif %}
             {% endif %}
         </div>
     </div>

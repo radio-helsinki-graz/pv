@@ -29,9 +29,7 @@
             {% if current.note %}
             <p>{{ current.note.title }}</p>
             {% else %}
-              {% if current.show.short_description != 'FIXME' %}
             <p>{{ current.show.short_description }}</p>
-              {% endif %}
             {% endif %}
           </td>
         </tr>

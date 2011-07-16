@@ -29,9 +29,7 @@
     <p class="timeslot-note">{{ timeslot.note.content|safe }}</p>
     {% endif %}
 
-    {% if timeslot.show.short_description != 'FIXME' %}
     <div id="short-description" class="documentDescription">{{ timeslot.show.short_description }}</div>
-    {% endif %}
 
     <div id="description">{{ timeslot.show.description|safe }}</div>
 
