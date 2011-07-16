@@ -39,6 +39,10 @@
 
     <div id="description">{{ show.description|safe }}</div>
 
+    {% if show.image %}
+    <div id="image" style="float: right;"><img src="/program/static/{{ show.image }}" width="200" alt="image"></div>
+    {% endif %}
+
     <p>
       {% for host in show.hosts.all %}
       <a href="{% url host-detail host.id %}">{{ host }}</a><br />
