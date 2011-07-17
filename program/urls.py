@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.conf.urls.defaults import *
 
 from django.views.generic.list_detail import object_detail, object_list
@@ -33,3 +34,10 @@ urlpatterns = patterns('',
     url(r'^(?P<object_id>\d+)/?$', object_detail, timeslots_dict, name='timeslot-detail'),
     url(r'^week/?$', week_schedule),
 )
+
+if settings.DEBUG:
+    import os
+    PROGRAM_STATIC_DIR = os.path.join(os.path.dirname(__file__), '../site_media')
+    urlpatterns += patterns('',
+        url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': PROGRAM_STATIC_DIR}),
+    )
