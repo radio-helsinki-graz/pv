@@ -68,14 +68,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'program',
     'nop',
-    'haystack',
     'tinymce',
 )
-
-HAYSTACK_SITECONF = 'search_sites'
-HAYSTACK_SEARCH_ENGINE = 'solr'
-HAYSTACK_SOLR_URL = 'http://localhost:8988/solr'
-HAYSTACK_ID_FIELD = 'docid'
 
 TINYMCE_DEFAULT_CONFIG = {
     'plugins' : 'contextmenu',
