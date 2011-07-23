@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned, ValidationError
 from django.core.management.base import NoArgsCommand
 from django.utils.html import clean_html, strip_tags
 
@@ -22,14 +22,14 @@ class Command(NoArgsCommand):
 
         cursor.execute("""SELECT n.titel, n.datum, s.titel, n.notiz
 FROM notizen AS n JOIN sendungen AS s ON n.sendung_id=s.id
-WHERE n.sendung_id in (SELECT id FROM sendungen WHERE letzter_termin > current_date) AND n.titel != ''""")
+WHERE n.sendung_id in (SELECT id FROM sendungen WHERE letzter_termin > current_date)""")
 
         counter = 0
         for ntitel, datum, stitel, notiz in cursor.fetchall():
-            ntitel = strip_tags(ntitel)
+            ntitel = strip_tags(ntitel) if ntitel else strip_tags(stitel)
             stitel = strip_tags(stitel)
             notiz = clean_html(notiz)
-            
+
             if stitel.endswith('(Wiederholung)'):
                 stitel = stitel[:-15]
 
@@ -37,7 +37,9 @@ WHERE n.sendung_id in (SELECT id FROM sendungen WHERE letzter_termin > current_d
                 year, month, day = datum.year, datum.month, datum.day
                 try:
                     show = Show.objects.get(name=stitel)
-                    
+                except ObjectDoesNotExist:
+                    print 'show with name "%s" not found' % stitel
+                else:
                     try:
                         timeslot = TimeSlot.objects.get(programslot__show=show, start__year=year, start__month=month, start__day=day)
                     except ObjectDoesNotExist:
@@ -46,15 +48,17 @@ WHERE n.sendung_id in (SELECT id FROM sendungen WHERE letzter_termin > current_d
                         print 'multiple timeslots found for sendung "%s" and datum "%s"' % (stitel, datum)
                     else:
                         note = Note(timeslot=timeslot, owner=OWNER, title=ntitel, content=notiz)
-                        
                         try:
-                            note.save()
-                        except:
-                            print 'could not save note "%s" for show "%s" and datum "%s"' % (ntitel, stitel, datum)
+                            note.validate_unique()
+                        except ValidationError:
+                            print 'note already imported for show "%s" and datum "%s"' % (stitel, datum)
                         else:
-                            counter += 1
-                except ObjectDoesNotExist:
-                    print 'show with name "%s" not found' % stitel
+                            try:
+                                note.save()
+                            except:
+                                print 'could not save note "%s" for show "%s" and datum "%s"' % (ntitel, stitel, datum)
+                            else:
+                                counter += 1
 
         cursor.close()
         connection.close()
