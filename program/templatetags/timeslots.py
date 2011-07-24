@@ -15,7 +15,7 @@ def duration_until(end):
 
 @register.simple_tag
 def duration_since(start):
-    if start.time()<time(0,0):
+    if start.time() < time(23,59):
         end = datetime.combine(start.date()+timedelta(days=1), time(6,0))
     else:
         end = datetime.combine(start.date(), time(6,0))
