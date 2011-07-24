@@ -28,13 +28,13 @@ class NoteAdmin(admin.ModelAdmin):
     ordering = ('timeslot',)
 
     def queryset(self, request):
-        return super(NoteAdmin, self).queryset(request).filter(owner=request.user)
+        shows = request.user.shows.all()
+        return super(NoteAdmin, self).queryset(request).filter(show__in=shows)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'timeslot':
-            one_year_ago = datetime.today() - timedelta(days=365)
             shows = request.user.shows.all()
-            kwargs['queryset'] = TimeSlot.objects.filter(show__in=shows, start__gt=one_year_ago)
+            kwargs['queryset'] = TimeSlot.objects.filter(show__in=shows)
 
         return super(NoteAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
