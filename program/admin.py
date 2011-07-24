@@ -1,7 +1,5 @@
 from django.contrib import admin
 
-from datetime import datetime, timedelta
-
 from models import BroadcastFormat, MusicFocus, ShowInformation, ShowTopic, Host, Note, ProgramSlot, Show, TimeSlot
 
 class BroadcastFormatAdmin(admin.ModelAdmin):
