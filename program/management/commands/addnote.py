@@ -41,7 +41,7 @@ class Command(BaseCommand):
         except Exception as e:
             raise CommandError(e)
 
-        owner = show.owners[0] if show.owners.count() > 0 else User.objects.get(pk=1)
+        owner = show.owners.all()[0] if show.owners.count() > 0 else User.objects.get(pk=1)
         note = Note(timeslot=timeslot, owner=owner, title=title, content=''.join(lines))
 
         try:
