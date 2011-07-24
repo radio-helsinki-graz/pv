@@ -1,17 +1,18 @@
 from django.conf import settings
 from django.conf.urls.defaults import *
-
 from django.views.generic.list_detail import object_detail, object_list
 
 from models import Host, Show, TimeSlot
 from views import current_show, day_schedule, recommendations, show_list, week_schedule
 
+from datetime import date
+
 hosts_dict = {
-    'queryset': Host.objects.all(),
+    'queryset': Host.objects.filter(shows__programslots__until__gte=date.today()).distinct(),
     'template_object_name': 'host'
 }
 shows_dict = {
-    'queryset': Show.objects.all(),
+    'queryset': Show.objects.filter(programslots__until__gt=date.today()).exclude(id=1).distinct(),
     'template_object_name': 'show'
 }
 timeslots_dict = {

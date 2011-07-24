@@ -6,7 +6,7 @@ from models import BroadcastFormat, MusicFocus, Note, Show, ShowInformation, Sho
 from datetime import date, datetime, time, timedelta
 
 def show_list(request):
-    queryset = Show.objects.exclude(id=1)
+    queryset = Show.objects.filter(programslots__until__gt=date.today()).exclude(id=1).distinct()
 
     if 'broadcastformat' in request.GET:
         broadcastformat = get_object_or_404(BroadcastFormat, slug=request.GET['broadcastformat'])
