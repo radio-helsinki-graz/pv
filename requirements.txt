@@ -1,4 +1,4 @@
-Django==1.2.6
+Django==1.2.7
 MySQL-python==1.2.3
 PIL==1.1.7
 PyYAML==3.10
