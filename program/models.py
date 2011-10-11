@@ -182,9 +182,9 @@ class ProgramSlot(models.Model):
             return u'%s, %s, %s - %s' % (weekday, self.rrule, tstart, tend)
 
     def save(self, *args, **kwargs):
-        if not self.pk:
-            super(ProgramSlot, self).save(*args, **kwargs)
+        super(ProgramSlot, self).save(*args, **kwargs)
 
+        if not self.pk:
             if self.rrule.freq == 0:
                 byweekday_start = None
                 byweekday_end = None
