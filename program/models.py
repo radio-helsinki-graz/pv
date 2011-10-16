@@ -182,9 +182,9 @@ class ProgramSlot(models.Model):
             return u'%s, %s, %s - %s' % (weekday, self.rrule, tstart, tend)
 
     def save(self, *args, **kwargs):
-        super(ProgramSlot, self).save(*args, **kwargs)
-
         if not self.pk:
+            super(ProgramSlot, self).save(*args, **kwargs)
+
             if self.rrule.freq == 0:
                 byweekday_start = None
                 byweekday_end = None
@@ -249,8 +249,8 @@ class TimeSlotManager(models.Manager):
                 new_programslot.save()
             except ValidationError:
                 pass
-
-            return new_programslot.timeslots.all()[0]
+            else:
+                return new_programslot.timeslots.all()[0]
 
     def get_day_timeslots(self, day):
         today = datetime.combine(day, time(6,0))
