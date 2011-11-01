@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.core.exceptions import ObjectDoesNotExist, ValidationError, MultipleObjectsReturned
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -232,6 +232,8 @@ class TimeSlotManager(models.Manager):
     def get_or_create_current(self):
         try:
             return TimeSlot.objects.get(start__lte=datetime.now(), end__gt=datetime.now())
+        except MultipleObjectsReturned:
+            return TimeSlot.objects.filter(start__lte=datetime.now(), end__gt=datetime.now())[0]
         except ObjectDoesNotExist:
             once = RRule.objects.get(pk=1)
             today = date.today().weekday()
