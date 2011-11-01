@@ -85,7 +85,7 @@ class Show(models.Model):
     showinformation = models.ManyToManyField(ShowInformation, blank=True, null=True, related_name='shows', verbose_name=_("Show information"))
     showtopic = models.ManyToManyField(ShowTopic, blank=True, null=True, related_name='shows', verbose_name=_("Show topic"))
     musicfocus = models.ManyToManyField(MusicFocus, blank=True, null=True, related_name='shows', verbose_name=_("Music focus"))
-    name = models.CharField(_("Name"), max_length=256)
+    name = models.CharField(_("Name"), max_length=256, unique=True)
     slug = models.CharField(_("Slug"), max_length=255, unique=True)
     image = models.ImageField(_("Image"), blank=True, null=True, upload_to='show_images')
     short_description = models.CharField(_("Short description"), max_length=64)
