@@ -25,14 +25,16 @@ MUSIKPROG_IDS = (1,5,17,34,60,81,89)
 class NopForm(forms.Form):
     date = forms.DateField(
             required=True,
-            initial=datetime.date(datetime.now()),
+            #initial=datetime.date(datetime.now()), ## static initial specifies
+                                                    ## any time but not the 
+                                                    ## current one
             widget=forms.DateInput(
                 format='%Y-%m-%d',
                 attrs={'id':'nop_date', 'class':'date'})
             )
     time = forms.TimeField(
             required=True,
-            initial=datetime.time(datetime.now()),
+            #initial=datetime.time(datetime.now()),
             widget=forms.TimeInput(
                 format='%H:%M',
                 attrs={'id':'nop_time', 'class':'date'})
@@ -129,7 +131,8 @@ def nop_form(request):
             date = form.cleaned_data['date']
             time = form.cleaned_data['time']
     else:
-        form = NopForm()
+        form = NopForm(initial={'date':datetime.date(datetime.now()),
+                                'time':datetime.time(datetime.now())})
     if not date: date = datetime.date(datetime.now())
     if not time: time = datetime.time(datetime.now())
     result = _bydate(date.year, date.month, date.day, time.hour, time.minute)
