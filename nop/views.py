@@ -26,7 +26,7 @@ class NopForm(forms.Form):
     date = forms.DateField(
             required=True,
             #initial=datetime.date(datetime.now()), ## static initial specifies
-                                                    ## any time but not the 
+                                                    ## any time but not the
                                                     ## current one
             widget=forms.DateInput(
                 format='%Y-%m-%d',
@@ -120,7 +120,7 @@ def get(request, year=None, month=None, day=None, hour=None, minute=None):
 
 def nop_form(request):
     context = {}
-    ## currently no csrf security for nicier forms 
+    ## currently no csrf security for nicier forms
     #context.update(csrf(request)) # in django template: {% csrf_token %}
     date = None
     time = None
