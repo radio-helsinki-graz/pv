@@ -34,6 +34,7 @@
         <div style="height: 60px;">05:00</div>
     </div>
     <div id="monday" class="weekday weekday-first">
+        <div class="week-navigation"><a href="/program/{{ last_w }}">&lt;--</a></div>
         <h2>{{ monday|date:"l d.m.Y" }}</h2>
         {% for timeslot in monday_timeslots %}
             {% include "program/week_schedule_timeslot.html" %}
@@ -41,6 +42,7 @@
     </div>
 
     <div id="tuesday" class="weekday">
+        <div class="week-navigation">{{ cur_w }}</div>
         <h2>{{ tuesday|date:"l d.m.Y" }}</h2>
         {% for timeslot in tuesday_timeslots %}
             {% include "program/week_schedule_timeslot.html" %}
@@ -48,6 +50,7 @@
     </div>
 
     <div id="wednesday" class="weekday">
+        <div class="week-navigation"><a href="/program/{{ next_w1 }}">{{ next_w1 }}</a></div>
         <h2>{{ wednesday|date:"l d.m.Y" }}</h2>
         {% for timeslot in wednesday_timeslots %}
             {% include "program/week_schedule_timeslot.html" %}
@@ -55,6 +58,7 @@
     </div>
 
     <div id="thursday" class="weekday">
+        <div class="week-navigation"><a href="/program/{{ next_w2 }}">{{ next_w2 }}</a></div>
         <h2>{{ thursday|date:"l d.m.Y" }}</h2>
         {% for timeslot in thursday_timeslots %}
             {% include "program/week_schedule_timeslot.html" %}
@@ -62,6 +66,7 @@
     </div>
 
     <div id="friday" class="weekday">
+        <div class="week-navigation"><a href="/program/{{ next_w3 }}">{{ next_w3 }}</a></div>
         <h2>{{ friday|date:"l d.m.Y" }}</h2>
         {% for timeslot in friday_timeslots %}
             {% include "program/week_schedule_timeslot.html" %}
@@ -69,6 +74,7 @@
     </div>
 
     <div id="saturday" class="weekday">
+        <div class="week-navigation"><a href="/program/{{ next_w4 }}">{{ next_w4 }}</a></div>
         <h2>{{ saturday|date:"l d.m.Y" }}</h2>
         {% for timeslot in saturday_timeslots %}
             {% include "program/week_schedule_timeslot.html" %}
@@ -76,6 +82,7 @@
     </div>
 
     <div id="sunday" class="weekday weekday-last">
+        <div class="week-navigation"><a href="/program/{{ next_w1 }}">--&gt;</a></div>
         <h2>{{ sunday|date:"l d.m.Y" }}</h2>
         {% for timeslot in sunday_timeslots %}
             {% include "program/week_schedule_timeslot.html" %}
