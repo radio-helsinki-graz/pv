@@ -12,10 +12,10 @@ import time
 from datetime import datetime
 
 DB = 'nop'
-MUSIKPROG_IDS = (1,5,12,17,34,60,81,89)
+MUSIKPROG_IDS = (1,5,17,34,60,81,89)
         # 1 - unmodieriertes musikprogramm
         # 5 - Abunda Lingva
-        # 12 - aus den freien radios
+        ## 12 - aus den freien radios
         # 17 - bumbumtschak
         # 34 - fruehstück A
         # 60 - musikprogramm bunt gemischt
