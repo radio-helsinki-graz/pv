@@ -86,49 +86,39 @@ def _current():
             'album': album}
 
 def _bydate(year=None, month=None, day=None, hour=None, minute=None):
-    #try:
-        #import pdb;pdb.set_trace()
-        show = _get_show(datetime(year, month, day, hour, minute))
-        if show['id'] and show['id'] not in MUSIKPROG_IDS:
-            return [{'show': show['name'],
-                     'start': show['start'],
-                     'artist': None,
-                     'title': None,
-                     'album': None}]
-        else:
-            # tm_year,tm_mon,tm_mday,tm_hour,tm_min,tm_sec,tm_wday,tm_yday,tm_isdst
-            ts = int(time.mktime((
-                 int(year),
-                 int(month),
-                 int(day),
-                 int(hour),
-                 int(minute),0,0,0,-1))) * 1000000
-            result = _which(ts).objects.using(DB).filter(timestamp__lt=ts)[:5]
-            return [{'show': show['name'],
-                     'start': _dtstring(time.localtime(item.timestamp//1000000)),
-                     'artist': item.artist,
-                     'title': item.title,
-                     'album': item.album} for item in result]
-    #except: # all errors
-    #    return None
-
+    show = _get_show(datetime(year, month, day, hour, minute))
+    if show['id'] and show['id'] not in MUSIKPROG_IDS:
+        return [{'show': show['name'],
+                 'start': show['start'],
+                 'artist': None,
+                 'title': None,
+                 'album': None}]
+    else:
+        # tm_year,tm_mon,tm_mday,tm_hour,tm_min,tm_sec,tm_wday,tm_yday,tm_isdst
+        ts = int(time.mktime((
+             int(year),
+             int(month),
+             int(day),
+             int(hour),
+             int(minute),0,0,0,-1))) * 1000000
+        result = _which(ts).objects.using(DB).filter(timestamp__lt=ts)[:5]
+        return [{'show': show['name'],
+                 'start': _dtstring(time.localtime(item.timestamp//1000000)),
+                 'artist': item.artist,
+                 'title': item.title,
+                 'album': item.album} for item in result]
 
 def get_current(request):
     response = json.dumps(_current())
-
     return HttpResponse(response, mimetype='application/json')
-    #return HttpResponse(response, mimetype='text/plain')
 
 def get(request, year=None, month=None, day=None, hour=None, minute=None):
     response = json.dumps(_bydate(year, month, day, hour, minute))
-
     return HttpResponse(response, mimetype='application/json')
-    #return HttpResponse(response, mimetype='text/plain')
-
 
 def nop_form(request):
     context = {}
-    # currently no csrf security for nicier forms 
+    ## currently no csrf security for nicier forms 
     #context.update(csrf(request)) # in django template: {% csrf_token %}
     date = None
     time = None
