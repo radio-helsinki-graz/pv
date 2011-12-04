@@ -44,7 +44,6 @@ class TimeSlotInline(admin.TabularInline):
     model = TimeSlot
 
 class ProgramSlotAdmin(admin.ModelAdmin):
-    date_hierarchy = 'dstart'
     inlines = (TimeSlotInline,)
     list_display = ('show', 'byweekday', 'rrule', 'tstart', 'tend', 'dstart', 'until', 'timeslot_count')
     list_filter = ('byweekday', 'rrule', 'is_repetition')
