@@ -41,7 +41,10 @@ class NoteAdmin(admin.ModelAdmin):
         obj.save()
 
 class TimeSlotInline(admin.TabularInline):
+    extra = 0
+    max_num = 1
     model = TimeSlot
+    readonly_fields = ('start', 'end')
 
 class ProgramSlotAdmin(admin.ModelAdmin):
     inlines = (TimeSlotInline,)
@@ -51,7 +54,10 @@ class ProgramSlotAdmin(admin.ModelAdmin):
     search_fields = ('show__name',)
 
 class ProgramSlotInline(admin.TabularInline):
+    extra = 0
+    max_num = 1
     model = ProgramSlot
+    readonly_fields = ('rrule', 'byweekday', 'dstart', 'tstart', 'tend', 'is_repetition')
 
 class ShowAdmin(admin.ModelAdmin):
     filter_horizontal = ('hosts', 'owners', 'musicfocus', 'showinformation', 'showtopic')
