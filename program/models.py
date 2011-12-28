@@ -196,15 +196,15 @@ class ProgramSlot(models.Model):
             byweekday_start = (0, 1, 2, 3, 4, 5, 6)
             byweekday_end = (0, 1, 2, 3, 4, 5, 6)
         else:
-            byweekday_start = self.byweekday
+            byweekday_start = int(self.byweekday)
 
             if self.tend < self.tstart:
                 if self.byweekday < 6:
-                    byweekday_end = self.byweekday + 1
+                    byweekday_end = int(self.byweekday + 1)
                 else:
                     byweekday_end = 0
             else:
-                byweekday_end = self.byweekday
+                byweekday_end = int(self.byweekday)
 
         if self.tend < self.tstart:
             dend = self.dstart + timedelta(days=+1)
