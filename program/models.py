@@ -231,10 +231,6 @@ class ProgramSlot(models.Model):
             for k in range(len(starts)):
                 if starts[k].date() > old.until:
                     timeslot = TimeSlot.objects.create(programslot=self, start=starts[k], end=ends[k])
-        elif self.until < old.until:
-            for k in range(len(starts)):
-                if starts[k].date() < old.until:
-                    timeslot = TimeSlot.objects.get(programslot=self, start=starts[k]).delete()
 
     def timeslot_count(self):
         return self.timeslots.count()
