@@ -182,47 +182,59 @@ class ProgramSlot(models.Model):
             return u'%s, %s, %s - %s' % (weekday, self.rrule, tstart, tend)
 
     def save(self, *args, **kwargs):
-        if not self.pk:
-            super(ProgramSlot, self).save(*args, **kwargs)
+        if self.pk:
+            old = ProgramSlot.objects.get(pk=self.pk)
+            if self.rrule != old.rrule or self.byweekday != old.byweekday or self.show != old.show or self.dstart != old.dstart or self.tstart != old.tstart or self.tend != old.tend or self.is_repetition != old.is_repetition:
+                raise ValidationError(u"only until can be changed")
 
-            if self.rrule.freq == 0:
-                byweekday_start = None
-                byweekday_end = None
-            elif self.rrule.freq == 3:
-                byweekday_start = (0, 1, 2, 3, 4, 5, 6)
-                byweekday_end = (0, 1, 2, 3, 4, 5, 6)
-            else:
-                byweekday_start = self.byweekday
+        super(ProgramSlot, self).save(*args, **kwargs)
 
-                if self.tend < self.tstart:
-                    if self.byweekday < 6:
-                        byweekday_end = self.byweekday + 1
-                    else:
-                        byweekday_end = 0
-                else:
-                    byweekday_end = self.byweekday
+        if self.rrule.freq == 0:
+            byweekday_start = None
+            byweekday_end = None
+        elif self.rrule.freq == 3:
+            byweekday_start = (0, 1, 2, 3, 4, 5, 6)
+            byweekday_end = (0, 1, 2, 3, 4, 5, 6)
+        else:
+            byweekday_start = self.byweekday
 
             if self.tend < self.tstart:
-                dend = self.dstart + timedelta(days=+1)
+                if self.byweekday < 6:
+                    byweekday_end = self.byweekday + 1
+                else:
+                    byweekday_end = 0
             else:
-                dend = self.dstart
+                byweekday_end = self.byweekday
 
-            starts = list(rrule(freq=self.rrule.freq,
-                dtstart=datetime.combine(self.dstart, self.tstart),
-                interval=self.rrule.interval,
-                until=self.until+relativedelta(days=+1),
-                bysetpos=self.rrule.bysetpos,
-                byweekday=byweekday_start))
-            ends = list(rrule(freq=self.rrule.freq,
-                dtstart=datetime.combine(dend, self.tend),
-                interval=self.rrule.interval,
-                until=self.until+relativedelta(days=+1),
-                bysetpos=self.rrule.bysetpos,
-                byweekday=byweekday_end))
+        if self.tend < self.tstart:
+            dend = self.dstart + timedelta(days=+1)
+        else:
+            dend = self.dstart
 
+        starts = list(rrule(freq=self.rrule.freq,
+            dtstart=datetime.combine(self.dstart, self.tstart),
+            interval=self.rrule.interval,
+            until=self.until+relativedelta(days=+1),
+            bysetpos=self.rrule.bysetpos,
+            byweekday=byweekday_start))
+        ends = list(rrule(freq=self.rrule.freq,
+            dtstart=datetime.combine(dend, self.tend),
+            interval=self.rrule.interval,
+            until=self.until+relativedelta(days=+1),
+            bysetpos=self.rrule.bysetpos,
+            byweekday=byweekday_end))
+
+        if not self.pk:
             for k in range(len(starts)):
-                timeslot = TimeSlot(programslot=self, start=starts[k], end=ends[k])
-                timeslot.save()
+                timeslot = TimeSlot.objects.create(programslot=self, start=starts[k], end=ends[k])
+        elif self.until > old.until:
+            for k in range(len(starts)):
+                if starts[k].date() > old.until:
+                    timeslot = TimeSlot.objects.create(programslot=self, start=starts[k], end=ends[k])
+        elif self.until < old.until:
+            for k in range(len(starts)):
+                if starts[k].date() < old.until:
+                    timeslot = TimeSlot.objects.get(programslot=self, start=starts[k]).delete()
 
     def timeslot_count(self):
         return self.timeslots.count()
