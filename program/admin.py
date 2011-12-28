@@ -1,6 +1,9 @@
 from django.contrib import admin
+from django.utils.translation import ugettext_lazy as _
 
 from models import BroadcastFormat, MusicFocus, ShowInformation, ShowTopic, Host, Note, ProgramSlot, Show, TimeSlot
+
+from datetime import date
 
 class BroadcastFormatAdmin(admin.ModelAdmin):
     list_display = ('format',)
@@ -46,7 +49,13 @@ class TimeSlotInline(admin.TabularInline):
     model = TimeSlot
     readonly_fields = ('start', 'end')
 
+def renew(modeladmin, request, queryset):
+    next_year = date.today().year+1
+    queryset.update(until=date(next_year, 12, 31))
+renew.short_description = _("Renew selected time slots")
+
 class ProgramSlotAdmin(admin.ModelAdmin):
+    actions = (renew,)
     inlines = (TimeSlotInline,)
     list_display = ('show', 'byweekday', 'rrule', 'tstart', 'tend', 'dstart', 'until', 'timeslot_count')
     list_filter = ('byweekday', 'rrule', 'is_repetition')
