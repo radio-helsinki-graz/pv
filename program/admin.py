@@ -51,6 +51,7 @@ class ProgramSlotAdmin(admin.ModelAdmin):
     list_display = ('show', 'byweekday', 'rrule', 'tstart', 'tend', 'dstart', 'until', 'timeslot_count')
     list_filter = ('byweekday', 'rrule', 'is_repetition')
     ordering = ('byweekday', 'dstart')
+    save_on_top = True
     search_fields = ('show__name',)
 
 class ProgramSlotInline(admin.TabularInline):
