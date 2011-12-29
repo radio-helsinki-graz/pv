@@ -186,6 +186,8 @@ class ProgramSlot(models.Model):
             old = ProgramSlot.objects.get(pk=self.pk)
             if self.rrule != old.rrule or self.byweekday != old.byweekday or self.show != old.show or self.dstart != old.dstart or self.tstart != old.tstart or self.tend != old.tend or self.is_repetition != old.is_repetition:
                 raise ValidationError(u"only until can be changed")
+        else:
+            old = False
 
         super(ProgramSlot, self).save(*args, **kwargs)
 
@@ -224,7 +226,7 @@ class ProgramSlot(models.Model):
             bysetpos=self.rrule.bysetpos,
             byweekday=byweekday_end))
 
-        if not self.pk:
+        if not old:
             for k in range(len(starts)):
                 timeslot = TimeSlot.objects.create(programslot=self, start=starts[k], end=ends[k])
         elif self.until > old.until:
