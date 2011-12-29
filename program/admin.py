@@ -44,7 +44,6 @@ class NoteAdmin(admin.ModelAdmin):
         obj.save()
 
 class TimeSlotInline(admin.TabularInline):
-    max_num = 2
     model = TimeSlot
 
 def renew(modeladmin, request, queryset):
@@ -62,7 +61,6 @@ class ProgramSlotAdmin(admin.ModelAdmin):
     search_fields = ('show__name',)
 
 class ProgramSlotInline(admin.TabularInline):
-    max_num = 2
     model = ProgramSlot
 
 class ShowAdmin(admin.ModelAdmin):
