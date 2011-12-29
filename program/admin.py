@@ -44,10 +44,8 @@ class NoteAdmin(admin.ModelAdmin):
         obj.save()
 
 class TimeSlotInline(admin.TabularInline):
-    extra = 0
-    max_num = 1
+    max_num = 2
     model = TimeSlot
-    readonly_fields = ('start', 'end')
 
 def renew(modeladmin, request, queryset):
     next_year = date.today().year+1
@@ -57,17 +55,15 @@ renew.short_description = _("Renew selected time slots")
 class ProgramSlotAdmin(admin.ModelAdmin):
     actions = (renew,)
     inlines = (TimeSlotInline,)
-    list_display = ('show', 'byweekday', 'rrule', 'tstart', 'tend', 'dstart', 'until', 'timeslot_count')
+    list_display = ('show', 'byweekday', 'rrule', 'tstart', 'tend', 'until', 'timeslot_count')
     list_filter = ('byweekday', 'rrule', 'is_repetition')
     ordering = ('byweekday', 'dstart')
     save_on_top = True
     search_fields = ('show__name',)
 
 class ProgramSlotInline(admin.TabularInline):
-    extra = 0
-    max_num = 1
+    max_num = 2
     model = ProgramSlot
-    readonly_fields = ('rrule', 'byweekday', 'dstart', 'tstart', 'tend', 'is_repetition')
 
 class ShowAdmin(admin.ModelAdmin):
     filter_horizontal = ('hosts', 'owners', 'musicfocus', 'showinformation', 'showtopic')
