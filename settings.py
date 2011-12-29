@@ -77,6 +77,8 @@ TINYMCE_DEFAULT_CONFIG = {
     'theme_advanced_toolbar_location': 'top',
 }
 
+CACHE_BACKEND = 'locmem://'
+
 try:
     from local_settings import *
 except ImportError:

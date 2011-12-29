@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.conf.urls.defaults import *
+from django.views.decorators.cache import cache_page
 from django.views.generic.list_detail import object_detail, object_list
 
 from models import Host, Show, TimeSlot
@@ -25,7 +26,7 @@ urlpatterns = patterns('',
     url(r'^today/?$', day_schedule),
     url(r'^(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})/?$', day_schedule),
     url(r'^(?P<year>\d{4})/(?P<week>\d{1,2})/?$', week_schedule),
-    url(r'^current_box/?$', current_show),
+    url(r'^current_box/?$', cache_page(current_show, 60)),
     url(r'^hosts/?$', object_list, hosts_dict),
     url(r'^hosts/(?P<object_id>\d+)/?$', object_detail, hosts_dict, name='host-detail'),
     url(r'^tips/?$', recommendations),
