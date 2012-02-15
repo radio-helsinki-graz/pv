@@ -31,7 +31,7 @@ def recommendations(request, template_name='program/recommendations.html'):
     now = datetime.now()
     in_one_week = now + timedelta(weeks=1)
 
-    queryset = Note.objects.filter(status=1, timeslot__start__range=(now, in_one_week))[:10]
+    queryset = Note.objects.filter(status=1, timeslot__start__range=(now, in_one_week))[:20]
 
     return list_detail.object_list(request, queryset=queryset, template_name=template_name, template_object_name='recommendation')
 
