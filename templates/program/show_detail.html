@@ -39,7 +39,7 @@
 
     <div id="description">{{ show.description|safe }}</div>
 
-    {% if show.image %}
+    {% if show.image and show.image_enabled %}
     <div id="image" style="float: right;"><img src="/program/static/{{ show.image }}" width="200" alt="image"></div>
     {% endif %}
 

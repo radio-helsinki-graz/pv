@@ -88,6 +88,7 @@ class Show(models.Model):
     name = models.CharField(_("Name"), max_length=255)
     slug = models.CharField(_("Slug"), max_length=255, unique=True)
     image = models.ImageField(_("Image"), blank=True, null=True, upload_to='show_images')
+    image_enabled = models.BooleanField(_("show Image"), default=True )
     short_description = models.CharField(_("Short description"), max_length=64)
     description = tinymce_models.HTMLField(_("Description"))
     email = models.EmailField(_("E-Mail"), blank=True, null=True)
