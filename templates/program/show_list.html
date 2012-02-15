@@ -38,7 +38,9 @@
             <h3 class="show-title"><a href="{% url show-detail show.slug %}">{{ show.name }}</a></h3>
             <ul class="show-programslots">
             {% for slot in show.programslots.all %}
+              {% if slot.has_active_timeslot %}
                 <li class="show-programslot">{{ slot }}</li>
+              {% endif %}
             {% endfor %}
             </ul>
             <p class="show-description">{{ show.short_description }}</p>
