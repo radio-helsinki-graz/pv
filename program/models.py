@@ -239,6 +239,12 @@ class ProgramSlot(models.Model):
         return self.timeslots.count()
     timeslot_count.description = _("Time slot count")
 
+    def has_active_timeslot(self):
+        start = self.timeslots.all().order_by("start")[0].start
+        end = self.timeslots.all().order_by("-end")[0].end
+        now = datetime.now()
+        return (start < now and end > now)
+
 class TimeSlotManager(models.Manager):
     def get_or_create_current(self):
         try:
