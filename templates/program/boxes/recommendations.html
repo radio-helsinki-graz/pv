@@ -16,16 +16,26 @@
           <td class="format bf-{{ item.show.broadcastformat.slug }}"
               title="{{ item.show.broadcastformat.format }}">&nbsp;</td>
           <td class="show">
-            {{ item.timeslot.start|date:"d.m. H:i" }} -
-            {{ item.timeslot.end|date:"H:i" }}<br />
+            {{ item.start|date:"d.m. H:i" }} -
+            {{ item.end|date:"H:i" }}<br />
 
-            <h3>
-              <a href="{% url timeslot-detail item.timeslot.id %}">{{ item.show.name }}</a>
-            </h3>
-            <p class="note-title">
-              {{ item.title }}<br />
-              <a href="{% url timeslot-detail item.timeslot.id %}">[weiter]</a>
-            </p>
+            {% if item.note %}
+              <h3>
+                <a href="{% url timeslot-detail item.id %}">{{ item.show.name }}</a>
+              </h3>
+              <p class="note-title">
+                {{ item.note.title }}<br />
+                <a href="{% url timeslot-detail item.id %}">[weiter]</a>
+              </p>
+            {% else %}
+              <h3>
+                <a href="{% url show-detail item.show.slug %}">{{ item.show.name }}</a>
+              </h3>
+              <p class="note-title">
+                {{ item.show.broadcastformat.format }}<br />
+                <a href="{% url show-detail item.show.slug %}">[weiter]</a>
+              </p>
+            {% endif %}
           </td>
         </tr>
       {% endfor %}

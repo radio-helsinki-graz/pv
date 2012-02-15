@@ -1,5 +1,6 @@
 from django.views.generic import list_detail, simple
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 
 from models import BroadcastFormat, MusicFocus, Note, Show, ShowInformation, ShowTopic, TimeSlot
 
@@ -29,10 +30,10 @@ def show_list(request):
 
 def recommendations(request, template_name='program/recommendations.html'):
     now = datetime.now()
-    in_one_week = now + timedelta(weeks=1)
+    end = now + timedelta(weeks=1)
 
-    queryset = Note.objects.filter(status=1, timeslot__start__range=(now, in_one_week))[:20]
-
+    queryset = TimeSlot.objects.filter(Q(note__isnull=False, note__status=1, start__range=(now, end)) |
+                                       Q(show__broadcastformat__slug='sondersendung', start__range=(now, end))).order_by('start')[:20]
     return list_detail.object_list(request, queryset=queryset, template_name=template_name, template_object_name='recommendation')
 
 def day_schedule(request, year=None, month=None, day=None):
