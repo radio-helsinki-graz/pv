@@ -9,12 +9,13 @@ from program.models import Show, TimeSlot, Note
 
 class Command(BaseCommand):
     help = 'adds a note to a timeslot'
-    args = '<show_id> <date>'
-    
+    args = '<show_id> <date> <status>'
+
     def handle(self, *args, **options):
-        if len(args) == 2:
+        if len(args) == 3:
             show_id = args[0]
             start_date = args[1]
+            status = args[2]
         else:
             raise CommandError('you must provide the show_id date')
 
@@ -42,7 +43,7 @@ class Command(BaseCommand):
             raise CommandError(e)
 
         owner = show.owners.all()[0] if show.owners.count() > 0 else User.objects.get(pk=1)
-        note = Note(timeslot=timeslot, owner=owner, title=title, content=''.join(lines))
+        note = Note(timeslot=timeslot, owner=owner, title=title, content=''.join(lines), status=status)
 
         try:
             note.validate_unique()
