@@ -18,24 +18,17 @@
           <td class="show">
             {{ item.start|date:"d.m. H:i" }} -
             {{ item.end|date:"H:i" }}<br />
-
-            {% if item.note %}
               <h3>
                 <a href="{% url timeslot-detail item.id %}">{{ item.show.name }}</a>
               </h3>
               <p class="note-title">
+              {% if item.note %}
                 {{ item.note.title }}<br />
+              {% else %}
+                {{ item.show.broadcastformat.format }}<br />
+              {% endif %}
                 <a href="{% url timeslot-detail item.id %}">[weiter]</a>
               </p>
-            {% else %}
-              <h3>
-                <a href="{% url show-detail item.show.slug %}">{{ item.show.name }}</a>
-              </h3>
-              <p class="note-title">
-                {{ item.show.broadcastformat.format }}<br />
-                <a href="{% url show-detail item.show.slug %}">[weiter]</a>
-              </p>
-            {% endif %}
           </td>
         </tr>
       {% endfor %}
