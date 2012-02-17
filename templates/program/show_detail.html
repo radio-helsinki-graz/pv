@@ -39,7 +39,9 @@
 
     <div id="short-description" class="documentDescription">{{ show.short_description }}</div>
 
+    {% if show.description %}
     <div id="description">{{ show.description|safe }}</div>
+    {% endif %}
 
     {% if show.image and show.image_enabled %}
     <div id="image" style="float: right;"><img src="/program/static/{{ show.image }}" width="200" alt="image"></div>

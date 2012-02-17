@@ -36,7 +36,9 @@
 
     <div id="short-description" class="documentDescription">{{ timeslot.show.short_description }}</div>
 
+    {% if timeslot.show.description %}
     <div id="description">{{ timeslot.show.description|safe }}</div>
+    {% endif %}
 
     <p>
       {% for host in timeslot.show.hosts.all %}
