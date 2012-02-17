@@ -90,7 +90,7 @@ class Show(models.Model):
     image = models.ImageField(_("Image"), blank=True, null=True, upload_to='show_images')
     image_enabled = models.BooleanField(_("show Image"), default=True )
     short_description = models.CharField(_("Short description"), max_length=64)
-    description = tinymce_models.HTMLField(_("Description"))
+    description = tinymce_models.HTMLField(_("Description"), blank=True, null=True)
     email = models.EmailField(_("E-Mail"), blank=True, null=True)
     website = models.URLField(_("Website"), blank=True, null=True)
     cba_series_id = models.IntegerField(_("CBA series ID"), blank=True, null=True)
