@@ -17,7 +17,7 @@ class Command(BaseCommand):
             start_date = args[1]
             status = args[2]
         else:
-            raise CommandError('you must provide the show_id date')
+            raise CommandError('you must provide the show_id, start_date, status')
 
         try:
             show = Show.objects.get(id=show_id)
