@@ -275,7 +275,8 @@ class TimeSlotManager(models.Manager):
         today = datetime.combine(day, time(6,0))
         tomorrow = today + timedelta(days=1)
 
-        return TimeSlot.objects.filter(models.Q(start__lte=today, end__gte=today) | models.Q(start__gt=today, start__lt=tomorrow))
+        return TimeSlot.objects.filter(models.Q(start__lte=today, end__gte=today) |
+            models.Q(start__gt=today, start__lt=tomorrow)).exclude(end=today)
 
 class TimeSlot(models.Model):
     programslot = models.ForeignKey(ProgramSlot, related_name='timeslots', verbose_name=_("Program slot"))
