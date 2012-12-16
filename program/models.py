@@ -228,10 +228,10 @@ class ProgramSlot(models.Model):
             byweekday=byweekday_end))
 
         if not old:
-            for k in range(len(starts)):
+            for k in range(min(len(starts), len(ends))):
                 timeslot = TimeSlot.objects.create(programslot=self, start=starts[k], end=ends[k])
         elif self.until > old.until:
-            for k in range(len(starts)):
+            for k in range(min(len(starts), len(ends))):
                 if starts[k].date() > old.until:
                     timeslot = TimeSlot.objects.create(programslot=self, start=starts[k], end=ends[k])
 
