@@ -1,0 +1,86 @@
+{% for bf in broadcastformats %}
+.bf-{{ bf.slug }} { background-color: {{ bf.color }}; }
+{% endfor %}
+dl.filterbox li { line-height:1em; }
+.filterbox .abbrev { padding-left:20px; }
+.show-abbrevs .abbrev { display: inline-block; width: 11px; height: 11px; margin-bottom: 2px; }
+a.abbrev, .abbrev { background-repeat:no-repeat; background-position:left center; }
+.abbrev span { display:none; }
+{% for mf in musicfocus %}
+.mf-{{ mf.abbrev }} { background-image:url({{ mf.button_url }}); }
+.filterbox .mf-{{ mf.abbrev }}:hover { background-image:url({{ mf.button_hover_url }}); }
+{% endfor %}
+{% for si in showinformation %}
+.si-{{ si.abbrev }} { background-image:url({{ si.button_url }}); }
+.filterbox .si-{{ si.abbrev }}:hover { background-image:url({{ si.button_hover_url }}); }
+{% endfor %}
+{% for st in showtopic %}
+.st-{{ st.abbrev }} { background-image:url({{ st.button_url }}); }
+.filterbox .st-{{ st.abbrev }}:hover { background-image:url({{ st.button_hover_url }}); }
+{% endfor %}
+.show-detail-header .abbrev { display: inline-block; float: left; width: 17px; height: 17px; margin-bottom: 2px; margin-right: 2px; }
+{% for mf in musicfocus %}
+.show-detail-header .mf-{{ mf.abbrev }} { background-image:url({{ mf.big_button_url }}); }
+{% endfor %}
+{% for si in showinformation %}
+.show-detail-header .si-{{ si.abbrev }} { background-image:url({{ si.big_button_url }}); }
+{% endfor %}
+{% for st in showtopic %}
+.show-detail-header .st-{{ st.abbrev }} { background-image:url({{ st.big_button_url }}); }
+{% endfor %}
+.portletItem.bcformat { margin-bottom:5px; padding:3px; }
+.show-start { font-size:1em; }
+#timeslots h3, #shows h3 { margin-bottom:0.2em; margin-top:0; font-weight:normal; font-size:1em; }
+#timeslots h4, #shows h4 { margin-bottom:0.5em; margin-top:0; line-height:1.2em; font-weight:normal; font-size:0.9em; }
+#shows p, #timeslots p { margin:0; font-size:0.9em; }
+p.show-description { font-style:italic; }
+#shows .show, #timeslots .timeslot { padding:0.4em; min-height:30px; clear:both; border-bottom:1px solid white; }
+.show-start, .show-abbrevs { float:left; }
+.show-start { width:50px; }
+.show-abbrevs { padding:2px 5px; text-align:center; width:50px; }
+#timeslots .show-detail { margin-left:120px; }
+#shows .show-detail { margin-left:60px; }
+table.week-navigation td { text-align:center; padding:0 2em; }
+table.week-navigation td.current,
+table.week-navigation td:hover { background-color:black; color:white; font-weight:bold; }
+table.week-navigation td:hover a,
+table.week-navigation td:hover a:hover { color:white; }
+table.week-navigation { margin:0 auto 0.55em auto; }
+div.weekday { width:125px; float:left; line-height:1.2em; }
+.weekday-starts { background-color:#858488; color:white; font-weight:bold; overflow:hidden; white-space:nowrap; font-size:10px; float:left; }
+.weekday-starts-left { border-right:2px solid white; width:35px; }
+.weekday-starts-right { border-left:2px solid white; width:34px; }
+.weekday .timeslot { overflow: hidden; text-overflow: ellipsis; -o-text-overflow: ellipsis; }
+.weekday .timeslot div { border-top:1px solid white; }
+div.weekday { border-right:2px solid white; }
+div.weekday-last { border-right:none; }
+div.weekday, .weekday-starts { text-align:center; }
+div.weekday h2 { margin:0; padding:5px 0; background-color:black; color:white; text-transform:uppercase; font-size:14px; line-height:16px; border-bottom:1px solid white; }
+.show-detail-header { padding:10px; margin-bottom:20px; }
+#column-main .show-detail-header h1, #column-main .show-detail-header h2 { text-shadow:none; }
+.show-detail-header p { font-size:1.2em; }
+.show-detail-header .show-details { display:inline-block; width:70%; }
+.show-detail-header .show-categorization { display:inline-block; width:20%; }
+.program-box .format { width:8px; font-size:8px; }
+.program-box .start { width:32px; padding-right:3px; }
+.program-box .show { padding-left:3px; } 
+#calendar .ui-datepicker-prev span, #calendar .ui-datepicker-next span { display:none; }
+#calendar .ui-datepicker-prev { float:left; display:inline-block; width:20%; height:17px; cursor:pointer; background-position:80% center; background-repeat:no-repeat; background-image:url(img/arrow-left.png); }
+#calendar .ui-datepicker-prev:hover { background-color:black; background-image:url(img/arrow-left-h.png); }
+#calendar .ui-datepicker-next { float:right; display:inline-block; width:20%; height:17px; cursor:pointer; background-position:20% center; background-repeat:no-repeat; background-image:url(img/arrow-right.png); }
+#calendar .ui-datepicker-next:hover { background-color:black; background-image:url(img/arrow-right-h.png); }
+#calendar .ui-datepicker-title { height:17px; width:auto; font-weight:bold; text-align:center; }
+table.ui-datepicker-calendar { width:100%; }
+table.ui-datepicker-calendar td { width:14.3%; }
+table.ui-datepicker-calendar td a.ui-state-default { text-align:center; display:inline-block; width:100%; }
+table.ui-datepicker-calendar td a.ui-state-active { background-color:black; color:white; font-weight:bold; }
+ul.nowplaying { margin-top:20px; }
+ul.nowplaying li { display:list-item; margin-bottom:10px; }
+.nowplaying .artist { font-weight:bold; }
+.nowplaying .track {}
+.nowplaying .meta {}
+.host-list { -moz-column-count: 3; -moz-column-gap: 20px; }
+#program-current-box td { padding-bottom:0.4em; }
+#shows ul li { display:list-item; font-size:0.9em; }
+ul.recommendations-list li { white-space:nowrap; display:list-item; }
+ul.recommendations-list li a { display:inline-block; min-width:100px; }
