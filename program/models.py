@@ -54,12 +54,12 @@ class ShowInformation(models.Model):
             buttons.append(u'x')
 
         if self.big_button:
-            buttons.append(u'<img src="%s" />' % self.button.url)
+            buttons.append(u'<img src="%s" />' % self.big_button.url)
         else:
             buttons.append(u'x')
 
         return ' '.join(buttons)
-    admin_buttons.short_description = _("Button")
+    admin_buttons.short_description = _("Buttons")
     admin_buttons.allow_tags = True
 
     def button_url(self):
@@ -109,12 +109,12 @@ class ShowTopic(models.Model):
             buttons.append(u'x')
 
         if self.big_button:
-            buttons.append(u'<img src="%s" />' % self.button.url)
+            buttons.append(u'<img src="%s" />' % self.big_button.url)
         else:
             buttons.append(u'x')
 
         return ' '.join(buttons)
-    admin_buttons.short_description = _("Button")
+    admin_buttons.short_description = _("Buttons")
     admin_buttons.allow_tags = True
 
     def button_url(self):
@@ -164,12 +164,12 @@ class MusicFocus(models.Model):
             buttons.append(u'x')
 
         if self.big_button:
-            buttons.append(u'<img src="%s" />' % self.button.url)
+            buttons.append(u'<img src="%s" />' % self.big_button.url)
         else:
             buttons.append(u'x')
 
         return ' '.join(buttons)
-    admin_buttons.short_description = _("Button")
+    admin_buttons.short_description = _("Buttons")
     admin_buttons.allow_tags = True
 
     def button_url(self):
