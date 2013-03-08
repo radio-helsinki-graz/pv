@@ -2,23 +2,25 @@ from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
 from models import BroadcastFormat, MusicFocus, ShowInformation, ShowTopic, Host, Note, ProgramSlot, Show, TimeSlot
+from forms import MusicFocusForm
 
 from datetime import date
 
 class BroadcastFormatAdmin(admin.ModelAdmin):
-    list_display = ('format',)
+    list_display = ('format', 'enabled', 'admin_color')
     prepopulated_fields = {'slug': ('format',)}
 
 class MusicFocusAdmin(admin.ModelAdmin):
-    list_display = ('focus', 'abbrev')
+    form = MusicFocusForm
+    list_display = ('focus', 'abbrev', 'admin_button')
     prepopulated_fields = {'slug': ('focus',)}
 
 class ShowInformationAdmin(admin.ModelAdmin):
-    list_display = ('information', 'abbrev')
+    list_display = ('information', 'abbrev', 'admin_button')
     prepopulated_fields = {'slug': ('information',)}
 
 class ShowTopicAdmin(admin.ModelAdmin):
-    list_display = ('topic', 'abbrev')
+    list_display = ('topic', 'abbrev', 'admin_button')
     prepopulated_fields = {'slug': ('topic',)}
 
 class NoteAdmin(admin.ModelAdmin):

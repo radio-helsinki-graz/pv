@@ -4,7 +4,7 @@ from django.views.decorators.cache import cache_page
 from django.views.generic.list_detail import object_detail, object_list
 
 from models import Host, Show, TimeSlot
-from views import current_show, day_schedule, recommendations, show_list, week_schedule
+from views import current_show, day_schedule, recommendations, show_list, week_schedule, styles
 
 from datetime import date
 
@@ -35,6 +35,7 @@ urlpatterns = patterns('',
     url(r'^shows/(?P<slug>[\w-]+)/?$', object_detail, shows_dict, name='show-detail'),
     url(r'^(?P<object_id>\d+)/?$', object_detail, timeslots_dict, name='timeslot-detail'),
     url(r'^week/?$', week_schedule),
+    url(r'^styles.css$', styles),
 )
 
 if settings.DEBUG:

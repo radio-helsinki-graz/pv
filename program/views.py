@@ -119,3 +119,11 @@ def week_schedule(request, year=None, week=None):
     extra_context['next_w4'] = datetime.strftime(monday+timedelta(days=28), '%Y/%W')
 
     return simple.direct_to_template(request, template='program/week_schedule.html', extra_context=extra_context)
+
+def styles(request):
+    extra_context = dict()
+    extra_context['broadcastformats'] = BroadcastFormat.objects.filter(enabled=True)
+    extra_context['musicfocus'] = MusicFocus.objects.all()
+    extra_context['showinformation'] = ShowInformation.objects.all()
+    extra_context['showtopic'] = ShowTopic.objects.all()
+    return simple.direct_to_template(request, template='program/styles.css', mimetype='text/css', extra_context=extra_context)

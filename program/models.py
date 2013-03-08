@@ -12,11 +12,18 @@ from dateutil.rrule import rrule
 class BroadcastFormat(models.Model):
     format = models.CharField(_("Format"), max_length=32)
     slug = models.SlugField(_("Slug"), max_length=32, unique=True)
+    color = models.CharField(_("Color"), max_length=7, default='#ffffff')
+    enabled = models.BooleanField(_("Enabled"), default=True)
 
     class Meta:
         ordering = ('format',)
         verbose_name = _("Broadcast format")
         verbose_name_plural = _("Broadcast formats")
+
+    def admin_color(self):
+        return u'<span style="background-color:%s; padding: 0.2em">%s</span>' % (self.color, self.color)
+    admin_color.short_description = _("Color")
+    admin_color.allow_tags = True
 
     def __unicode__(self):
         return u'%s' % self.format
@@ -25,11 +32,40 @@ class ShowInformation(models.Model):
     information = models.CharField(_("Information"), max_length=32)
     abbrev = models.CharField(_("Abbreviation"), max_length=4, unique=True)
     slug = models.SlugField(_("Slug"), max_length=32, unique=True)
+    button = models.ImageField(_("Button image"), blank=True, null=True, upload_to='buttons')
+    button_hover = models.ImageField(_("Button image (hover)"), blank=True, null=True, upload_to='buttons')
+    big_button = models.ImageField(_("Big button image"), blank=True, null=True, upload_to='buttons')
 
     class Meta:
         ordering = ('information',)
         verbose_name = _("Show information")
         verbose_name_plural = _("Show information")
+
+    def admin_button(self):
+        if self.button:
+            return u'<img src="%s" />' % self.button.url
+        else:
+            return u'(no button)'
+    admin_button.short_description = _("Button")
+    admin_button.allow_tags = True
+
+    def button_url(self):
+        if self.button:
+            return self.button.url
+        else:
+            return '/site_media/buttons/default-11.png'
+
+    def button_hover_url(self):
+        if self.button_hover:
+            return self.button_hover.url
+        else:
+            return '/site_media/buttons/default-11.png'
+
+    def big_button_url(self):
+        if self.big_button:
+            return self.big_button.url
+        else:
+            return '/site_media/buttons/default-17.png'
 
     def __unicode__(self):
         return u'%s' % self.information
@@ -38,11 +74,40 @@ class ShowTopic(models.Model):
     topic = models.CharField(_("Show topic"), max_length=32)
     abbrev = models.CharField(_("Abbreviation"), max_length=4, unique=True)
     slug = models.SlugField(_("Slug"), max_length=32, unique=True)
+    button = models.ImageField(_("Button image"), blank=True, null=True, upload_to='buttons')
+    button_hover = models.ImageField(_("Button image (hover)"), blank=True, null=True, upload_to='buttons')
+    big_button = models.ImageField(_("Big button image"), blank=True, null=True, upload_to='buttons')
 
     class Meta:
         ordering = ('topic',)
         verbose_name = _("Show topic")
         verbose_name_plural = _("Show topics")
+
+    def admin_button(self):
+        if self.button:
+            return u'<img src="%s" />' % self.button.url
+        else:
+            return u'(no button)'
+    admin_button.short_description = _("Button")
+    admin_button.allow_tags = True
+
+    def button_url(self):
+        if self.button:
+            return self.button.url
+        else:
+            return '/site_media/buttons/default-11.png'
+
+    def button_hover_url(self):
+        if self.button_hover:
+            return self.button_hover.url
+        else:
+            return '/site_media/buttons/default-11.png'
+
+    def big_button_url(self):
+        if self.big_button:
+            return self.big_button.url
+        else:
+            return '/site_media/buttons/default-17.png'
 
     def __unicode__(self):
         return u'%s' % self.topic
@@ -51,11 +116,40 @@ class MusicFocus(models.Model):
     focus = models.CharField(_("Focus"), max_length=32)
     abbrev = models.CharField(_("Abbreviation"), max_length=4, unique=True)
     slug = models.SlugField(_("Slug"), max_length=32, unique=True)
+    button = models.ImageField(_("Button image"), blank=True, null=True, upload_to='buttons')
+    button_hover = models.ImageField(_("Button image (hover)"), blank=True, null=True, upload_to='buttons')
+    big_button = models.ImageField(_("Big button image"), blank=True, null=True, upload_to='buttons')
 
     class Meta:
         ordering = ('focus',)
         verbose_name = _("Music focus")
         verbose_name_plural = _("Music focus")
+
+    def admin_button(self):
+        if self.button:
+            return u'<img src="%s" />' % self.button.url
+        else:
+            return u'(no button)'
+    admin_button.short_description = _("Button")
+    admin_button.allow_tags = True
+
+    def button_url(self):
+        if self.button:
+            return self.button.url
+        else:
+            return '/site_media/buttons/default-11.png'
+
+    def button_hover_url(self):
+        if self.button_hover:
+            return self.button_hover.url
+        else:
+            return '/site_media/buttons/default-11.png'
+
+    def big_button_url(self):
+        if self.big_button:
+            return self.big_button.url
+        else:
+            return '/site_media/buttons/default-17.png'
 
     def __unicode__(self):
         return u'%s' % self.focus
