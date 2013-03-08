@@ -41,13 +41,26 @@ class ShowInformation(models.Model):
         verbose_name = _("Show information")
         verbose_name_plural = _("Show information")
 
-    def admin_button(self):
+    def admin_buttons(self):
+        buttons = []
         if self.button:
-            return u'<img src="%s" />' % self.button.url
+            buttons.append(u'<img src="%s" />' % self.button.url)
         else:
-            return u'(no button)'
-    admin_button.short_description = _("Button")
-    admin_button.allow_tags = True
+            buttons.append(u'x')
+
+        if self.button_hover:
+            buttons.append(u'<img src="%s" />' % self.button_hover.url)
+        else:
+            buttons.append(u'x')
+
+        if self.big_button:
+            buttons.append(u'<img src="%s" />' % self.button.url)
+        else:
+            buttons.append(u'x')
+
+        return ' '.join(buttons)
+    admin_buttons.short_description = _("Button")
+    admin_buttons.allow_tags = True
 
     def button_url(self):
         if self.button:
@@ -83,13 +96,26 @@ class ShowTopic(models.Model):
         verbose_name = _("Show topic")
         verbose_name_plural = _("Show topics")
 
-    def admin_button(self):
+    def admin_buttons(self):
+        buttons = []
         if self.button:
-            return u'<img src="%s" />' % self.button.url
+            buttons.append(u'<img src="%s" />' % self.button.url)
         else:
-            return u'(no button)'
-    admin_button.short_description = _("Button")
-    admin_button.allow_tags = True
+            buttons.append(u'x')
+
+        if self.button_hover:
+            buttons.append(u'<img src="%s" />' % self.button_hover.url)
+        else:
+            buttons.append(u'x')
+
+        if self.big_button:
+            buttons.append(u'<img src="%s" />' % self.button.url)
+        else:
+            buttons.append(u'x')
+
+        return ' '.join(buttons)
+    admin_buttons.short_description = _("Button")
+    admin_buttons.allow_tags = True
 
     def button_url(self):
         if self.button:
@@ -125,13 +151,26 @@ class MusicFocus(models.Model):
         verbose_name = _("Music focus")
         verbose_name_plural = _("Music focus")
 
-    def admin_button(self):
+    def admin_buttons(self):
+        buttons = []
         if self.button:
-            return u'<img src="%s" />' % self.button.url
+            buttons.append(u'<img src="%s" />' % self.button.url)
         else:
-            return u'(no button)'
-    admin_button.short_description = _("Button")
-    admin_button.allow_tags = True
+            buttons.append(u'x')
+
+        if self.button_hover:
+            buttons.append(u'<img src="%s" />' % self.button_hover.url)
+        else:
+            buttons.append(u'x')
+
+        if self.big_button:
+            buttons.append(u'<img src="%s" />' % self.button.url)
+        else:
+            buttons.append(u'x')
+
+        return ' '.join(buttons)
+    admin_buttons.short_description = _("Button")
+    admin_buttons.allow_tags = True
 
     def button_url(self):
         if self.button:

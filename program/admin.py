@@ -12,15 +12,15 @@ class BroadcastFormatAdmin(admin.ModelAdmin):
 
 class MusicFocusAdmin(admin.ModelAdmin):
     form = MusicFocusForm
-    list_display = ('focus', 'abbrev', 'admin_button')
+    list_display = ('focus', 'abbrev', 'admin_buttons')
     prepopulated_fields = {'slug': ('focus',)}
 
 class ShowInformationAdmin(admin.ModelAdmin):
-    list_display = ('information', 'abbrev', 'admin_button')
+    list_display = ('information', 'abbrev', 'admin_buttons')
     prepopulated_fields = {'slug': ('information',)}
 
 class ShowTopicAdmin(admin.ModelAdmin):
-    list_display = ('topic', 'abbrev', 'admin_button')
+    list_display = ('topic', 'abbrev', 'admin_buttons')
     prepopulated_fields = {'slug': ('topic',)}
 
 class NoteAdmin(admin.ModelAdmin):
