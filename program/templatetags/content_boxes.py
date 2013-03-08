@@ -7,7 +7,7 @@ from program.models import BroadcastFormat, MusicFocus, ShowInformation, ShowTop
 
 @register.inclusion_tag('program/boxes/broadcastformat.html')
 def broadcastformat():
-    broadcastformats = BroadcastFormat.objects.all()
+    broadcastformats = BroadcastFormat.objects.filter(enabled=True)
     return {'broadcastformats': broadcastformats}
 
 @register.inclusion_tag('program/boxes/musicfocus.html')
