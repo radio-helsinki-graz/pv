@@ -9,15 +9,17 @@ from program.models import Show, TimeSlot, Note
 
 class Command(BaseCommand):
     help = 'adds a note to a timeslot'
-    args = '<show_id> <date> <status>'
+    args = '<show_id> <start_date> <status> [index]'
 
     def handle(self, *args, **options):
         if len(args) == 3:
             show_id = args[0]
             start_date = args[1]
             status = args[2]
+        elif len(args) == 4:
+            index = args[3]
         else:
-            raise CommandError('you must provide the show_id, start_date, status')
+            raise CommandError('you must provide the show_id, start_date, status [index]')
 
         try:
             show = Show.objects.get(id=show_id)
@@ -35,6 +37,13 @@ class Command(BaseCommand):
             timeslot = TimeSlot.objects.get(show=show, start__year=year, start__month=month, start__day=day)
         except TimeSlot.DoesNotExist as dne:
             raise CommandError(dne)
+        except TimeSlot.MultipleObjectsReturned as mor:
+            if not index:
+                raise  CommandError('you must provide the show_id, start_date, status index')
+            try:
+                timeslot = TimeSlot.objects.filter(show=show, start__year=year, start__month=month, start__day=day).order_by('start')[index]
+            except IndexError as ie:
+                raise CommandError(ie)
 
         try:
             title = sys.stdin.readline().rstrip()
