@@ -227,6 +227,7 @@ class Show(models.Model):
     email = models.EmailField(_("E-Mail"), blank=True, null=True)
     website = models.URLField(_("Website"), blank=True, null=True)
     cba_series_id = models.IntegerField(_("CBA series ID"), blank=True, null=True)
+    automation_id = models.IntegerField(_("Automation ID"), blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_updated = models.DateTimeField(auto_now=True, editable=False)
 
@@ -293,6 +294,7 @@ class ProgramSlot(models.Model):
     tend = models.TimeField(_("End time"))
     until = models.DateField(_("Last date"))
     is_repetition = models.BooleanField(_("Is repetition"), default=False)
+    automation_id = models.IntegerField(_("Automation ID"), blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_updated = models.DateTimeField(auto_now=True, editable=False)
 
