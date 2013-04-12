@@ -1,10 +1,13 @@
 from django.views.generic import list_detail, simple
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
+from django.http import HttpResponse
 
 from models import BroadcastFormat, MusicFocus, Note, Show, ShowInformation, ShowTopic, TimeSlot
 
 from datetime import date, datetime, time, timedelta
+
+import json
 
 def show_list(request):
     queryset = Show.objects.filter(programslots__until__gt=date.today()).exclude(id=1).distinct()
@@ -127,3 +130,21 @@ def styles(request):
     extra_context['showinformation'] = ShowInformation.objects.all()
     extra_context['showtopic'] = ShowTopic.objects.all()
     return simple.direct_to_template(request, template='program/styles.css', mimetype='text/css', extra_context=extra_context)
+
+def json_day_schedule(request, year=None, month=None, day=None):
+    if year is None and month is None and day is None:
+        today = datetime.combine(date.today(), time(6, 0))
+    else:
+        today = datetime.strptime('%s__%s__%s__06__00' % (year, month, day), '%Y__%m__%d__%H__%M')
+
+    timeslots = TimeSlot.objects.get_day_timeslots(today)
+    schedule = []
+    for ts in timeslots:
+        if ts.programslot.automation_id:
+            schedule.append((ts.start.strftime('%H:%M:%S'), ts.programslot.automation_id))
+        elif ts.programslot.show.automation_id:
+            schedule.append((ts.start.strftime('%H:%M:%S'), ts.programslot.show.automation_id))
+        else:
+            schedule.append((ts.start.strftime('%H:%M:%S'), -1))
+
+    return HttpResponse(json.dumps(schedule), content_type="application/json")
