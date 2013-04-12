@@ -1,3 +1,4 @@
 *.pyc
 dev_data.sqlite
 local_settings.py
+site_media
