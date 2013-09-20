@@ -25,7 +25,6 @@ class ShowTopicAdmin(admin.ModelAdmin):
 
 class NoteAdmin(admin.ModelAdmin):
     date_hierarchy = 'start'
-    exclude = ('owner',)
     list_display = ('title', 'show', 'start', 'status')
     list_filter = ('status',)
     ordering = ('timeslot',)
@@ -42,7 +41,6 @@ class NoteAdmin(admin.ModelAdmin):
         return super(NoteAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
     def save_model(self, request, obj, form, change):
-        obj.owner = request.user
         obj.save()
 
 class TimeSlotInline(admin.TabularInline):
