@@ -114,12 +114,12 @@ def week_schedule(request, year=None, week=None):
     extra_context['saturday_timeslots'] = TimeSlot.objects.get_day_timeslots(saturday)
     extra_context['sunday_timeslots'] = TimeSlot.objects.get_day_timeslots(sunday)
 
-    extra_context['last_w'] = datetime.strftime(monday-timedelta(days=7), '%Y/%W')
+    extra_context['last_w'] = datetime.strftime(monday-timedelta(days=7), '%Y/%V')
     extra_context['cur_w'] = '%s/%s' % (year, week)
-    extra_context['next_w1'] = datetime.strftime(monday+timedelta(days=7), '%Y/%W')
-    extra_context['next_w2'] = datetime.strftime(monday+timedelta(days=14), '%Y/%W')
-    extra_context['next_w3'] = datetime.strftime(monday+timedelta(days=21), '%Y/%W')
-    extra_context['next_w4'] = datetime.strftime(monday+timedelta(days=28), '%Y/%W')
+    extra_context['next_w1'] = datetime.strftime(monday+timedelta(days=7), '%Y/%V')
+    extra_context['next_w2'] = datetime.strftime(monday+timedelta(days=14), '%Y/%V')
+    extra_context['next_w3'] = datetime.strftime(monday+timedelta(days=21), '%Y/%V')
+    extra_context['next_w4'] = datetime.strftime(monday+timedelta(days=28), '%Y/%V')
 
     return simple.direct_to_template(request, template='program/week_schedule.html', extra_context=extra_context)
 
