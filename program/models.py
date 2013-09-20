@@ -452,7 +452,6 @@ class Note(models.Model):
         (2, _("Repetition")),
     )
     timeslot = models.OneToOneField(TimeSlot, verbose_name=_("Time slot"))
-    owner = models.ForeignKey(User, related_name='notes', verbose_name=_("Owner"))
     title = models.CharField(_("Title"), max_length=128)
     content = tinymce_models.HTMLField(_("Content"))
     status = models.IntegerField(_("Status"), choices=STATUS_CHOICES, default=1)
