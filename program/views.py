@@ -91,7 +91,7 @@ def current_show(request):
 
 def week_schedule(request, year=None, week=None):
     if year is None and week is None:
-        year, week = datetime.strftime(datetime.now(), '%Y__%V').split('__')
+        year, week = datetime.strftime(datetime.now(), '%G__%V').split('__')
 
     monday = tofirstdayinisoweek(int(year), int(week))
     tuesday = monday+timedelta(days=1)
@@ -113,12 +113,12 @@ def week_schedule(request, year=None, week=None):
     extra_context['saturday_timeslots'] = TimeSlot.objects.get_day_timeslots(saturday)
     extra_context['sunday_timeslots'] = TimeSlot.objects.get_day_timeslots(sunday)
 
-    extra_context['last_w'] = datetime.strftime(monday-timedelta(days=7), '%Y/%V')
-    extra_context['cur_w'] = '%s/%s' % (year, week)
-    extra_context['next_w1'] = datetime.strftime(monday+timedelta(days=7), '%Y/%V')
-    extra_context['next_w2'] = datetime.strftime(monday+timedelta(days=14), '%Y/%V')
-    extra_context['next_w3'] = datetime.strftime(monday+timedelta(days=21), '%Y/%V')
-    extra_context['next_w4'] = datetime.strftime(monday+timedelta(days=28), '%Y/%V')
+    extra_context['last_w'] = datetime.strftime(monday-timedelta(days=7), '%G/%V')
+    extra_context['cur_w'] = datetime.strftime(monday, '%G/%V')
+    extra_context['next_w1'] = datetime.strftime(monday+timedelta(days=7), '%G/%V')
+    extra_context['next_w2'] = datetime.strftime(monday+timedelta(days=14), '%G/%V')
+    extra_context['next_w3'] = datetime.strftime(monday+timedelta(days=21), '%G/%V')
+    extra_context['next_w4'] = datetime.strftime(monday+timedelta(days=28), '%G/%V')
 
     return simple.direct_to_template(request, template='program/week_schedule.html', extra_context=extra_context)
 
