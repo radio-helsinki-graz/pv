@@ -91,10 +91,9 @@ def current_show(request):
 
 def week_schedule(request, year=None, week=None):
     if year is None and week is None:
-        year, week = datetime.strftime(datetime.today(), '%Y__%W').split('__')
+        year, week = datetime.strftime(datetime.now(), '%Y__%V').split('__')
 
-    monday = datetime.strptime('%s__%s__1__06__00' % (year, week), '%Y__%W__%w__%H__%M')
-
+    monday = tofirstdayinisoweek(int(year), int(week))
     tuesday = monday+timedelta(days=1)
     wednesday = monday+timedelta(days=2)
     thursday = monday+timedelta(days=3)
@@ -148,3 +147,10 @@ def json_day_schedule(request, year=None, month=None, day=None):
             schedule.append((ts.start.strftime('%H:%M:%S'), -1))
 
     return HttpResponse(json.dumps(schedule), content_type="application/json")
+
+def tofirstdayinisoweek(year, week):
+    # http://stackoverflow.com/questions/5882405/get-date-from-iso-week-number-in-python
+    ret = datetime.strptime('%04d-%02d-1' % (year, week), '%Y-%W-%w')
+    if date(year, 1, 4).isoweekday() > 4:
+        ret -= timedelta(days=7)
+    return ret
