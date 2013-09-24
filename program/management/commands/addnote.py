@@ -51,8 +51,7 @@ class Command(BaseCommand):
         except Exception as e:
             raise CommandError(e)
 
-        owner = show.owners.all()[0] if show.owners.count() > 0 else User.objects.get(pk=1)
-        note = Note(timeslot=timeslot, owner=owner, title=title, content=''.join(lines), status=status)
+        note = Note(timeslot=timeslot, title=title, content=''.join(lines), status=status)
 
         try:
             note.validate_unique()
@@ -61,4 +60,4 @@ class Command(BaseCommand):
         else:
             note.save()
             print 'added note "%s" to "%s"' % (title, timeslot)
-        
+
