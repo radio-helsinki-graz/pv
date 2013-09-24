@@ -11,8 +11,6 @@ USER = 'helsinki'
 PASSWD = 'helsinki'
 DB = 'helsinki'
 
-OWNER = User.objects.get(pk=1)
-
 class Command(NoArgsCommand):
     help = 'Import notes from current program'
 
@@ -47,7 +45,7 @@ WHERE n.sendung_id in (SELECT id FROM sendungen WHERE letzter_termin > current_d
                     except MultipleObjectsReturned:
                         print 'multiple timeslots found for sendung "%s" and datum "%s"' % (stitel, datum)
                     else:
-                        note = Note(timeslot=timeslot, owner=OWNER, title=ntitel, content=notiz)
+                        note = Note(timeslot=timeslot, title=ntitel, content=notiz)
                         try:
                             note.validate_unique()
                         except ValidationError:
