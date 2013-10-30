@@ -12,15 +12,16 @@ import time
 from datetime import datetime
 
 DB = 'nop'
-MUSIKPROG_IDS = (1,5,17,34,60,81,89)
-        # 1 - unmodieriertes musikprogramm
-        # 5 - Abunda Lingva
-        ## 12 - aus den freien radios
-        # 17 - bumbumtschak
-        # 34 - fruehstück A
-        # 60 - musikprogramm bunt gemischt
-        # 81 - selchfleisch
-        # 89 - styrian underground
+MUSIKPROG_IDS = (
+    1,  # unmodieriertes musikprogramm
+    206, # Abunda Lingva
+    17,  # bumbumtschak
+    34,  # fruehstück A
+    374, # musikprogramm bunt gemischt
+    81,  # selchfleisch
+    290, # styrian underground
+    203  # Hotel Passage
+)
 
 class NopForm(forms.Form):
     date = forms.DateField(
