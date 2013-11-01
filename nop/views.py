@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*-
+# coding=utf-8
 
-from django.core.context_processors import csrf
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django import forms
@@ -12,37 +12,38 @@ import time
 from datetime import datetime
 
 DB = 'nop'
+
 MUSIKPROG_IDS = (
-    1,  # unmodieriertes musikprogramm
-    206, # Abunda Lingva
-    17,  # bumbumtschak
-    34,  # fruehstück A
-    374, # musikprogramm bunt gemischt
-    81,  # selchfleisch
-    290, # styrian underground
-    203  # Hotel Passage
+    1,    # unmodieriertes musikprogramm
+    17,   # bumbumtschak
+    203,  # Hotel Passage
+    204,  # Radyo Mezopotamya
+    206,  # Abunda Lingva
+    290   # styrian underground
 )
+
+SPECIAL_PROGRAM_IDS = (
+    66,   # Probebühne
+    374   # musikprogramm bunt gemischt
+)
+
 
 class NopForm(forms.Form):
     date = forms.DateField(
-            required=True,
-            #initial=datetime.date(datetime.now()), ## static initial specifies
-                                                    ## any time but not the
-                                                    ## current one
-            widget=forms.DateInput(
-                format='%Y-%m-%d',
-                attrs={'id':'nop_date', 'class':'date'})
-            )
+        required=True,
+        widget=forms.DateInput(
+            format='%Y-%m-%d',
+            attrs={'id': 'nop_date', 'class': 'date'}))
     time = forms.TimeField(
-            required=True,
-            #initial=datetime.time(datetime.now()),
-            widget=forms.TimeInput(
-                format='%H:%M',
-                attrs={'id':'nop_time', 'class':'date'})
-            )
+        required=True,
+        widget=forms.TimeInput(
+            format='%H:%M',
+            attrs={'id': 'nop_time', 'class': 'date'}))
+
 
 def _dtstring(dt):
     return time.strftime('%Y-%m-%d %H:%M', dt)
+
 
 def _which(timestamp=None):
     if timestamp:
@@ -54,7 +55,8 @@ def _which(timestamp=None):
     else:
         return Standby
 
-def _get_show(datetime = None):
+
+def _get_show(datetime=None):
     try:
         if datetime:
             timeslot = TimeSlot.objects.get(start__lte=datetime, end__gt=datetime)
@@ -62,34 +64,34 @@ def _get_show(datetime = None):
             timeslot = TimeSlot.objects.get_or_create_current()
         return {'start': _dtstring(timeslot.start.timetuple()),
                 'id': timeslot.show.id,
-                'name': timeslot.show.name}
-    except: # e.g. DoesNotExist
+                'name': timeslot.show.name,
+                'note': timeslot.note}
+    except (ObjectDoesNotExist, MultipleObjectsReturned):
         return {'start': None, 'id': None, 'name': None}
 
 
 def _current():
-    #current = int(time.time())*1000000
-    #time.gmtime(_which().objects.using(DB).all()[6000].timestamp//1000000)
-    # select all where timestamp < givenTS, get most recent one -> order DESC
-
     artist = None
     title = None
     album = None
     show = _get_show()
-    if show['id'] in MUSIKPROG_IDS:
-        # reverse sorted. get the first object = last played
+
+    if show['id'] in MUSIKPROG_IDS or (show['id'] in SPECIAL_PROGRAM_IDS and not show['note']):
         result = _which().objects.using(DB).all()[0]
         artist = result.artist
         title = result.title
         album = result.album
+
     return {'show': show['name'],
             'start': show['start'],
             'artist': artist,
             'title': title,
             'album': album}
 
+
 def _bydate(year=None, month=None, day=None, hour=None, minute=None):
     show = _get_show(datetime(year, month, day, hour, minute))
+
     if show['id'] and show['id'] not in MUSIKPROG_IDS:
         return [{'show': show['name'],
                  'start': show['start'],
@@ -97,13 +99,7 @@ def _bydate(year=None, month=None, day=None, hour=None, minute=None):
                  'title': None,
                  'album': None}]
     else:
-        # tm_year,tm_mon,tm_mday,tm_hour,tm_min,tm_sec,tm_wday,tm_yday,tm_isdst
-        ts = int(time.mktime((
-             int(year),
-             int(month),
-             int(day),
-             int(hour),
-             int(minute),0,0,0,-1))) * 1000000
+        ts = int(time.mktime((int(year), int(month), int(day), int(hour), int(minute), 0, 0, 0, -1))) * 1000000
         result = _which(ts).objects.using(DB).filter(timestamp__lt=ts)[:5]
         return [{'show': show['name'],
                  'start': _dtstring(time.localtime(item.timestamp//1000000)),
@@ -111,31 +107,37 @@ def _bydate(year=None, month=None, day=None, hour=None, minute=None):
                  'title': item.title,
                  'album': item.album} for item in result]
 
+
 def get_current(request):
     response = json.dumps(_current())
     return HttpResponse(response, mimetype='application/json')
+
 
 def get(request, year=None, month=None, day=None, hour=None, minute=None):
     response = json.dumps(_bydate(year, month, day, hour, minute))
     return HttpResponse(response, mimetype='application/json')
 
+
 def nop_form(request):
     context = {}
-    ## currently no csrf security for nicier forms
-    #context.update(csrf(request)) # in django template: {% csrf_token %}
     date = None
     time = None
-    if request.method == 'GET' and\
-            ('date' in request.GET or 'time' in request.GET):
+
+    if request.method == 'GET' and ('date' in request.GET or 'time' in request.GET):
         form = NopForm(request.GET)
+
         if form.is_valid():
             date = form.cleaned_data['date']
             time = form.cleaned_data['time']
     else:
-        form = NopForm(initial={'date':datetime.date(datetime.now()),
-                                'time':datetime.time(datetime.now())})
-    if not date: date = datetime.date(datetime.now())
-    if not time: time = datetime.time(datetime.now())
+        form = NopForm(initial={'date': datetime.date(datetime.now()), 'time': datetime.time(datetime.now())})
+
+    if not date:
+        date = datetime.date(datetime.now())
+
+    if not time:
+        time = datetime.time(datetime.now())
+
     result = _bydate(date.year, date.month, date.day, time.hour, time.minute)
     context['nowplaying'] = result
     context['form'] = form
