@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django import forms
 from models import Master, Standby, State
-from program.models import TimeSlot
+from program.models import TimeSlot, Note
 
 import json
 import time
@@ -62,12 +62,18 @@ def _get_show(datetime=None):
             timeslot = TimeSlot.objects.get(start__lte=datetime, end__gt=datetime)
         else:
             timeslot = TimeSlot.objects.get_or_create_current()
+    except (ObjectDoesNotExist, MultipleObjectsReturned):
+        return {'start': None, 'id': None, 'name': None}
+    else:
+        try:
+            note = timeslot.note
+        except ObjectDoesNotExist:
+            note = None
+
         return {'start': _dtstring(timeslot.start.timetuple()),
                 'id': timeslot.show.id,
                 'name': timeslot.show.name,
-                'note': timeslot.note}
-    except (ObjectDoesNotExist, MultipleObjectsReturned):
-        return {'start': None, 'id': None, 'name': None}
+                'note': note}
 
 
 def _current():
