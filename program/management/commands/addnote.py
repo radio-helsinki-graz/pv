@@ -17,6 +17,9 @@ class Command(BaseCommand):
             start_date = args[1]
             status = args[2]
         elif len(args) == 4:
+            show_id = args[0]
+            start_date = args[1]
+            status = args[2]
             index = args[3]
         else:
             raise CommandError('you must provide the show_id, start_date, status [index]')
@@ -41,7 +44,7 @@ class Command(BaseCommand):
             if not index:
                 raise  CommandError('you must provide the show_id, start_date, status index')
             try:
-                timeslot = TimeSlot.objects.filter(show=show, start__year=year, start__month=month, start__day=day).order_by('start')[index]
+                timeslot = TimeSlot.objects.filter(show=show, start__year=year, start__month=month, start__day=day).order_by('start')[int(index)]
             except IndexError as ie:
                 raise CommandError(ie)
 
