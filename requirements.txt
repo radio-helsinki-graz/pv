@@ -1,4 +1,4 @@
-Django==1.4.9
+Django==1.4.10
 MySQL-python==1.2.4
 Pillow==2.2.1
 PyYAML==3.10
