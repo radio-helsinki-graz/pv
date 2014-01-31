@@ -13,7 +13,9 @@ middleware here, or combine a Django application with an application of another
 framework.
 
 """
-import os
+import os, sys
+
+sys.path.append('/var/www/pv/helsinki')
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "helsinki.settings")
 
