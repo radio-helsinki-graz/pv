@@ -7,8 +7,8 @@ Installation
 
 To get setup you must have the following installed:
 
- * Python 2.6
- * virtualenv 1.5
+ * Python 2.7
+ * virtualenv 1.11
 
 Setting up the environment
 --------------------------
