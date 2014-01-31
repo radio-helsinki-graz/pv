@@ -35,7 +35,7 @@ LOCALE_PATHS = os.path.join(PROJECT_DIR, 'locale')
 MEDIA_ROOT = os.path.join(PROJECT_DIR, 'site_media')
 MEDIA_URL = '/site_media/'
 
-ADMIN_MEDIA_PREFIX = '/media/'
+STATIC_URL = '/django_static/'
 
 SECRET_KEY = ''
 
@@ -66,6 +66,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
+    'django.contrib.staticfiles',
     'program',
     'nop',
     'tinymce',
