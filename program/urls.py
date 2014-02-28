@@ -20,7 +20,7 @@ timeslots_dict = {
     'queryset': TimeSlot.objects.all(),
     'template_object_name': 'timeslot'
 }
-recommendations_dict = {'template_name': 'program/boxes/recommendations.html'}
+recommendations_dict = {'template_name': 'boxes/recommendations.html'}
 
 urlpatterns = patterns('',
     url(r'^today/?$', day_schedule),

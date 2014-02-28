@@ -35,7 +35,7 @@ LOCALE_PATHS = os.path.join(PROJECT_DIR, 'locale')
 MEDIA_ROOT = os.path.join(PROJECT_DIR, 'site_media')
 MEDIA_URL = '/site_media/'
 
-STATIC_URL = '/django_static/'
+STATIC_URL = '/static/'
 
 SECRET_KEY = ''
 
@@ -72,6 +72,7 @@ INSTALLED_APPS = (
     'tinymce',
 )
 
+TINYMCE_JS_URL = '/static/js/tiny_mce/tiny_mce.js'
 TINYMCE_DEFAULT_CONFIG = {
     'plugins' : 'contextmenu',
     'theme': 'advanced',

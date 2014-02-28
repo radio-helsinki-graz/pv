@@ -1,11 +1,21 @@
 <html>
 <head>
   <title>Tagesansicht {{ day|date:"l, d.m.Y" }} &mdash; Radio Helsinki - Freies Radio Graz</title>
-    <script type="text/javascript" src="/program/static/js/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/program/static/js/jqueryui/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="/program/static/js/jqueryui/jquery.ui.datepicker-de.js"></script>
-    <script type="text/javascript" src="/program/static/programcalendar.js"></script>
-    <link type="text/css" href="/program/static/js/jqueryui/jquery-ui.css" rel="stylesheet" />
+  <link type="text/css" href="/program/static/js/jqueryui/jquery-ui.css" rel="stylesheet" />
+
+  <script type="text/javascript" src="/program/static/js/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/program/static/js/jqueryui/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="/program/static/js/jqueryui/jquery.ui.datepicker-de.js"></script>
+  <script type="text/javascript">
+jQuery(document).ready(function() {
+    jQuery("#calendar").datepicker({
+        defaultDate: location.href.split('/').slice(4, 7).reverse().join('.'),
+        onSelect: function(dateText, inst) {
+            location = '/programm/' + dateText.split('.').reverse().join('/');
+        }
+    });
+});
+  </script>
 </head>
 <body>
 
