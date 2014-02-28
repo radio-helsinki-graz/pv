@@ -71,6 +71,10 @@ class ShowAdmin(admin.ModelAdmin):
     ordering = ('slug',)
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ('name', 'short_description', 'description')
+    fields = (
+        'predecessor', 'broadcastformat', 'name', 'slug', 'image', 'image_enabled', 'short_description', 'description', 'email',
+        'website', 'cba_series_id', 'automation_id', 'hosts', 'owners', 'showinformation', 'showtopic', 'musicfocus',
+    )
 
 admin.site.register(BroadcastFormat, BroadcastFormatAdmin)
 admin.site.register(MusicFocus, MusicFocusAdmin)
