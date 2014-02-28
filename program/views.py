@@ -29,7 +29,7 @@ def show_list(request):
 
         queryset = queryset.filter(showtopic=showtopic)
 
-    return list_detail.object_list(request, queryset=queryset, template_object_name='show')
+    return list_detail.object_list(request, queryset=queryset, template_object_name='show', template_name='show_list.html')
 
 def recommendations(request, template_name='recommendations.html'):
     now = datetime.now()
