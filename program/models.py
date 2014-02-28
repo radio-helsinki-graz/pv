@@ -24,7 +24,7 @@ class BroadcastFormat(models.Model):
         verbose_name_plural = _("Broadcast formats")
 
     def admin_color(self):
-        return u'<span style="background-color:%s; color: %s padding: 0.2em">%s/%s</span>' % (self.color, self.text_color, self.color, self.text_color)
+        return u'<span style="background-color: %s; color: %s; padding: 0.2em">%s/%s</span>' % (self.color, self.text_color, self.color, self.text_color)
     admin_color.short_description = _("Color")
     admin_color.allow_tags = True
 
