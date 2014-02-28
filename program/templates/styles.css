@@ -1,5 +1,5 @@
 {% for bf in broadcastformats %}
-.bf-{{ bf.slug }} { background-color: {{ bf.color }}; }
+.bf-{{ bf.slug }} { background-color: {{ bf.color }}; color: {{ bf.text_color }}; }
 {% endfor %}
 
 {% for mf in musicfocus %}

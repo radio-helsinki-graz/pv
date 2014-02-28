@@ -15,6 +15,7 @@ class BroadcastFormat(models.Model):
     format = models.CharField(_("Format"), max_length=32)
     slug = models.SlugField(_("Slug"), max_length=32, unique=True)
     color = models.CharField(_("Color"), max_length=7, default='#ffffff')
+    text_color = models.CharField(_("Text color"), max_length=7, default='#000000')
     enabled = models.BooleanField(_("Enabled"), default=True)
 
     class Meta:
@@ -23,7 +24,7 @@ class BroadcastFormat(models.Model):
         verbose_name_plural = _("Broadcast formats")
 
     def admin_color(self):
-        return u'<span style="background-color:%s; padding: 0.2em">%s</span>' % (self.color, self.color)
+        return u'<span style="background-color:%s; color: %s padding: 0.2em">%s/%s</span>' % (self.color, self.text_color, self.color, self.text_color)
     admin_color.short_description = _("Color")
     admin_color.allow_tags = True
 
