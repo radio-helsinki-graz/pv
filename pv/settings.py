@@ -1,4 +1,4 @@
-# Django settings for helsinki project.
+# Django settings for pv project.
 
 import os.path
 PROJECT_DIR = os.path.dirname(__file__)
@@ -53,7 +53,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'helsinki.urls'
+ROOT_URLCONF = 'pv.urls'
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_DIR, "templates"),
