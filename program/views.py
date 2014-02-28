@@ -31,7 +31,7 @@ def show_list(request):
 
     return list_detail.object_list(request, queryset=queryset, template_object_name='show')
 
-def recommendations(request, template_name='program/recommendations.html'):
+def recommendations(request, template_name='recommendations.html'):
     now = datetime.now()
     end = now + timedelta(weeks=1)
 
@@ -74,7 +74,7 @@ def day_schedule(request, year=None, month=None, day=None):
     else:
         extra_context['timeslots'] = timeslots
 
-    return simple.direct_to_template(request, extra_context=extra_context, template='program/day_schedule.html')
+    return simple.direct_to_template(request, extra_context=extra_context, template='day_schedule.html')
 
 def current_show(request):
     current = TimeSlot.objects.get_or_create_current()
@@ -87,7 +87,7 @@ def current_show(request):
             next=next,
             after_next=after_next)
 
-    return simple.direct_to_template(request, template='program/boxes/current.html', extra_context=extra_context)
+    return simple.direct_to_template(request, template='boxes/current.html', extra_context=extra_context)
 
 def week_schedule(request, year=None, week=None):
     if year is None and week is None:
@@ -120,7 +120,7 @@ def week_schedule(request, year=None, week=None):
     extra_context['next_w3'] = datetime.strftime(monday+timedelta(days=21), '%G/%V')
     extra_context['next_w4'] = datetime.strftime(monday+timedelta(days=28), '%G/%V')
 
-    return simple.direct_to_template(request, template='program/week_schedule.html', extra_context=extra_context)
+    return simple.direct_to_template(request, template='week_schedule.html', extra_context=extra_context)
 
 def styles(request):
     extra_context = dict()
@@ -128,7 +128,7 @@ def styles(request):
     extra_context['musicfocus'] = MusicFocus.objects.all()
     extra_context['showinformation'] = ShowInformation.objects.all()
     extra_context['showtopic'] = ShowTopic.objects.all()
-    return simple.direct_to_template(request, template='program/styles.css', mimetype='text/css', extra_context=extra_context)
+    return simple.direct_to_template(request, template='styles.css', mimetype='text/css', extra_context=extra_context)
 
 def json_day_schedule(request, year=None, month=None, day=None):
     if year is None and month is None and day is None:

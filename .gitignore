@@ -1,4 +1,7 @@
 *.pyc
 dev_data.sqlite
-local_settings.py
-site_media
+static/
+pv/local_settings.py
+pv/site_media/buttons/b-*.png
+pv/site_media/buttons/s-*.png
+pv/site_media/buttons/r-*.png

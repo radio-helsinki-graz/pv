@@ -47,49 +47,49 @@
     <div id="monday" class="weekday weekday-first">
         <h2>{{ monday|date:"l d.m.Y" }}</h2>
         {% for timeslot in monday_timeslots %}
-            {% include "program/week_schedule_timeslot.html" %}
+            {% include "week_schedule_timeslot.html" %}
         {% endfor %}
     </div>
 
     <div id="tuesday" class="weekday">
         <h2>{{ tuesday|date:"l d.m.Y" }}</h2>
         {% for timeslot in tuesday_timeslots %}
-            {% include "program/week_schedule_timeslot.html" %}
+            {% include "week_schedule_timeslot.html" %}
         {% endfor %}
     </div>
 
     <div id="wednesday" class="weekday">
         <h2>{{ wednesday|date:"l d.m.Y" }}</h2>
         {% for timeslot in wednesday_timeslots %}
-            {% include "program/week_schedule_timeslot.html" %}
+            {% include "week_schedule_timeslot.html" %}
         {% endfor %}
     </div>
 
     <div id="thursday" class="weekday">
         <h2>{{ thursday|date:"l d.m.Y" }}</h2>
         {% for timeslot in thursday_timeslots %}
-            {% include "program/week_schedule_timeslot.html" %}
+            {% include "week_schedule_timeslot.html" %}
         {% endfor %}
     </div>
 
     <div id="friday" class="weekday">
         <h2>{{ friday|date:"l d.m.Y" }}</h2>
         {% for timeslot in friday_timeslots %}
-            {% include "program/week_schedule_timeslot.html" %}
+            {% include "week_schedule_timeslot.html" %}
         {% endfor %}
     </div>
 
     <div id="saturday" class="weekday">
         <h2>{{ saturday|date:"l d.m.Y" }}</h2>
         {% for timeslot in saturday_timeslots %}
-            {% include "program/week_schedule_timeslot.html" %}
+            {% include "week_schedule_timeslot.html" %}
         {% endfor %}
     </div>
 
     <div id="sunday" class="weekday weekday-last">
         <h2>{{ sunday|date:"l d.m.Y" }}</h2>
         {% for timeslot in sunday_timeslots %}
-            {% include "program/week_schedule_timeslot.html" %}
+            {% include "week_schedule_timeslot.html" %}
         {% endfor %}
     </div>
 
