@@ -132,21 +132,21 @@ def styles(request):
 
 def json_day_schedule(request, year=None, month=None, day=None):
     if year is None and month is None and day is None:
-        today = datetime.combine(date.today(), time(6, 0))
+        today = datetime.combine(date.today(), time(0, 0))
     else:
-        today = datetime.strptime('%s__%s__%s__06__00' % (year, month, day), '%Y__%m__%d__%H__%M')
+        today = datetime.strptime('%s__%s__%s__00__00' % (year, month, day), '%Y__%m__%d__%H__%M')
 
-    timeslots = TimeSlot.objects.get_day_timeslots(today)
+    timeslots = TimeSlot.objects.get_24h_timeslots(today)
     schedule = []
     for ts in timeslots:
         if ts.programslot.automation_id:
-            schedule.append((ts.start.strftime('%H:%M:%S'), ts.programslot.automation_id))
+            schedule.append((ts.start.strftime('%H:%M:%S'), ts.programslot.show.name, ts.programslot.automation_id))
         elif ts.programslot.show.automation_id:
-            schedule.append((ts.start.strftime('%H:%M:%S'), ts.programslot.show.automation_id))
+            schedule.append((ts.start.strftime('%H:%M:%S'), ts.programslot.show.name, ts.programslot.show.automation_id))
         else:
-            schedule.append((ts.start.strftime('%H:%M:%S'), -1))
+            schedule.append((ts.start.strftime('%H:%M:%S'), ts.programslot.show.name, -1))
 
-    return HttpResponse(json.dumps(schedule), content_type="application/json")
+    return HttpResponse(json.dumps(schedule), content_type="application/json; charset=utf-8")
 
 def tofirstdayinisoweek(year, week):
     # http://stackoverflow.com/questions/5882405/get-date-from-iso-week-number-in-python

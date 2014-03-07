@@ -419,6 +419,12 @@ class TimeSlotManager(models.Manager):
         return TimeSlot.objects.filter(models.Q(start__lte=today, end__gte=today) |
             models.Q(start__gt=today, start__lt=tomorrow)).exclude(end=today)
 
+    def get_24h_timeslots(self, start):
+        end = start + timedelta(hours=24)
+
+        return TimeSlot.objects.filter(models.Q(start__lte=start, end__gte=start) |
+            models.Q(start__gt=start, start__lt=end)).exclude(end=start)
+
 class TimeSlot(models.Model):
     programslot = models.ForeignKey(ProgramSlot, related_name='timeslots', verbose_name=_("Program slot"))
     start = models.DateTimeField(_("Start time"), unique=True)
