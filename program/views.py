@@ -146,7 +146,7 @@ def json_day_schedule(request, year=None, month=None, day=None):
         else:
             schedule.append((ts.start.strftime('%H:%M:%S'), ts.programslot.show.name, -1))
 
-    return HttpResponse(json.dumps(schedule), content_type="application/json; charset=utf-8")
+    return HttpResponse(json.dumps(schedule, ensure_ascii=False, encoding='utf8').encode('utf8'), content_type="application/json; charset=utf-8")
 
 def tofirstdayinisoweek(year, week):
     # http://stackoverflow.com/questions/5882405/get-date-from-iso-week-number-in-python
