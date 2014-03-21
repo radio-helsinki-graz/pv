@@ -10,6 +10,14 @@
 jQuery(document).ready(function() {
     jQuery("#calendar").datepicker({
 	dateFormat: "yy.mm.dd",
+	monthNames: [ "Jänner", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" ],
+	monthNamesShort: [ "Jän", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez" ],
+	dayNames: [ "Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag" ],
+	dayNamesMin: [ "So", "Mo", "Di", "Mi", "Do", "Fr", "Sa" ],
+	dayNamesShort: [ "Son", "Mon", "Die", "Mit", "Don", "Fre", "Sam" ],
+	firstDay: 1,
+	nextText: "Weiter",
+	prevText: "Zurück",
         defaultDate: location.href.split('/').slice(4, 7).join('.'),
         onSelect: function(dateText, inst) {
             location = '/programm/' + dateText.split('.').join('/');
