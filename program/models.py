@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
-from django.core.exceptions import ObjectDoesNotExist, ValidationError, MultipleObjectsReturned
+from django.core.exceptions import (ObjectDoesNotExist, ValidationError,
+                                    MultipleObjectsReturned)
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -11,11 +12,13 @@ from dateutil.rrule import rrule
 
 from utils import get_automation_id_choices
 
+
 class BroadcastFormat(models.Model):
     format = models.CharField(_("Format"), max_length=32)
     slug = models.SlugField(_("Slug"), max_length=32, unique=True)
     color = models.CharField(_("Color"), max_length=7, default='#ffffff')
-    text_color = models.CharField(_("Text color"), max_length=7, default='#000000')
+    text_color = models.CharField(_("Text color"), max_length=7,
+                                  default='#000000')
     enabled = models.BooleanField(_("Enabled"), default=True)
 
     class Meta:
@@ -24,20 +27,26 @@ class BroadcastFormat(models.Model):
         verbose_name_plural = _("Broadcast formats")
 
     def admin_color(self):
-        return u'<span style="background-color: %s; color: %s; padding: 0.2em">%s/%s</span>' % (self.color, self.text_color, self.color, self.text_color)
+        return u'<span style="background-color: %s; color: %s; padding: 0.2em">%s/%s</span>' % (
+            self.color, self.text_color, self.color, self.text_color)
+
     admin_color.short_description = _("Color")
     admin_color.allow_tags = True
 
     def __unicode__(self):
         return u'%s' % self.format
 
+
 class ShowInformation(models.Model):
     information = models.CharField(_("Information"), max_length=32)
     abbrev = models.CharField(_("Abbreviation"), max_length=4, unique=True)
     slug = models.SlugField(_("Slug"), max_length=32, unique=True)
-    button = models.ImageField(_("Button image"), blank=True, null=True, upload_to='buttons')
-    button_hover = models.ImageField(_("Button image (hover)"), blank=True, null=True, upload_to='buttons')
-    big_button = models.ImageField(_("Big button image"), blank=True, null=True, upload_to='buttons')
+    button = models.ImageField(_("Button image"), blank=True, null=True,
+                               upload_to='buttons')
+    button_hover = models.ImageField(_("Button image (hover)"), blank=True,
+                                     null=True, upload_to='buttons')
+    big_button = models.ImageField(_("Big button image"), blank=True,
+                                   null=True, upload_to='buttons')
 
     class Meta:
         ordering = ('information',)
@@ -62,6 +71,7 @@ class ShowInformation(models.Model):
             buttons.append(u'x')
 
         return ' '.join(buttons)
+
     admin_buttons.short_description = _("Buttons")
     admin_buttons.allow_tags = True
 
@@ -86,13 +96,17 @@ class ShowInformation(models.Model):
     def __unicode__(self):
         return u'%s' % self.information
 
+
 class ShowTopic(models.Model):
     topic = models.CharField(_("Show topic"), max_length=32)
     abbrev = models.CharField(_("Abbreviation"), max_length=4, unique=True)
     slug = models.SlugField(_("Slug"), max_length=32, unique=True)
-    button = models.ImageField(_("Button image"), blank=True, null=True, upload_to='buttons')
-    button_hover = models.ImageField(_("Button image (hover)"), blank=True, null=True, upload_to='buttons')
-    big_button = models.ImageField(_("Big button image"), blank=True, null=True, upload_to='buttons')
+    button = models.ImageField(_("Button image"), blank=True, null=True,
+                               upload_to='buttons')
+    button_hover = models.ImageField(_("Button image (hover)"), blank=True,
+                                     null=True, upload_to='buttons')
+    big_button = models.ImageField(_("Big button image"), blank=True,
+                                   null=True, upload_to='buttons')
 
     class Meta:
         ordering = ('topic',)
@@ -117,6 +131,7 @@ class ShowTopic(models.Model):
             buttons.append(u'x')
 
         return ' '.join(buttons)
+
     admin_buttons.short_description = _("Buttons")
     admin_buttons.allow_tags = True
 
@@ -141,13 +156,17 @@ class ShowTopic(models.Model):
     def __unicode__(self):
         return u'%s' % self.topic
 
+
 class MusicFocus(models.Model):
     focus = models.CharField(_("Focus"), max_length=32)
     abbrev = models.CharField(_("Abbreviation"), max_length=4, unique=True)
     slug = models.SlugField(_("Slug"), max_length=32, unique=True)
-    button = models.ImageField(_("Button image"), blank=True, null=True, upload_to='buttons')
-    button_hover = models.ImageField(_("Button image (hover)"), blank=True, null=True, upload_to='buttons')
-    big_button = models.ImageField(_("Big button image"), blank=True, null=True, upload_to='buttons')
+    button = models.ImageField(_("Button image"), blank=True, null=True,
+                               upload_to='buttons')
+    button_hover = models.ImageField(_("Button image (hover)"), blank=True,
+                                     null=True, upload_to='buttons')
+    big_button = models.ImageField(_("Big button image"), blank=True,
+                                   null=True, upload_to='buttons')
 
     class Meta:
         ordering = ('focus',)
@@ -172,6 +191,7 @@ class MusicFocus(models.Model):
             buttons.append(u'x')
 
         return ' '.join(buttons)
+
     admin_buttons.short_description = _("Buttons")
     admin_buttons.allow_tags = True
 
@@ -196,15 +216,16 @@ class MusicFocus(models.Model):
     def __unicode__(self):
         return u'%s' % self.focus
 
+
 class Host(models.Model):
     name = models.CharField(_("Name"), max_length=128)
     email = models.EmailField(_("E-Mail"), blank=True)
     website = models.URLField(_("Website"), blank=True)
 
     class Meta:
-         ordering = ('name',)
-         verbose_name = _("Host")
-         verbose_name_plural = _("Hosts")
+        ordering = ('name',)
+        verbose_name = _("Host")
+        verbose_name_plural = _("Hosts")
 
     def __unicode__(self):
         return u'%s' % self.name
@@ -213,24 +234,43 @@ class Host(models.Model):
     def get_absolute_url(self):
         return ('host-detail', [str(self.id)])
 
+
 class Show(models.Model):
-    predecessor = models.ForeignKey('self', blank=True, null=True, related_name='successors', verbose_name=_("Predecessor"))
-    hosts = models.ManyToManyField(Host, blank=True, null=True, related_name='shows', verbose_name=_("Hosts"))
-    owners = models.ManyToManyField(User, blank=True, null=True, related_name='shows', verbose_name=_("Owners"))
-    broadcastformat = models.ForeignKey(BroadcastFormat, related_name='shows', verbose_name=_("Broadcast format"))
-    showinformation = models.ManyToManyField(ShowInformation, blank=True, null=True, related_name='shows', verbose_name=_("Show information"))
-    showtopic = models.ManyToManyField(ShowTopic, blank=True, null=True, related_name='shows', verbose_name=_("Show topic"))
-    musicfocus = models.ManyToManyField(MusicFocus, blank=True, null=True, related_name='shows', verbose_name=_("Music focus"))
+    predecessor = models.ForeignKey('self', blank=True, null=True,
+                                    related_name='successors',
+                                    verbose_name=_("Predecessor"))
+    hosts = models.ManyToManyField(Host, blank=True, null=True,
+                                   related_name='shows',
+                                   verbose_name=_("Hosts"))
+    owners = models.ManyToManyField(User, blank=True, null=True,
+                                    related_name='shows',
+                                    verbose_name=_("Owners"))
+    broadcastformat = models.ForeignKey(BroadcastFormat, related_name='shows',
+                                        verbose_name=_("Broadcast format"))
+    showinformation = models.ManyToManyField(ShowInformation, blank=True,
+                                             null=True, related_name='shows',
+                                             verbose_name=_("Show information"))
+    showtopic = models.ManyToManyField(ShowTopic, blank=True, null=True,
+                                       related_name='shows',
+                                       verbose_name=_("Show topic"))
+    musicfocus = models.ManyToManyField(MusicFocus, blank=True, null=True,
+                                        related_name='shows',
+                                        verbose_name=_("Music focus"))
     name = models.CharField(_("Name"), max_length=255)
     slug = models.CharField(_("Slug"), max_length=255, unique=True)
-    image = models.ImageField(_("Image"), blank=True, null=True, upload_to='show_images')
-    image_enabled = models.BooleanField(_("show Image"), default=True )
+    image = models.ImageField(_("Image"), blank=True, null=True,
+                              upload_to='show_images')
+    image_enabled = models.BooleanField(_("show Image"), default=True)
     short_description = models.CharField(_("Short description"), max_length=64)
-    description = tinymce_models.HTMLField(_("Description"), blank=True, null=True)
+    description = tinymce_models.HTMLField(_("Description"), blank=True,
+                                           null=True)
     email = models.EmailField(_("E-Mail"), blank=True, null=True)
     website = models.URLField(_("Website"), blank=True, null=True)
-    cba_series_id = models.IntegerField(_("CBA series ID"), blank=True, null=True)
-    automation_id = models.IntegerField(_("Automation ID"), blank=True, null=True, choices=get_automation_id_choices())
+    cba_series_id = models.IntegerField(_("CBA series ID"), blank=True,
+                                        null=True)
+    automation_id = models.IntegerField(_("Automation ID"), blank=True,
+                                        null=True,
+                                        choices=get_automation_id_choices())
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_updated = models.DateTimeField(auto_now=True, editable=False)
 
@@ -247,9 +287,11 @@ class Show(models.Model):
         return ('show-detail', [self.slug])
 
     def has_active_programslots(self):
-         return self.programslots.filter(until__gt=date.today()).count() > 0
+        return self.programslots.filter(until__gt=date.today()).count() > 0
+
     has_active_programslots.boolean = True
     has_active_programslots.short_description = _("Has active program slots")
+
 
 class RRule(models.Model):
     FREQ_CHOICES = (
@@ -268,7 +310,8 @@ class RRule(models.Model):
     name = models.CharField(_("Name"), max_length=32, unique=True)
     freq = models.IntegerField(_("Frequency"), choices=FREQ_CHOICES)
     interval = models.IntegerField(_("Interval"), default=1)
-    bysetpos = models.IntegerField(_("Set position"), blank=True, choices=BYSETPOS_CHOICES, null=True)
+    bysetpos = models.IntegerField(_("Set position"), blank=True,
+                                   choices=BYSETPOS_CHOICES, null=True)
     count = models.IntegerField(_("Count"), blank=True, null=True)
 
     class Meta:
@@ -278,6 +321,7 @@ class RRule(models.Model):
 
     def __unicode__(self):
         return u'%s' % self.name
+
 
 class ProgramSlot(models.Model):
     BYWEEKDAY_CHOICES = (
@@ -289,15 +333,19 @@ class ProgramSlot(models.Model):
         (5, _("Saturday")),
         (6, _("Sunday")),
     )
-    rrule = models.ForeignKey(RRule, related_name='programslots', verbose_name=_("Recurrence rule"))
+    rrule = models.ForeignKey(RRule, related_name='programslots',
+                              verbose_name=_("Recurrence rule"))
     byweekday = models.IntegerField(_("Weekday"), choices=BYWEEKDAY_CHOICES)
-    show = models.ForeignKey(Show, related_name='programslots', verbose_name=_("Show"))
+    show = models.ForeignKey(Show, related_name='programslots',
+                             verbose_name=_("Show"))
     dstart = models.DateField(_("First date"))
     tstart = models.TimeField(_("Start time"))
     tend = models.TimeField(_("End time"))
     until = models.DateField(_("Last date"))
     is_repetition = models.BooleanField(_("Is repetition"), default=False)
-    automation_id = models.IntegerField(_("Automation ID"), blank=True, null=True, choices=get_automation_id_choices())
+    automation_id = models.IntegerField(_("Automation ID"), blank=True,
+                                        null=True,
+                                        choices=get_automation_id_choices())
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_updated = models.DateTimeField(auto_now=True, editable=False)
 
@@ -323,7 +371,13 @@ class ProgramSlot(models.Model):
     def save(self, *args, **kwargs):
         if self.pk:
             old = ProgramSlot.objects.get(pk=self.pk)
-            if self.rrule != old.rrule or self.byweekday != old.byweekday or self.show != old.show or self.dstart != old.dstart or self.tstart != old.tstart or self.tend != old.tend or self.is_repetition != old.is_repetition:
+            if self.rrule != old.rrule \
+                    or self.byweekday != old.byweekday \
+                    or self.show != old.show \
+                    or self.dstart != old.dstart \
+                    or self.tstart != old.tstart \
+                    or self.tend != old.tend \
+                    or self.is_repetition != old.is_repetition:
                 raise ValidationError(u"only until can be changed")
         else:
             old = False
@@ -353,28 +407,33 @@ class ProgramSlot(models.Model):
             dend = self.dstart
 
         starts = list(rrule(freq=self.rrule.freq,
-            dtstart=datetime.combine(self.dstart, self.tstart),
-            interval=self.rrule.interval,
-            until=self.until+relativedelta(days=+1),
-            bysetpos=self.rrule.bysetpos,
-            byweekday=byweekday_start))
+                            dtstart=datetime.combine(self.dstart, self.tstart),
+                            interval=self.rrule.interval,
+                            until=self.until + relativedelta(days=+1),
+                            bysetpos=self.rrule.bysetpos,
+                            byweekday=byweekday_start))
         ends = list(rrule(freq=self.rrule.freq,
-            dtstart=datetime.combine(dend, self.tend),
-            interval=self.rrule.interval,
-            until=self.until+relativedelta(days=+1),
-            bysetpos=self.rrule.bysetpos,
-            byweekday=byweekday_end))
+                          dtstart=datetime.combine(dend, self.tend),
+                          interval=self.rrule.interval,
+                          until=self.until + relativedelta(days=+1),
+                          bysetpos=self.rrule.bysetpos,
+                          byweekday=byweekday_end))
 
         if not old:
             for k in range(min(len(starts), len(ends))):
-                timeslot = TimeSlot.objects.create(programslot=self, start=starts[k], end=ends[k])
+                timeslot = TimeSlot.objects.create(programslot=self,
+                                                   start=starts[k],
+                                                   end=ends[k])
         elif self.until > old.until:
             for k in range(min(len(starts), len(ends))):
                 if starts[k].date() > old.until:
-                    timeslot = TimeSlot.objects.create(programslot=self, start=starts[k], end=ends[k])
+                    timeslot = TimeSlot.objects.create(programslot=self,
+                                                       start=starts[k],
+                                                       end=ends[k])
 
     def timeslot_count(self):
         return self.timeslots.count()
+
     timeslot_count.description = _("Time slot count")
 
     def has_active_timeslot(self):
@@ -386,12 +445,15 @@ class ProgramSlot(models.Model):
         else:
             return False
 
+
 class TimeSlotManager(models.Manager):
     def get_or_create_current(self):
         try:
-            return TimeSlot.objects.get(start__lte=datetime.now(), end__gt=datetime.now())
+            return TimeSlot.objects.get(start__lte=datetime.now(),
+                                        end__gt=datetime.now())
         except MultipleObjectsReturned:
-            return TimeSlot.objects.filter(start__lte=datetime.now(), end__gt=datetime.now())[0]
+            return TimeSlot.objects.filter(start__lte=datetime.now(),
+                                           end__gt=datetime.now())[0]
         except ObjectDoesNotExist:
             once = RRule.objects.get(pk=1)
             today = date.today().weekday()
@@ -403,7 +465,10 @@ class TimeSlotManager(models.Manager):
             dstart, tstart = previous.end.date(), previous.end.time()
             until, tend = next.start.date(), next.start.time()
 
-            new_programslot = ProgramSlot(rrule=once, byweekday=today, show=default, dstart=dstart, tstart=tstart, tend=tend, until=until)
+            new_programslot = ProgramSlot(rrule=once, byweekday=today,
+                                          show=default, dstart=dstart,
+                                          tstart=tstart, tend=tend,
+                                          until=until)
             try:
                 new_programslot.validate_unique()
                 new_programslot.save()
@@ -413,20 +478,26 @@ class TimeSlotManager(models.Manager):
                 return new_programslot.timeslots.all()[0]
 
     def get_day_timeslots(self, day):
-        today = datetime.combine(day, time(6,0))
+        today = datetime.combine(day, time(6, 0))
         tomorrow = today + timedelta(days=1)
 
-        return TimeSlot.objects.filter(models.Q(start__lte=today, end__gte=today) |
-            models.Q(start__gt=today, start__lt=tomorrow)).exclude(end=today)
+        return TimeSlot.objects.filter(models.Q(start__lte=today,
+                                                end__gte=today) |
+                                       models.Q(start__gt=today,
+                                                start__lt=tomorrow)).exclude(end=today)
 
     def get_24h_timeslots(self, start):
         end = start + timedelta(hours=24)
 
-        return TimeSlot.objects.filter(models.Q(start__lte=start, end__gte=start) |
-            models.Q(start__gt=start, start__lt=end)).exclude(end=start)
+        return TimeSlot.objects.filter(models.Q(start__lte=start,
+                                                end__gte=start) |
+                                       models.Q(start__gt=start,
+                                                start__lt=end)).exclude(end=start)
+
 
 class TimeSlot(models.Model):
-    programslot = models.ForeignKey(ProgramSlot, related_name='timeslots', verbose_name=_("Program slot"))
+    programslot = models.ForeignKey(ProgramSlot, related_name='timeslots',
+                                    verbose_name=_("Program slot"))
     start = models.DateTimeField(_("Start time"), unique=True)
     end = models.DateTimeField(_("End time"))
     show = models.ForeignKey(Show, editable=False, related_name='timeslots')
@@ -452,6 +523,7 @@ class TimeSlot(models.Model):
     def get_absolute_url(self):
         return ('timeslot-detail', [self.id])
 
+
 class Note(models.Model):
     STATUS_CHOICES = (
         (0, _("Cancellation")),
@@ -461,8 +533,10 @@ class Note(models.Model):
     timeslot = models.OneToOneField(TimeSlot, verbose_name=_("Time slot"))
     title = models.CharField(_("Title"), max_length=128)
     content = tinymce_models.HTMLField(_("Content"))
-    status = models.IntegerField(_("Status"), choices=STATUS_CHOICES, default=1)
-    cba_entry_id = models.IntegerField(_("CBA entry ID"), blank=True, null=True)
+    status = models.IntegerField(_("Status"), choices=STATUS_CHOICES,
+                                 default=1)
+    cba_entry_id = models.IntegerField(_("CBA entry ID"), blank=True,
+                                       null=True)
     start = models.DateTimeField(editable=False)
     show = models.ForeignKey(Show, editable=False, related_name='notes')
     created = models.DateTimeField(auto_now_add=True, editable=False)
@@ -477,7 +551,7 @@ class Note(models.Model):
         return u'%s - %s' % (self.title, self.timeslot)
 
     def save(self, *args, **kwargs):
-        self.start =  self.timeslot.start
+        self.start = self.timeslot.start
         self.show = self.timeslot.programslot.show
 
         super(Note, self).save(*args, **kwargs)

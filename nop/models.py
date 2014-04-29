@@ -30,6 +30,7 @@ class Standby(models.Model):
         db_table = u'standby'
         ordering = ['-timestamp']
 
+
 class State(models.Model):
     timestamp = models.BigIntegerField(primary_key=True)
     state = models.CharField(max_length=96, blank=True)

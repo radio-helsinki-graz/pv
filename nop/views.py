@@ -59,7 +59,8 @@ def _which(timestamp=None):
 def _get_show(datetime=None):
     try:
         if datetime:
-            timeslot = TimeSlot.objects.get(start__lte=datetime, end__gt=datetime)
+            timeslot = TimeSlot.objects.get(start__lte=datetime,
+                                            end__gt=datetime)
         else:
             timeslot = TimeSlot.objects.get_or_create_current()
     except (ObjectDoesNotExist, MultipleObjectsReturned):
@@ -82,7 +83,8 @@ def _current():
     album = None
     show = _get_show()
 
-    if show['id'] in MUSIKPROG_IDS or (show['id'] in SPECIAL_PROGRAM_IDS and not show['note']):
+    if show['id'] in MUSIKPROG_IDS \
+            or (show['id'] in SPECIAL_PROGRAM_IDS and not show['note']):
         result = _which().objects.using(DB).all()[0]
         artist = result.artist
         title = result.title
@@ -105,7 +107,8 @@ def _bydate(year=None, month=None, day=None, hour=None, minute=None):
                  'title': None,
                  'album': None}]
     else:
-        ts = int(time.mktime((int(year), int(month), int(day), int(hour), int(minute), 0, 0, 0, -1))) * 1000000
+        ts = int(time.mktime((int(year), int(month), int(day), int(hour),
+                              int(minute), 0, 0, 0, -1))) * 1000000
         result = _which(ts).objects.using(DB).filter(timestamp__lt=ts)[:5]
         return [{'show': show['name'],
                  'start': _dtstring(time.localtime(item.timestamp//1000000)),
@@ -129,14 +132,16 @@ def nop_form(request):
     date = None
     time = None
 
-    if request.method == 'GET' and ('date' in request.GET or 'time' in request.GET):
+    if request.method == 'GET' \
+            and ('date' in request.GET or 'time' in request.GET):
         form = NopForm(request.GET)
 
         if form.is_valid():
             date = form.cleaned_data['date']
             time = form.cleaned_data['time']
     else:
-        form = NopForm(initial={'date': datetime.date(datetime.now()), 'time': datetime.time(datetime.now())})
+        form = NopForm(initial={'date': datetime.date(datetime.now()),
+                                'time': datetime.time(datetime.now())})
 
     if not date:
         date = datetime.date(datetime.now())

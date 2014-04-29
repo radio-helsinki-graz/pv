@@ -1,12 +1,13 @@
 # Django settings for pv project.
 
 import os.path
+
 PROJECT_DIR = os.path.dirname(__file__)
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-ADMINS = ( )
+ADMINS = ()
 
 MANAGERS = ADMINS
 
@@ -42,7 +43,7 @@ SECRET_KEY = ''
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    #     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -74,7 +75,7 @@ INSTALLED_APPS = (
 
 TINYMCE_JS_URL = '/static/js/tiny_mce/tiny_mce.js'
 TINYMCE_DEFAULT_CONFIG = {
-    'plugins' : 'contextmenu',
+    'plugins': 'contextmenu',
     'theme': 'advanced',
     'theme_advanced_toolbar_location': 'top',
 }
