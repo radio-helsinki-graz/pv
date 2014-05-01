@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.conf.urls.defaults import *
+from django.db.models import Q
 from django.views.decorators.cache import cache_page
 from django.views.generic.list_detail import object_detail, object_list
 
@@ -11,7 +12,8 @@ from datetime import date
 
 hosts_dict = {
     'queryset': Host.objects.filter(
-        shows__programslots__until__gte=date.today()).distinct(),
+        Q(shows__programslots__until__gte=date.today()) |
+        Q(always_visible=True)).distinct(),
     'template_object_name': 'host'
 }
 shows_dict = {
