@@ -5,7 +5,7 @@ from models import (BroadcastFormat, MusicFocus, ShowInformation, ShowTopic,
                     Host, Note, ProgramSlot, Show, TimeSlot)
 from forms import MusicFocusForm
 
-from datetime import date
+from datetime import date, datetime, timedelta
 
 
 class BroadcastFormatAdmin(admin.ModelAdmin):
@@ -34,15 +34,18 @@ class NoteAdmin(admin.ModelAdmin):
     list_display = ('title', 'show', 'start', 'status')
     list_filter = ('status',)
     ordering = ('timeslot',)
+    save_as = True
 
     def queryset(self, request):
         shows = request.user.shows.all()
         return super(NoteAdmin, self).queryset(request).filter(show__in=shows)
 
     def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
+        four_weeks = datetime.now() - timedelta(weeks=4)
         if db_field.name == 'timeslot':
             shows = request.user.shows.all()
-            kwargs['queryset'] = TimeSlot.objects.filter(show__in=shows)
+            kwargs['queryset'] = TimeSlot.objects.filter(show__in=shows,
+                                                         start__gt=four_weeks)
 
         return super(NoteAdmin, self).formfield_for_foreignkey(db_field,
                                                                request,
@@ -56,16 +59,8 @@ class TimeSlotInline(admin.TabularInline):
     model = TimeSlot
 
 
-def renew(modeladmin, request, queryset):
-    next_year = date.today().year + 1
-    queryset.update(until=date(next_year, 12, 31))
-
-
-renew.short_description = _("Renew selected time slots")
-
-
 class ProgramSlotAdmin(admin.ModelAdmin):
-    actions = (renew,)
+    actions = ('renew',)
     inlines = (TimeSlotInline,)
     list_display = ('show', 'byweekday', 'rrule', 'tstart', 'tend', 'until',
                     'timeslot_count')
@@ -73,6 +68,17 @@ class ProgramSlotAdmin(admin.ModelAdmin):
     ordering = ('byweekday', 'dstart')
     save_on_top = True
     search_fields = ('show__name',)
+
+    def renew(self, request, queryset):
+        next_year = date.today().year + 1
+        until = date(next_year, 12, 31)
+        renewed = queryset.update(until=until)
+        if renewed == 1:
+            message = _("1 program slot was renewed until %s") % until
+        else:
+            message = _("%s program slots were renewed until %s") % until
+        self.message_user(request, message)
+    renew.short_description = _("Renew selected program slots")
 
 
 class ProgramSlotInline(admin.TabularInline):
