@@ -1,54 +1,51 @@
 {% load timeslots %}
 
-{% if forloop.first and timeslot.start != timeslot.get_previous_by_start.end %}
-<div class="timeslot bf-{{ default_show.broadcastformat.slug }}" {% duration_until timeslot.start %}>
-    <div>{{ default_show.name }}</div>
-</div>
-{% endif %}
-
-{% if forloop.first and timeslot.start == timeslot.get_next_by_start.end and timeslot.start != "06:00" %}
-<div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}" {% duration timeslot.start timeslot.end %}>
-    <div><a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a></div>
-</div>
-{% endif %}
-
-{% if forloop.first and timeslot.start != "06:00" and timeslot.show == default_show %}
-<div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}" {% duration_until timeslot.end %}>
-    <div><a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a> </div>
-</div>
-{% endif %}
-
-{% if forloop.first and timeslot.start != "06:00" and timeslot.show != default_show %}
-<div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}" {% duration timeslot.start timeslot.end %}>
-    <div><a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a> </div>
-</div>
-{% endif %}
-
-{% if not forloop.first and not forloop.last %}
-<div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}" {% duration timeslot.start timeslot.end %}>
-    <div><a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a></div>
-</div>
+{% if forloop.first %}
+    {% if timeslot.start.hour < 6 %}
+        {# the day starts with the first show until its end #}
+        <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}" {% duration_until timeslot.end %}>
+            <div><a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a></div>
+        </div>
+    {% else %}
+        {# the day starts with a default show until the start of first show #}
+        <div class="timeslot bf-{{ default_show.broadcastformat.slug }}" {% duration_until timeslot.start %}>
+            <div>{{ default_show.name }}</div>
+        </div>
+        <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}" {% duration timeslot.start timeslot.end %}>
+            <div><a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a></div>
+        </div>
+    {% endif %}
     {% if timeslot.end != timeslot.get_next_by_start.start %}
-    <div class="timeslot bf-{{ default_show.broadcastformat.slug }}" {% duration timeslot.end timeslot.get_next_by_start.start %}>
-        <div>{{ default_show.name }}</div>
+        {# a default show is needed to fill the time until the next show #}
+        <div class="timeslot bf-{{ default_show.broadcastformat.slug }}" {% duration timeslot.end timeslot.get_next_by_start.start %}>
+            <div>{{ default_show.name }}</div>
+        </div>
+    {% endif %}
+{% elif forloop.last %}
+    {% if timeslot.end.hour < 6 %}
+        {# the day ends with this show and a default show until 6 #}
+        <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}" {% duration timeslot.start timeslot.end %}>
+            <div><a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a></div>
+        </div>
+        <div class="timeslot bf-{{ default_show.broadcastformat.slug }}" {% duration_since timeslot.end %}>
+            <div>{{ default_show.name }}</div>
+        </div>
+    {% else %}
+        {# the days ends with this show  #}
+        <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}" {% duration_since timeslot.start %}>
+            <div><a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a></div>
+        </div>
+    {% endif %}
+{% else %}
+    <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}" {% duration timeslot.start timeslot.end %}>
+        <div><a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a></div>
     </div>
+    {% if timeslot.end != timeslot.get_next_by_start.start %}
+        {# a default show is needed to fill the time until the next show #}
+        <div class="timeslot bf-{{ default_show.broadcastformat.slug }}" {% duration timeslot.end timeslot.get_next_by_start.start %}>
+            <div>{{ default_show.name }}</div>
+        </div>
     {% endif %}
 {% endif %}
 
-{% if forloop.last and timeslot.end != "06:00" and timeslot.show == default_show %}
-<div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}" {% duration_since timeslot.start %}>
-    <div><a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a> </div>
-</div>
-{% endif %}
 
-{% if forloop.last and timeslot.end != "06:00" and timeslot.show != default_show %}
-<div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}" {% duration timeslot.start timeslot.end %}>
-    <div><a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a> </div>
-</div>
-{% endif %}
-
-{% if forloop.last and timeslot.end != timeslot.get_next_by_start.start %}
-<div class="timeslot bf-{{ default_show.broadcastformat.slug }}" {% duration_since timeslot.end %}>
-    <div>{{ default_show.name }}</div>
-</div>
-{% endif  %}
