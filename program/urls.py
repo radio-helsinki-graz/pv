@@ -1,8 +1,8 @@
 from django.conf import settings
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns, url, include
 from django.db.models import Q
 from django.views.decorators.cache import cache_page
-from django.views.generic.list_detail import object_detail, object_list
+from django.views.generic.detail import DetailView
 
 from models import Host, Show, TimeSlot
 from views import current_show, day_schedule, recommendations, show_list, \
@@ -33,21 +33,21 @@ urlpatterns = patterns('',
                            day_schedule),
                        url(r'^(?P<year>\d{4})/(?P<week>\d{1,2})/?$',
                            week_schedule),
-                       url(r'^current_box/?$', cache_page(current_show, 60)),
+                       url(r'^current_box/?$', cache_page(60)(current_show)),
                        url(r'^hosts/?$',
-                           object_list,
+                           DetailView,
                            dict(hosts_dict, template_name='host_list.html')),
-                       url(r'^hosts/(?P<object_id>\d+)/?$', object_detail,
+                       url(r'^hosts/(?P<object_id>\d+)/?$', DetailView,
                            dict(hosts_dict, template_name='host_detail.html'),
                            name='host-detail'),
                        url(r'^tips/?$', recommendations),
                        url(r'^tips_box/?$', recommendations,
                            recommendations_dict),
                        url(r'^shows/?$', show_list),
-                       url(r'^shows/(?P<slug>[\w-]+)/?$', object_detail,
+                       url(r'^shows/(?P<slug>[\w-]+)/?$', DetailView,
                            dict(shows_dict, template_name='show_detail.html'),
                            name='show-detail'),
-                       url(r'^(?P<object_id>\d+)/?$', object_detail,
+                       url(r'^(?P<object_id>\d+)/?$', DetailView,
                            dict(timeslots_dict,
                                 template_name='timeslot_detail.html'),
                            name='timeslot-detail'),

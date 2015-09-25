@@ -36,6 +36,7 @@ LOCALE_PATHS = os.path.join(PROJECT_DIR, 'locale')
 MEDIA_ROOT = os.path.join(PROJECT_DIR, 'site_media')
 MEDIA_URL = '/site_media/'
 
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 STATIC_URL = '/static/'
 
 SECRET_KEY = ''

@@ -16,7 +16,7 @@ framework.
 import os
 import sys
 
-sys.path.append('/var/www/pv')
+sys.path.append('/srv/pv/pv')
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pv.settings")
 

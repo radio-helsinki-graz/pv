@@ -1,7 +1,8 @@
 from datetime import date, datetime, time, timedelta
 import json
 
-from django.views.generic import list_detail, simple
+from django.views.generic.base import TemplateView
+from django.views.generic.detail import DetailView
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from django.http import HttpResponse
@@ -33,7 +34,7 @@ def show_list(request):
 
         queryset = queryset.filter(showtopic=showtopic)
 
-    return list_detail.object_list(request, queryset=queryset,
+    return DetailView(request, queryset=queryset,
                                    template_object_name='show',
                                    template_name='show_list.html')
 
@@ -46,7 +47,7 @@ def recommendations(request, template_name='recommendations.html'):
                                          start__range=(now, end)) |
                                        Q(show__broadcastformat__slug='sondersendung',
                                          start__range=(now, end))).order_by('start')[:20]
-    return list_detail.object_list(request, queryset=queryset,
+    return DetailView(request, queryset=queryset,
                                    template_name=template_name,
                                    template_object_name='recommendation')
 
@@ -93,7 +94,7 @@ def day_schedule(request, year=None, month=None, day=None):
     else:
         extra_context['timeslots'] = timeslots
 
-    return simple.direct_to_template(request, extra_context=extra_context,
+    return TemplateView(request, extra_context=extra_context,
                                      template='day_schedule.html')
 
 
@@ -108,7 +109,7 @@ def current_show(request):
                          next=next,
                          after_next=after_next)
 
-    return simple.direct_to_template(request, template='boxes/current.html',
+    return TemplateView(request, template='boxes/current.html',
                                      extra_context=extra_context)
 
 
@@ -151,7 +152,7 @@ def week_schedule(request, year=None, week=None):
     extra_context['next_w4'] = datetime.strftime(monday + timedelta(days=28),
                                                  '%G/%V')
 
-    return simple.direct_to_template(request, template='week_schedule.html',
+    return TemplateView(request, template='week_schedule.html',
                                      extra_context=extra_context)
 
 
@@ -161,7 +162,7 @@ def styles(request):
     extra_context['musicfocus'] = MusicFocus.objects.all()
     extra_context['showinformation'] = ShowInformation.objects.all()
     extra_context['showtopic'] = ShowTopic.objects.all()
-    return simple.direct_to_template(request, template='styles.css',
+    return TemplateView(request, template='styles.css',
                                      mimetype='text/css',
                                      extra_context=extra_context)
 
