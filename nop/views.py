@@ -19,7 +19,8 @@ MUSIKPROG_IDS = (
     203,  # Hotel Passage
     204,  # Radyo Mezopotamya
     206,  # Abunda Lingva
-    290   # styrian underground
+    290,  # styrian underground
+    523   # Songbirds
 )
 
 SPECIAL_PROGRAM_IDS = (
