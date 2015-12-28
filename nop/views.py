@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django import forms
 from models import Master, Standby, State
-from program.models import TimeSlot, Note
+from program.models import TimeSlot
 
 import json
 import time
