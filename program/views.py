@@ -3,99 +3,101 @@ import json
 
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from django.http import HttpResponse
 
-from models import (BroadcastFormat, MusicFocus, Note, Show, ShowInformation,
-                    ShowTopic, TimeSlot)
+from models import BroadcastFormat, MusicFocus, Note, Show, ShowInformation, ShowTopic, TimeSlot, Host
+
+
+def host_list(request):
+    queryset = Host.objects.filter(Q(shows__programslots__until__gte=date.today()) |
+                                   Q(always_visible=True)).distinct()
+
+    return ListView.as_view(request, queryset=queryset, template_name='host_list.html')
+
+
+def host_detail(request):
+    queryset = Host.objects.filter(Q(shows__programslots__until__gte=date.today()) |
+                                   Q(always_visible=True)).distinct()
+
+    return DetailView.as_view(request, queryset=queryset, template_name='host_detail.html')
 
 
 def show_list(request):
     queryset = Show.objects.filter(programslots__until__gt=date.today()).exclude(id=1).distinct()
 
     if 'broadcastformat' in request.GET:
-        broadcastformat = get_object_or_404(BroadcastFormat,
-                                            slug=request.GET['broadcastformat'])
-
+        broadcastformat = get_object_or_404(BroadcastFormat, slug=request.GET['broadcastformat'])
         queryset = queryset.filter(broadcastformat=broadcastformat)
     elif 'musicfocus' in request.GET:
-        musicfocus = get_object_or_404(MusicFocus,
-                                       slug=request.GET['musicfocus'])
-
+        musicfocus = get_object_or_404(MusicFocus, slug=request.GET['musicfocus'])
         queryset = queryset.filter(musicfocus=musicfocus)
     elif 'showinformation' in request.GET:
-        showinformation = get_object_or_404(ShowInformation,
-                                            slug=request.GET['showinformation'])
-
+        showinformation = get_object_or_404(ShowInformation, slug=request.GET['showinformation'])
         queryset = queryset.filter(showinformation=showinformation)
     elif 'showtopic' in request.GET:
         showtopic = get_object_or_404(ShowTopic, slug=request.GET['showtopic'])
-
         queryset = queryset.filter(showtopic=showtopic)
 
-    return DetailView(request, queryset=queryset,
-                                   template_object_name='show',
-                                   template_name='show_list.html')
+    return ListView.as_view(request, queryset=queryset, template_object_name='show', template_name='show_list.html')
+
+
+def show_detail(request):
+    queryset = Show.objects.filter(programslots__until__gt=date.today()).exclude(id=1).distinct()
+
+    return DetailView.as_view(request, queryset=queryset, template_name='show_detail.html',)
+
+
+def timeslot_detail(request):
+    queryset = TimeSlot.objects.all()
+
+    return DetailView.as_view(request, queryset=queryset, template_name='timeslot_detail.html')
 
 
 def recommendations(request, template_name='recommendations.html'):
     now = datetime.now()
     end = now + timedelta(weeks=1)
 
-    queryset = TimeSlot.objects.filter(Q(note__isnull=False, note__status=1,
-                                         start__range=(now, end)) |
-                                       Q(show__broadcastformat__slug='sondersendung',
-                                         start__range=(now, end))).order_by('start')[:20]
-    return DetailView(request, queryset=queryset,
-                                   template_name=template_name,
-                                   template_object_name='recommendation')
+    queryset = TimeSlot.objects.filter(Q(note__isnull=False, note__status=1, start__range=(now, end)) |
+                                       Q(show__broadcastformat__slug='sondersendung', start__range=(now, end))).order_by('start')[:20]
+
+    return DetailView.as_view(request, queryset=queryset, template_name=template_name, template_object_name='recommendation')
 
 
 def day_schedule(request, year=None, month=None, day=None):
     if year is None and month is None and day is None:
         today = datetime.combine(date.today(), time(6, 0))
     else:
-        today = datetime.strptime('%s__%s__%s__06__00' % (year, month, day),
-                                  '%Y__%m__%d__%H__%M')
+        today = datetime.strptime('%s__%s__%s__06__00' % (year, month, day), '%Y__%m__%d__%H__%M')
 
     tomorrow = today + timedelta(days=1)
 
-    recommendations = Note.objects.filter(status=1,
-                                          timeslot__start__range=(today,
-                                                                  tomorrow))
+    recommendations = Note.objects.filter(status=1, timeslot__start__range=(today, tomorrow))
 
     default_show = Show.objects.get(pk=1)
 
-    extra_context = dict(day=today, recommendations=recommendations,
-                         default_show=default_show)
+    extra_context = dict(day=today, recommendations=recommendations, default_show=default_show)
 
     timeslots = TimeSlot.objects.get_day_timeslots(today)
 
     if 'broadcastformat' in request.GET:
-        broadcastformat = get_object_or_404(BroadcastFormat,
-                                            slug=request.GET['broadcastformat'])
-
+        broadcastformat = get_object_or_404(BroadcastFormat, slug=request.GET['broadcastformat'])
         extra_context['timeslots'] = timeslots.filter(show__broadcastformat=broadcastformat)
     elif 'musicfocus' in request.GET:
-        musicfocus = get_object_or_404(MusicFocus,
-                                       slug=request.GET['musicfocus'])
-
+        musicfocus = get_object_or_404(MusicFocus, slug=request.GET['musicfocus'])
         extra_context['timeslots'] = timeslots.filter(show__musicfocus=musicfocus)
     elif 'showinformation' in request.GET:
-        showinformation = get_object_or_404(ShowInformation,
-                                            slug=request.GET['showinformation'])
-
+        showinformation = get_object_or_404(ShowInformation, slug=request.GET['showinformation'])
         extra_context['timeslots'] = timeslots.filter(show__showinformation=showinformation)
     elif 'showtopic' in request.GET:
         showtopic = get_object_or_404(ShowTopic, slug=request.GET['showtopic'])
-
         extra_context['showtopic'] = timeslots.filter(show__showtopic=showtopic)
     else:
         extra_context['timeslots'] = timeslots
 
-    return TemplateView(request, extra_context=extra_context,
-                                     template='day_schedule.html')
+    return TemplateView.as_view(request, extra_context=extra_context, template='day_schedule.html')
 
 
 def current_show(request):
@@ -104,18 +106,14 @@ def current_show(request):
     next = current.get_next_by_start()
     after_next = next.get_next_by_start()
 
-    extra_context = dict(current=current,
-                         previous=previous,
-                         next=next,
-                         after_next=after_next)
+    extra_context = dict(current=current, previous=previous, next=next, after_next=after_next)
 
-    return TemplateView(request, template='boxes/current.html',
-                                     extra_context=extra_context)
+    return TemplateView.as_view(request, template='boxes/current.html', extra_context=extra_context)
 
 
 def week_schedule(request, year=None, week=None):
     if year is None and week is None:
-        year, week = datetime.strftime(datetime.now(), '%G__%V').split('__')
+        year, week = datetime.now().strftime('%G__%V').split('__')
 
     monday = tofirstdayinisoweek(int(year), int(week))
     tuesday = monday + timedelta(days=1)
@@ -127,10 +125,8 @@ def week_schedule(request, year=None, week=None):
 
     default_show = Show.objects.get(pk=1)
 
-    extra_context = dict(monday=monday, tuesday=tuesday, wednesday=wednesday,
-                         thursday=thursday, friday=friday,
-                         saturday=saturday, sunday=sunday,
-                         default_show=default_show)
+    extra_context = dict(monday=monday, tuesday=tuesday, wednesday=wednesday,  thursday=thursday, friday=friday,
+                         saturday=saturday, sunday=sunday, default_show=default_show)
 
     extra_context['monday_timeslots'] = TimeSlot.objects.get_day_timeslots(monday)
     extra_context['tuesday_timeslots'] = TimeSlot.objects.get_day_timeslots(tuesday)
@@ -140,20 +136,14 @@ def week_schedule(request, year=None, week=None):
     extra_context['saturday_timeslots'] = TimeSlot.objects.get_day_timeslots(saturday)
     extra_context['sunday_timeslots'] = TimeSlot.objects.get_day_timeslots(sunday)
 
-    extra_context['last_w'] = datetime.strftime(monday - timedelta(days=7),
-                                                '%G/%V')
+    extra_context['last_w'] = datetime.strftime(monday - timedelta(days=7), '%G/%V')
     extra_context['cur_w'] = datetime.strftime(monday, '%G/%V')
-    extra_context['next_w1'] = datetime.strftime(monday + timedelta(days=7),
-                                                 '%G/%V')
-    extra_context['next_w2'] = datetime.strftime(monday + timedelta(days=14),
-                                                 '%G/%V')
-    extra_context['next_w3'] = datetime.strftime(monday + timedelta(days=21),
-                                                 '%G/%V')
-    extra_context['next_w4'] = datetime.strftime(monday + timedelta(days=28),
-                                                 '%G/%V')
+    extra_context['next_w1'] = datetime.strftime(monday + timedelta(days=7), '%G/%V')
+    extra_context['next_w2'] = datetime.strftime(monday + timedelta(days=14), '%G/%V')
+    extra_context['next_w3'] = datetime.strftime(monday + timedelta(days=21), '%G/%V')
+    extra_context['next_w4'] = datetime.strftime(monday + timedelta(days=28), '%G/%V')
 
-    return TemplateView(request, template='week_schedule.html',
-                                     extra_context=extra_context)
+    return TemplateView.as_view(request, template='week_schedule.html', extra_context=extra_context)
 
 
 def styles(request):
@@ -162,36 +152,27 @@ def styles(request):
     extra_context['musicfocus'] = MusicFocus.objects.all()
     extra_context['showinformation'] = ShowInformation.objects.all()
     extra_context['showtopic'] = ShowTopic.objects.all()
-    return TemplateView(request, template='styles.css',
-                                     mimetype='text/css',
-                                     extra_context=extra_context)
+
+    return TemplateView.as_view(request, template='styles.css', mimetype='text/css', extra_context=extra_context)
 
 
 def json_day_schedule(request, year=None, month=None, day=None):
     if year is None and month is None and day is None:
         today = datetime.combine(date.today(), time(0, 0))
     else:
-        today = datetime.strptime('%s__%s__%s__00__00' % (year, month, day),
-                                  '%Y__%m__%d__%H__%M')
+        today = datetime.strptime('%s__%s__%s__00__00' % (year, month, day), '%Y__%m__%d__%H__%M')
 
     timeslots = TimeSlot.objects.get_24h_timeslots(today)
     schedule = []
     for ts in timeslots:
         if ts.programslot.automation_id:
-            schedule.append((ts.start.strftime('%H:%M:%S'),
-                             ts.programslot.show.name,
-                             ts.programslot.automation_id))
+            schedule.append((ts.start.strftime('%H:%M:%S'), ts.programslot.show.name, ts.programslot.automation_id))
         elif ts.programslot.show.automation_id:
-            schedule.append(
-                (ts.start.strftime('%H:%M:%S'), ts.programslot.show.name,
-                 ts.programslot.show.automation_id))
+            schedule.append((ts.start.strftime('%H:%M:%S'), ts.programslot.show.name, ts.programslot.show.automation_id))
         else:
-            schedule.append((ts.start.strftime('%H:%M:%S'),
-                             ts.programslot.show.name, -1))
+            schedule.append((ts.start.strftime('%H:%M:%S'), ts.programslot.show.name, -1))
 
-    return HttpResponse(json.dumps(schedule, ensure_ascii=False,
-                                   encoding='utf8').encode('utf8'),
-                        content_type="application/json; charset=utf-8")
+    return HttpResponse(json.dumps(schedule, ensure_ascii=False, encoding='utf8').encode('utf8'), content_type="application/json; charset=utf-8")
 
 
 def tofirstdayinisoweek(year, week):
