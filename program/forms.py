@@ -33,13 +33,16 @@ class FormWithButton(ModelForm):
 class MusicFocusForm(FormWithButton):
     class Meta:
         model = MusicFocus
+        fields = '__all__'
 
 
 class ShowInformationForm(FormWithButton):
     class Meta:
         model = ShowInformation
+        fields = '__all__'
 
 
 class ShowTopicForm(FormWithButton):
     class Meta:
         model = ShowTopic
+        fields = '__all__'
