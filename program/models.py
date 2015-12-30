@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist, ValidationError, MultipleObjectsReturned
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
@@ -221,19 +222,18 @@ class Host(models.Model):
     def __unicode__(self):
         return u'%s' % self.name
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('host-detail', [str(self.id)])
+        return reverse('host-detail', args=[self.id])
 
 
 class Show(models.Model):
     predecessor = models.ForeignKey('self', blank=True, null=True, related_name='successors', verbose_name=_("Predecessor"))
-    hosts = models.ManyToManyField(Host, blank=True, null=True, related_name='shows', verbose_name=_("Hosts"))
-    owners = models.ManyToManyField(User, blank=True, null=True, related_name='shows', verbose_name=_("Owners"))
+    hosts = models.ManyToManyField(Host, related_name='shows', verbose_name=_("Hosts"))
+    owners = models.ManyToManyField(User, related_name='shows', verbose_name=_("Owners"))
     broadcastformat = models.ForeignKey(BroadcastFormat, related_name='shows', verbose_name=_("Broadcast format"))
-    showinformation = models.ManyToManyField(ShowInformation, blank=True, null=True, related_name='shows', verbose_name=_("Show information"))
-    showtopic = models.ManyToManyField(ShowTopic, blank=True, null=True, related_name='shows', verbose_name=_("Show topic"))
-    musicfocus = models.ManyToManyField(MusicFocus, blank=True, null=True, related_name='shows', verbose_name=_("Music focus"))
+    showinformation = models.ManyToManyField(ShowInformation, related_name='shows', verbose_name=_("Show information"))
+    showtopic = models.ManyToManyField(ShowTopic, related_name='shows', verbose_name=_("Show topic"))
+    musicfocus = models.ManyToManyField(MusicFocus, related_name='shows', verbose_name=_("Music focus"))
     name = models.CharField(_("Name"), max_length=255)
     slug = models.CharField(_("Slug"), max_length=255, unique=True)
     image = models.ImageField(_("Image"), blank=True, null=True, upload_to='show_images')
@@ -255,9 +255,8 @@ class Show(models.Model):
     def __unicode__(self):
         return u'%s' % self.name
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('show-detail', [self.slug])
+        return reverse('show-detail', args=[self.slug])
 
     def has_active_programslots(self):
         return self.programslots.filter(until__gt=date.today()).count() > 0
@@ -475,9 +474,8 @@ class TimeSlot(models.Model):
         self.show = self.programslot.show
         super(TimeSlot, self).save(*args, **kwargs)
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('timeslot-detail', [self.id])
+        return reverse('timeslot-detail', args=[self.id])
 
 
 class Note(models.Model):
