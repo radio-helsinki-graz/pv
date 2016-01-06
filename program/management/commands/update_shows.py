@@ -10,13 +10,13 @@ class Command(NoArgsCommand):
 
     def handle_noargs(self, **options):
         for show in Show.objects.exclude(pk=1):
-            has_active_programslots = None
+            is_active = None
             for programslot in show.programslots.all():
                 if programslot.until > date.today():
-                    has_active_programslots = True
+                    is_active = True
                 else:
-                    has_active_programslots = False
-            show.has_active_programslots = has_active_programslots
+                    is_active = False
+            show.is_active = is_active
 
-            if not has_active_programslots:
+            if not is_active:
                 show.save()

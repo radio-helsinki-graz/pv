@@ -9,13 +9,13 @@ class Command(NoArgsCommand):
     def handle_noargs(self, **options):
         for host in Host.objects.all():
             for show in host.shows.all():
-                hosts_active_show = None
-                if show.has_active_programslots:
-                    hosts_active_show = True
+                is_active = None
+                if show.is_active:
+                    is_active = True
                 else:
-                    hosts_active_show = False
+                    is_active = False
 
-                host.hosts_active_show = hosts_active_show
+                host.is_active = is_active
 
-                if not hosts_active_show:
+                if not is_active:
                     host.save()
