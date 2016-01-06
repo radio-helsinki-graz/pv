@@ -211,6 +211,7 @@ class MusicFocus(models.Model):
 class Host(models.Model):
     name = models.CharField(_("Name"), max_length=128)
     always_visible = models.BooleanField(_("Always visible"), default=False)
+    is_active = models.BooleanField(_("Is active"), default=True, editable=False)
     email = models.EmailField(_("E-Mail"), blank=True)
     website = models.URLField(_("Website"), blank=True)
 
@@ -223,7 +224,7 @@ class Host(models.Model):
         return u'%s' % self.name
 
     def get_absolute_url(self):
-        return reverse('host-detail', args=[self.id])
+        return reverse('host-detail', args=[str(self.id)])
 
 
 class Show(models.Model):
@@ -242,6 +243,7 @@ class Show(models.Model):
     description = tinymce_models.HTMLField(_("Description"), blank=True, null=True)
     email = models.EmailField(_("E-Mail"), blank=True, null=True)
     website = models.URLField(_("Website"), blank=True, null=True)
+    is_active = models.BooleanField(_("Is active"), default=True, editable=False)
     cba_series_id = models.IntegerField(_("CBA series ID"), blank=True, null=True)
     automation_id = models.IntegerField(_("Automation ID"), blank=True, null=True, choices=get_automation_id_choices())
     created = models.DateTimeField(auto_now_add=True, editable=False)
@@ -257,12 +259,6 @@ class Show(models.Model):
 
     def get_absolute_url(self):
         return reverse('show-detail', args=[self.slug])
-
-    def has_active_programslots(self):
-        return self.programslots.filter(until__gt=date.today()).count() > 0
-
-    has_active_programslots.boolean = True
-    has_active_programslots.short_description = _("Has active program slots")
 
 
 class RRule(models.Model):
@@ -312,6 +308,7 @@ class ProgramSlot(models.Model):
     tstart = models.TimeField(_("Start time"))
     tend = models.TimeField(_("End time"))
     until = models.DateField(_("Last date"))
+    is_active = models.BooleanField(_("Is active"), default=True, editable=False)
     is_repetition = models.BooleanField(_("Is repetition"), default=False)
     automation_id = models.IntegerField(_("Automation ID"), blank=True, null=True, choices=get_automation_id_choices())
     created = models.DateTimeField(auto_now_add=True, editable=False)
@@ -349,6 +346,9 @@ class ProgramSlot(models.Model):
                 raise ValidationError(u"only until can be changed")
         else:
             old = False
+
+        self.is_active = self.until > date.today()
+        self.show.is_active = self.until > date.today()
 
         super(ProgramSlot, self).save(*args, **kwargs)
 
@@ -389,29 +389,16 @@ class ProgramSlot(models.Model):
 
         if not old:
             for k in range(min(len(starts), len(ends))):
-                timeslot = TimeSlot.objects.create(programslot=self, start=starts[k], end=ends[k])
+                TimeSlot.objects.create(programslot=self, start=starts[k], end=ends[k])
         elif self.until > old.until:
             for k in range(min(len(starts), len(ends))):
                 if starts[k].date() > old.until:
-                    timeslot = TimeSlot.objects.create(programslot=self, start=starts[k], end=ends[k])
-
-    def timeslot_count(self):
-        return self.timeslots.count()
-
-    timeslot_count.description = _("Time slot count")
-
-    def has_active_timeslot(self):
-        if self.timeslots.count() > 0:
-            start = self.timeslots.all().order_by("start")[0].start
-            end = self.timeslots.all().order_by("-end")[0].end
-            now = datetime.now()
-            return (start < now and end > now)
-        else:
-            return False
+                    TimeSlot.objects.create(programslot=self, start=starts[k], end=ends[k])
 
 
 class TimeSlotManager(models.Manager):
-    def get_or_create_current(self):
+    @staticmethod
+    def get_or_create_current():
         try:
             return TimeSlot.objects.get(start__lte=datetime.now(), end__gt=datetime.now())
         except MultipleObjectsReturned:
@@ -421,13 +408,19 @@ class TimeSlotManager(models.Manager):
             today = date.today().weekday()
             default = Show.objects.get(pk=1)
 
-            previous = TimeSlot.objects.filter(end__lte=datetime.now()).order_by('-start')[0]
-            next = TimeSlot.objects.filter(start__gte=datetime.now())[0]
+            previous_timeslot = TimeSlot.objects.filter(end__lte=datetime.now()).order_by('-start')[0]
+            next_timeslot = TimeSlot.objects.filter(start__gte=datetime.now())[0]
 
-            dstart, tstart = previous.end.date(), previous.end.time()
-            until, tend = next.start.date(), next.start.time()
+            dstart, tstart = previous_timeslot.end.date(), previous_timeslot.end.time()
+            until, tend = next_timeslot.start.date(), next_timeslot.start.time()
 
-            new_programslot = ProgramSlot(rrule=once, byweekday=today, show=default, dstart=dstart, tstart=tstart, tend=tend, until=until)
+            new_programslot = ProgramSlot(rrule=once,
+                                          byweekday=today,
+                                          show=default,
+                                          dstart=dstart,
+                                          tstart=tstart,
+                                          tend=tend,
+                                          until=until)
 
             try:
                 new_programslot.validate_unique()
@@ -437,14 +430,16 @@ class TimeSlotManager(models.Manager):
             else:
                 return new_programslot.timeslots.all()[0]
 
-    def get_day_timeslots(self, day):
+    @staticmethod
+    def get_day_timeslots(day):
         today = datetime.combine(day, time(6, 0))
         tomorrow = today + timedelta(days=1)
 
         return TimeSlot.objects.filter(Q(start__lte=today, end__gte=today) |
                                        Q(start__gt=today, start__lt=tomorrow)).exclude(end=today)
 
-    def get_24h_timeslots(self, start):
+    @staticmethod
+    def get_24h_timeslots(start):
         end = start + timedelta(hours=24)
 
         return TimeSlot.objects.filter(Q(start__lte=start, end__gte=start) |
@@ -475,7 +470,7 @@ class TimeSlot(models.Model):
         super(TimeSlot, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('timeslot-detail', args=[self.id])
+        return reverse('timeslot-detail', args=[str(self.id)])
 
 
 class Note(models.Model):

@@ -28,6 +28,11 @@ class ShowTopicAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('topic',)}
 
 
+class HostAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    list_filter = ('always_visible', 'is_active')
+
+
 class NoteAdmin(admin.ModelAdmin):
     date_hierarchy = 'start'
     list_display = ('title', 'show', 'start', 'status')
@@ -58,8 +63,8 @@ class TimeSlotInline(admin.TabularInline):
 class ProgramSlotAdmin(admin.ModelAdmin):
     actions = ('renew',)
     inlines = (TimeSlotInline,)
-    list_display = ('show', 'byweekday', 'rrule', 'tstart', 'tend', 'until', 'timeslot_count')
-    list_filter = ('byweekday', 'rrule', 'is_repetition')
+    list_display = ('show', 'byweekday', 'rrule', 'tstart', 'tend', 'until')
+    list_filter = ('byweekday', 'rrule', 'is_repetition', 'is_active')
     ordering = ('byweekday', 'dstart')
     save_on_top = True
     search_fields = ('show__name',)
@@ -83,8 +88,8 @@ class ProgramSlotInline(admin.TabularInline):
 class ShowAdmin(admin.ModelAdmin):
     filter_horizontal = ('hosts', 'owners', 'musicfocus', 'showinformation', 'showtopic')
     inlines = (ProgramSlotInline,)
-    list_display = ('name', 'short_description', 'broadcastformat', 'has_active_programslots')
-    list_filter = ('broadcastformat', 'showinformation', 'showtopic', 'musicfocus')
+    list_display = ('name', 'short_description', 'broadcastformat')
+    list_filter = ('broadcastformat', 'showinformation', 'showtopic', 'musicfocus', 'is_active')
     ordering = ('slug',)
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ('name', 'short_description', 'description')
@@ -94,13 +99,11 @@ class ShowAdmin(admin.ModelAdmin):
         'musicfocus',
     )
 
-
 admin.site.register(BroadcastFormat, BroadcastFormatAdmin)
 admin.site.register(MusicFocus, MusicFocusAdmin)
 admin.site.register(ShowInformation, ShowInformationAdmin)
 admin.site.register(ShowTopic, ShowTopicAdmin)
+admin.site.register(Host, HostAdmin)
 admin.site.register(Note, NoteAdmin)
 admin.site.register(ProgramSlot, ProgramSlotAdmin)
 admin.site.register(Show, ShowAdmin)
-
-admin.site.register(Host)
