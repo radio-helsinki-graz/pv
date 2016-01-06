@@ -145,41 +145,6 @@ class WeekScheduleView(TemplateView):
         context['next_w4'] = datetime.strftime(monday + timedelta(days=28), '%G/%V')
         return context
 
-def week_schedule(request, year=None, week=None):
-    if year is None and week is None:
-        year, week = datetime.now().strftime('%G__%V').split('__')
-
-    monday = tofirstdayinisoweek(int(year), int(week))
-    tuesday = monday + timedelta(days=1)
-    wednesday = monday + timedelta(days=2)
-    thursday = monday + timedelta(days=3)
-    friday = monday + timedelta(days=4)
-    saturday = monday + timedelta(days=5)
-    sunday = monday + timedelta(days=6)
-
-    default_show = Show.objects.get(pk=1)
-
-    extra_context = dict(monday=monday, tuesday=tuesday, wednesday=wednesday,  thursday=thursday, friday=friday,
-                         saturday=saturday, sunday=sunday, default_show=default_show)
-
-    extra_context['monday_timeslots'] = TimeSlot.objects.get_day_timeslots(monday)
-    extra_context['tuesday_timeslots'] = TimeSlot.objects.get_day_timeslots(tuesday)
-    extra_context['wednesday_timeslots'] = TimeSlot.objects.get_day_timeslots(wednesday)
-    extra_context['thursday_timeslots'] = TimeSlot.objects.get_day_timeslots(thursday)
-    extra_context['friday_timeslots'] = TimeSlot.objects.get_day_timeslots(friday)
-    extra_context['saturday_timeslots'] = TimeSlot.objects.get_day_timeslots(saturday)
-    extra_context['sunday_timeslots'] = TimeSlot.objects.get_day_timeslots(sunday)
-
-    extra_context['last_w'] = datetime.strftime(monday - timedelta(days=7), '%G/%V')
-    extra_context['cur_w'] = datetime.strftime(monday, '%G/%V')
-    extra_context['next_w1'] = datetime.strftime(monday + timedelta(days=7), '%G/%V')
-    extra_context['next_w2'] = datetime.strftime(monday + timedelta(days=14), '%G/%V')
-    extra_context['next_w3'] = datetime.strftime(monday + timedelta(days=21), '%G/%V')
-    extra_context['next_w4'] = datetime.strftime(monday + timedelta(days=28), '%G/%V')
-
-    return TemplateView.as_view(template='week_schedule.html', extra_context=extra_context)(request)
-
-
 
 class StylesView(TemplateView):
     template_name = 'styles.css'
