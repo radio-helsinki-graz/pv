@@ -8,14 +8,14 @@ class Command(NoArgsCommand):
 
     def handle_noargs(self, **options):
         for host in Host.objects.all():
+            is_active = None
             for show in host.shows.all():
-                is_active = None
                 if show.is_active:
                     is_active = True
                 else:
                     is_active = False
 
-                host.is_active = is_active
+            host.is_active = is_active
 
-                if not is_active:
-                    host.save()
+            if not is_active:
+                host.save()
