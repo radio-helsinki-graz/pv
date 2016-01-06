@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='host',
-            name='always_visible',
-            field=models.BooleanField(default=False, verbose_name='Always visible'),
+            name='is_always_visible',
+            field=models.BooleanField(default=False, verbose_name='Is always visible'),
         ),
     ]
