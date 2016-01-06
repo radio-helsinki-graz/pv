@@ -5,13 +5,31 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.views.generic.base import TemplateView
+from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
-from models import BroadcastFormat, MusicFocus, Note, Show, ShowInformation, ShowTopic, TimeSlot
+from models import BroadcastFormat, MusicFocus, Note, Show, ShowInformation, ShowTopic, TimeSlot, Host
+
 from program.utils import tofirstdayinisoweek
 
 
+class HostListView(ListView):
+    context_object_name = 'host_list'
+    queryset = Host.objects.filter(Q(is_active=True) | Q(always_visible=True)).distinct()
+    template_name = 'host_list.html'
+
+
+class HostDetailView(DetailView):
+    context_object_name = 'host'
+    queryset = Host.objects.filter(Q(is_active=True) | Q(always_visible=True)).distinct()
+    template_name = 'host_detail.html'
+
+
 class ShowListView(ListView):
+    context_object_name = 'show_list'
+    queryset = Show.objects.filter(is_active=True).exclude(id=1).distinct()
+    template_name = 'show_list.html'
+
     def get_queryset(self):
         queryset = Show.objects.filter(programslots__until__gt=date.today()).exclude(id=1).distinct()
 
@@ -31,6 +49,15 @@ class ShowListView(ListView):
         return queryset
 
 
+class ShowDetailView(DetailView):
+    queryset = Show.objects.filter(is_active=True).exclude(id=1).distinct()
+    template_name = 'show_detail.html'
+
+class TimeSlotDetailView(DetailView):
+    queryset = TimeSlot.objects.all()
+    template_name = 'timeslot_detail.html'
+
+
 class RecommendationsListView(ListView):
     context_object_name = 'recommendation_list'
     template_name = 'recommendation_list.html'
@@ -43,7 +70,7 @@ class RecommendationsListView(ListView):
 
 
 class RecommendationsBoxView(RecommendationsListView):
-    template_name='boxes/recommendation.html'
+    template_name = 'boxes/recommendation.html'
 
 
 class DayScheduleView(TemplateView):
