@@ -9,19 +9,12 @@ from views import ShowListView, CurrentShowBoxView, RecommendationsListView, Rec
 from models import Host, Show, TimeSlot
 
 import os
-from datetime import date, datetime, timedelta
 
 PROGRAM_SITE_MEDIA = os.path.join(os.path.dirname(__file__), '../site_media')
 
-now = datetime.now()
-end = now + timedelta(weeks=1)
-
-hosts = Host.objects.filter(Q(shows__programslots__until__gte=date.today()) |
-                            Q(always_visible=True)).distinct()
-shows = Show.objects.filter(programslots__until__gt=date.today()).exclude(id=1).distinct()
+hosts = Host.objects.filter(Q(is_active=True) | Q(always_visible=True)).distinct()
+shows = Show.objects.filter(is_active=True).exclude(id=1).distinct()
 timeslots = TimeSlot.objects.all()
-recommendations = TimeSlot.objects.filter(Q(note__isnull=False, note__status=1, start__range=(now, end)) |
-                                          Q(show__broadcastformat__slug='sondersendung', start__range=(now, end))).order_by('start')[:20]
 
 urlpatterns = patterns('',
                        url(r'^today/?$', DayScheduleView.as_view()),
