@@ -5,7 +5,6 @@ import os.path
 PROJECT_DIR = os.path.dirname(__file__)
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
 ADMINS = ()
 
@@ -47,7 +46,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            'templates'
+            os.path.join(PROJECT_DIR, 'templates')
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -73,10 +72,6 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'pv.urls'
-
-TEMPLATE_DIRS = (
-    os.path.join(PROJECT_DIR, "templates"),
-)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
