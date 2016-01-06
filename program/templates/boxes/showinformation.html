@@ -1,14 +1,16 @@
 {% if showinformations %}
-<dl id="filterbox_showinformation" class="portlet filterbox">
-  <dt class="portletHeader"><span>Sendungsinfo<span></dt>
-  <dd class="portletItem">
-    <ul>
-      {% for item in showinformations %}
-      <li>
-        <a title="Sendungen mit der Information {{item.information}} anzeigen." class="abbrev si-{{ item.abbrev }}" href="?showinformation={{ item.slug }}">{{ item }}</a>
-      </li>
-      {% endfor %}
-    </ul>
-  </dd>
-</dl>
+    <dl id="filterbox_showinformation" class="portlet filterbox">
+        <dt class="portletHeader"><span>Sendungsinfo<span></dt>
+        <dd class="portletItem">
+            <ul>
+                {% for si in showinformation_list %}
+                    <li>
+                        <a title="Sendungen mit der Information {{ si.information }} anzeigen."
+                           class="abbrev si-{{ si.abbrev }}"
+                           href="?showinformation={{ si.slug }}">{{ si.information }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </dd>
+    </dl>
 {% endif %}

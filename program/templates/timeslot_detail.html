@@ -6,53 +6,53 @@
 
 <div id="content-main" class="timeslot-detail">
 
-  <div class="show-detail-header bf-{{timeslot.show.broadcastformat.slug}}">
-    <h1 id="name">
-      <a href="{% url show-detail timeslot.show.slug %}">{{ timeslot.show.name }}</a>
-    </h1>
-    {% if timeslot.note %}
-    <h2>{{ timeslot.note.title }}</h2>
-    {% endif %}
-    <strong>Sendung am {{ timeslot.start|date:"d.m. H:i" }} bis {{ timeslot.end|date:"H:i" }}</strong>
+    <div class="show-detail-header bf-{{ timeslot.show.broadcastformat.slug }}">
+        <h1 id="name">
+            <a href="{% url "show-detail" timeslot.show.slug %}">{{ timeslot.show.name }}</a>
+        </h1>
+        {% if timeslot.note %}
+            <h2>{{ timeslot.note.title }}</h2>
+        {% endif %}
+        <strong>Sendung am {{ timeslot.start|date:"d.m. H:i" }} bis {{ timeslot.end|date:"H:i" }}</strong>
 
-      <div class="show-abbrevs">
-      {% for item in timeslot.show.showinformation.all %}
-        <span title="{{item.information}}" class="abbrev si-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
-      {% endfor %}
-      {% for item in timeslot.show.showtopic.all %}
-        <span title="{{item.topic}}" class="abbrev st-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
-      {% endfor %}
-      {% for item in timeslot.show.musicfocus.all %}
-        <span title="{{item.focus}}" class="abbrev mf-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
-      {% endfor %}
-      </div>
+        <div class="show-abbrevs">
+            {% for si in timeslot.show.showinformation.all %}
+                <span title="{{ si.information }}" class="abbrev si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
+            {% endfor %}
+            {% for st in timeslot.show.showtopic.all %}
+                <span title="{{ st.topic }}" class="abbrev st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
+            {% endfor %}
+            {% for mf in timeslot.show.musicfocus.all %}
+                <span title="{{ mf.focus }}" class="abbrev mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
+            {% endfor %}
+        </div>
 
-      <p id="broadcastformat">{{ timeslot.show.broadcastformat.format }}</p>
+        <p id="broadcastformat">{{ timeslot.show.broadcastformat.format }}</p>
     </div>
 
     {% if timeslot.note %}
-    <p class="timeslot-note">{{ timeslot.note.content|safe }}</p>
+        <p class="timeslot-note">{{ timeslot.note.content|safe }}</p>
     {% endif %}
 
     <div id="short-description" class="documentDescription">{{ timeslot.show.short_description }}</div>
 
     {% if timeslot.show.description %}
-    <div id="description">{{ timeslot.show.description|safe }}</div>
+        <div id="description">{{ timeslot.show.description|safe }}</div>
     {% endif %}
 
     <p>
-      {% for host in timeslot.show.hosts.all %}
-      <a href="{% url host-detail host.id %}">{{ host }}</a><br />
-      {% endfor %}
-      {% if timeslot.show.email %}
-      <strong>Email:</strong> <a href="mailto:{{ timeslot.show.email }}">{{ timeslot.show.email }}</a><br />
-      {% endif %}
-      {% if timeslot.show.website %}
-      <strong>Website:</strong> <a href="{{ timeslot.show.website }}">{{ timeslot.show.website }}</a><br />
-      {% endif %}
-      {% if timeslot.show.cba_series_id %}
-      <strong>CBA-Link:</strong> <a href="http://cba.fro.at/series/{{ timeslot.show.cba_series_id }}">CBA</a><br />
-      {% endif %}
+        {% for host in timeslot.show.hosts.all %}
+            <a href="{% url "host-detail" host.id %}">{{ host }}</a><br/>
+        {% endfor %}
+        {% if timeslot.show.email %}
+            <strong>Email:</strong> <a href="mailto:{{ timeslot.show.email }}">{{ timeslot.show.email }}</a><br/>
+        {% endif %}
+        {% if timeslot.show.website %}
+            <strong>Website:</strong> <a href="{{ timeslot.show.website }}">{{ timeslot.show.website }}</a><br/>
+        {% endif %}
+        {% if timeslot.show.cba_series_id %}
+            <strong>CBA-Link:</strong> <a href="http://cba.fro.at/series/{{ timeslot.show.cba_series_id }}">CBA</a><br/>
+        {% endif %}
     </p>
 
 

@@ -6,10 +6,12 @@
 .mf-{{ mf.abbrev }} { background-image:url({{ mf.button_url }}); }
 .filterbox .mf-{{ mf.abbrev }}:hover { background-image:url({{ mf.button_hover_url }}); }
 {% endfor %}
+
 {% for si in showinformation %}
 .si-{{ si.abbrev }} { background-image:url({{ si.button_url }}); }
 .filterbox .si-{{ si.abbrev }}:hover { background-image:url({{ si.button_hover_url }}); }
 {% endfor %}
+
 {% for st in showtopic %}
 .st-{{ st.abbrev }} { background-image:url({{ st.button_url }}); }
 .filterbox .st-{{ st.abbrev }}:hover { background-image:url({{ st.button_hover_url }}); }
@@ -18,9 +20,11 @@
 {% for mf in musicfocus %}
 .show-detail-header .mf-{{ mf.abbrev }} { background-image:url({{ mf.big_button_url }}); }
 {% endfor %}
+
 {% for si in showinformation %}
 .show-detail-header .si-{{ si.abbrev }} { background-image:url({{ si.big_button_url }}); }
 {% endfor %}
+
 {% for st in showtopic %}
 .show-detail-header .st-{{ st.abbrev }} { background-image:url({{ st.big_button_url }}); }
 {% endfor %}

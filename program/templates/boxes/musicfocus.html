@@ -1,14 +1,15 @@
 {% if musicfoci %}
-<dl id="filterbox_musicfocus" class="portlet filterbox">
-  <dt class="portletHeader"><span>Musiktendenz<span></dt>
-  <dd class="portletItem">
-    <ul>
-      {% for item in musicfoci %}
-      <li>
-        <a title="Sendungen mit der Musiktendenz {{item.focus}} anzeigen." class="abbrev mf-{{ item.abbrev }}" href="?musicfocus={{ item.slug }}">{{ item }}</a>
-      </li>
-      {% endfor %}
-    </ul>
-  </dd>
-</dl>
+    <dl id="filterbox_musicfocus" class="portlet filterbox">
+        <dt class="portletHeader"><span>Musiktendenz<span></dt>
+        <dd class="portletItem">
+            <ul>
+                {% for mf in musicfocus_list %}
+                    <li>
+                        <a title="Sendungen mit der Musiktendenz {{ mf.focus }} anzeigen."
+                           class="abbrev mf-{{ mf.abbrev }}" href="?musicfocus={{ mf.slug }}">{{ mf.focus }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </dd>
+    </dl>
 {% endif %}

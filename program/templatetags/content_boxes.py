@@ -8,23 +8,19 @@ from program.models import BroadcastFormat, MusicFocus, ShowInformation, ShowTop
 
 @register.inclusion_tag('boxes/broadcastformat.html')
 def broadcastformat():
-    broadcastformats = BroadcastFormat.objects.filter(enabled=True)
-    return {'broadcastformats': broadcastformats}
+    return {'broadcastformat_list': BroadcastFormat.objects.filter(enabled=True)}
 
 
 @register.inclusion_tag('boxes/musicfocus.html')
 def musicfocus():
-    musicfoci = MusicFocus.objects.all()
-    return {'musicfoci': musicfoci}
+    return {'musicfocus_list': MusicFocus.objects.all()}
 
 
 @register.inclusion_tag('boxes/showinformation.html')
 def showinformation():
-    showinformations = ShowInformation.objects.all()
-    return {'showinformations': showinformations}
+    return {'showinformation_list': ShowInformation.objects.all()}
 
 
 @register.inclusion_tag('boxes/showtopic.html')
 def showtopic():
-    showtopics = ShowTopic.objects.all()
-    return {'showtopics': showtopics}
+    return {'showtopic_list': ShowTopic.objects.all()}
