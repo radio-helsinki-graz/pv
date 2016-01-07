@@ -1,16 +1,16 @@
 # Radio Helsinki program/schedule management
 # Copyright (C) 2011, Ernesto Rico-Schmidt
 # This file is distributed under the same license as the helsinki package.
-# Ernesto Rico-Schmidt <e.rico.schmidt@gmail.com>, 2011.
+# Ernesto Rico-Schmidt <e.rico.schmidt@gmail.com>, 2011-2016.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: helsinki-program\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-01 20:24+0200\n"
+"POT-Creation-Date: 2016-01-07 09:10+0100\n"
 "PO-Revision-Date: 2011-06-02 22:25+0200\n"
-"Last-Translator: Ernesto Rico-Schmidt <e.rico.schmidt@gmail.com>\n"
+"Last-Translator: Ernesto Rico-Schmidt <ernesto@helsinki.at>\n"
 "Language-Team: LANGUAGE <de@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -18,24 +18,34 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: program/admin.py:64
-msgid "Renew selected time slots"
+#: program/admin.py:77
+#, python-format
+msgid "1 program slot was renewed until %s"
+msgstr "eine Sendezeit wurde verlängert bis %s"
+
+#: program/admin.py:79
+#, python-format
+msgid "%s program slots were renewed until %s"
+msgstr "%s Sendezeiten wurden verlängert bis %s"
+
+#: program/admin.py:81
+msgid "Renew selected program slots"
 msgstr "Ausgewählte Sendezeiten verlängern"
 
-#: program/models.py:17
+#: program/models.py:18
 msgid "Format"
 msgstr "Format"
 
-#: program/models.py:18 program/models.py:43 program/models.py:103
-#: program/models.py:163 program/models.py:260
+#: program/models.py:19 program/models.py:43 program/models.py:100
+#: program/models.py:157 program/models.py:239
 msgid "Slug"
 msgstr "Slug"
 
-#: program/models.py:19 program/models.py:33
+#: program/models.py:20 program/models.py:33
 msgid "Color"
 msgstr "Farbe"
 
-#: program/models.py:20
+#: program/models.py:21
 msgid "Text color"
 msgstr "Textfarbe"
 
@@ -43,7 +53,7 @@ msgstr "Textfarbe"
 msgid "Enabled"
 msgstr "Aktiviert"
 
-#: program/models.py:26 program/models.py:249
+#: program/models.py:26 program/models.py:234
 msgid "Broadcast format"
 msgstr "Sendungsformat"
 
@@ -55,275 +65,274 @@ msgstr "Sendungsformate"
 msgid "Information"
 msgstr "Zusatzinformation"
 
-#: program/models.py:42 program/models.py:102 program/models.py:162
+#: program/models.py:42 program/models.py:99 program/models.py:156
 msgid "Abbreviation"
 msgstr "Abkürzung"
 
-#: program/models.py:44 program/models.py:104 program/models.py:164
+#: program/models.py:44 program/models.py:101 program/models.py:158
 msgid "Button image"
 msgstr "Bild-Button"
 
-#: program/models.py:46 program/models.py:106 program/models.py:166
+#: program/models.py:45 program/models.py:102 program/models.py:159
 msgid "Button image (hover)"
 msgstr "Bild-Button (hover)"
 
-#: program/models.py:48 program/models.py:108 program/models.py:168
+#: program/models.py:46 program/models.py:103 program/models.py:160
 msgid "Big button image"
 msgstr "Bild-Button groß"
 
-#: program/models.py:53 program/models.py:54 program/models.py:252
+#: program/models.py:50 program/models.py:51 program/models.py:235
 msgid "Show information"
 msgstr "Zusatzinformation"
 
-#: program/models.py:75 program/models.py:135 program/models.py:195
+#: program/models.py:72 program/models.py:129 program/models.py:186
 msgid "Buttons"
 msgstr "Buttonts"
 
-#: program/models.py:101 program/models.py:113 program/models.py:255
+#: program/models.py:98 program/models.py:107 program/models.py:236
 msgid "Show topic"
 msgstr "Thema/Schwerpunkt"
 
-#: program/models.py:114
+#: program/models.py:108
 msgid "Show topics"
 msgstr "Themen/Schwerpunkte"
 
-#: program/models.py:161
+#: program/models.py:155
 msgid "Focus"
 msgstr "Tendenz"
 
-#: program/models.py:173 program/models.py:174 program/models.py:258
+#: program/models.py:164 program/models.py:165 program/models.py:237
 msgid "Music focus"
 msgstr "Musiktendenz"
 
-#: program/models.py:221 program/models.py:259 program/models.py:310
+#: program/models.py:212 program/models.py:238 program/models.py:278
 msgid "Name"
 msgstr "Name"
 
-#: program/models.py:222 program/models.py:267
+#: program/models.py:213
+msgid "Always visible"
+msgstr "Immer sichtbar"
+
+#: program/models.py:214 program/models.py:246 program/models.py:311
+msgid "Is active"
+msgstr "Is aktiv"
+
+#: program/models.py:215 program/models.py:244
 msgid "E-Mail"
 msgstr "E-Mail"
 
-#: program/models.py:223 program/models.py:268
+#: program/models.py:216 program/models.py:245
 msgid "Website"
 msgstr "Website"
 
-#: program/models.py:227
+#: program/models.py:220
 msgid "Host"
 msgstr "Sendungsmacher"
 
-#: program/models.py:228 program/models.py:244
+#: program/models.py:221 program/models.py:232
 msgid "Hosts"
 msgstr "Sendungsmacher"
 
-#: program/models.py:241
+#: program/models.py:231
 msgid "Predecessor"
 msgstr "Vorgänger"
 
-#: program/models.py:247
+#: program/models.py:233
 msgid "Owners"
 msgstr "Eingentümer"
 
-#: program/models.py:261
+#: program/models.py:240
 msgid "Image"
 msgstr "Bild"
 
-#: program/models.py:263
-#, fuzzy
+#: program/models.py:241
 msgid "show Image"
 msgstr "Zeige Bild"
 
-#: program/models.py:264
+#: program/models.py:242
 msgid "Short description"
 msgstr "Kurzbeschreibung"
 
-#: program/models.py:265
+#: program/models.py:243
 msgid "Description"
 msgstr "Beschreibung"
 
-#: program/models.py:269
+#: program/models.py:247
 msgid "CBA series ID"
 msgstr "ID der Sendereihe auf CBA"
 
-#: program/models.py:271 program/models.py:346
+#: program/models.py:248 program/models.py:313
 msgid "Automation ID"
 msgstr "ID in der Automatiserung"
 
-#: program/models.py:279 program/models.py:340
+#: program/models.py:254 program/models.py:306
 msgid "Show"
 msgstr "Sendung"
 
-#: program/models.py:280
+#: program/models.py:255
 msgid "Shows"
 msgstr "Sendungen"
 
-#: program/models.py:293
-msgid "Has active program slots"
-msgstr "Hat aktive Sendezeiten"
-
-#: program/models.py:298
+#: program/models.py:266
 msgid "Monthly"
 msgstr "monatlich"
 
-#: program/models.py:299
+#: program/models.py:267
 msgid "Weekly"
 msgstr "wöchentlich"
 
-#: program/models.py:300
+#: program/models.py:268
 msgid "Daily"
 msgstr "täglich"
 
-#: program/models.py:303
+#: program/models.py:271
 msgid "First"
 msgstr "Erster"
 
-#: program/models.py:304
+#: program/models.py:272
 msgid "Second"
 msgstr "Zweiter"
 
-#: program/models.py:305
+#: program/models.py:273
 msgid "Third"
 msgstr "Dritter"
 
-#: program/models.py:306
+#: program/models.py:274
 msgid "Fourth"
 msgstr "Vierter"
 
-#: program/models.py:307
+#: program/models.py:275
 msgid "Fifth"
 msgstr "Fünfter"
 
-#: program/models.py:308
+#: program/models.py:276
 msgid "Last"
 msgstr "Letzter"
 
-#: program/models.py:311
+#: program/models.py:279
 msgid "Frequency"
 msgstr "Häufigkeit"
 
-#: program/models.py:312
+#: program/models.py:280
 msgid "Interval"
 msgstr "Intervall"
 
-#: program/models.py:313
+#: program/models.py:281
 msgid "Set position"
 msgstr "Position"
 
-#: program/models.py:315
+#: program/models.py:283
 msgid "Count"
 msgstr "Zähler"
 
-#: program/models.py:319 program/models.py:337
+#: program/models.py:287 program/models.py:304
 msgid "Recurrence rule"
 msgstr "Wiederholungsregel"
 
-#: program/models.py:320
+#: program/models.py:288
 msgid "Recurrence rules"
 msgstr "Wiederholungsregel"
 
-#: program/models.py:328
+#: program/models.py:296
 msgid "Monday"
 msgstr "Montag"
 
-#: program/models.py:329
+#: program/models.py:297
 msgid "Tuesday"
 msgstr "Dienstag"
 
-#: program/models.py:330
+#: program/models.py:298
 msgid "Wednesday"
 msgstr "Mittwoch"
 
-#: program/models.py:331
+#: program/models.py:299
 msgid "Thursday"
 msgstr "Donnerstag"
 
-#: program/models.py:332
+#: program/models.py:300
 msgid "Friday"
 msgstr "Freitag"
 
-#: program/models.py:333
+#: program/models.py:301
 msgid "Saturday"
 msgstr "Samstag"
 
-#: program/models.py:334
+#: program/models.py:302
 msgid "Sunday"
 msgstr "Sonntag"
 
-#: program/models.py:338
+#: program/models.py:305
 msgid "Weekday"
 msgstr "Wochentag"
 
-#: program/models.py:341
+#: program/models.py:307
 msgid "First date"
 msgstr "Erstes Datum"
 
-#: program/models.py:342 program/models.py:501
+#: program/models.py:308 program/models.py:451
 msgid "Start time"
 msgstr "Beginnzeit"
 
-#: program/models.py:343 program/models.py:502
+#: program/models.py:309 program/models.py:452
 msgid "End time"
 msgstr "Endzeit"
 
-#: program/models.py:344
+#: program/models.py:310
 msgid "Last date"
 msgstr "Letztes Datum"
 
-#: program/models.py:345
+#: program/models.py:312
 msgid "Is repetition"
 msgstr "Is Wiederholung"
 
-#: program/models.py:355 program/models.py:500
+#: program/models.py:320 program/models.py:450
 msgid "Program slot"
 msgstr "Sendezeit"
 
-#: program/models.py:356
+#: program/models.py:321
 msgid "Program slots"
 msgstr "Sendezeiten"
 
-#: program/models.py:437
-msgid "Time slot count"
-msgstr "Zeitschlitze"
-
-#: program/models.py:509 program/models.py:533
+#: program/models.py:459 program/models.py:482
 msgid "Time slot"
 msgstr "Zeitschlitz"
 
-#: program/models.py:510
+#: program/models.py:460
 msgid "Time slots"
 msgstr "Zeitschlitze"
 
-#: program/models.py:529
+#: program/models.py:478
 msgid "Cancellation"
 msgstr "Ausfall"
 
-#: program/models.py:530
+#: program/models.py:479
 msgid "Recommendation"
 msgstr "Empfehlung"
 
-#: program/models.py:531
+#: program/models.py:480
 msgid "Repetition"
 msgstr "Wiederholung"
 
-#: program/models.py:534
+#: program/models.py:483
 msgid "Title"
 msgstr "Titel"
 
-#: program/models.py:535
+#: program/models.py:484
 msgid "Content"
 msgstr "Inhalt"
 
-#: program/models.py:536
+#: program/models.py:485
 msgid "Status"
 msgstr "Status"
 
-#: program/models.py:538
+#: program/models.py:486
 msgid "CBA entry ID"
 msgstr "ID des Beitrags auf der CBA"
 
-#: program/models.py:547
+#: program/models.py:494
 msgid "Note"
 msgstr "Notiz"
 
-#: program/models.py:548
+#: program/models.py:495
 msgid "Notes"
 msgstr "Notizen"
