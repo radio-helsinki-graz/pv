@@ -15,13 +15,13 @@ from program.utils import tofirstdayinisoweek
 
 class HostListView(ListView):
     context_object_name = 'host_list'
-    queryset = Host.objects.filter(Q(is_active=True) | Q(always_visible=True)).distinct()
+    queryset = Host.objects.filter(Q(is_active=True) | Q(is_always_visible=True)).distinct()
     template_name = 'host_list.html'
 
 
 class HostDetailView(DetailView):
     context_object_name = 'host'
-    queryset = Host.objects.filter(Q(is_active=True) | Q(always_visible=True)).distinct()
+    queryset = Host.objects.filter(Q(is_active=True) | Q(is_always_visible=True)).distinct()
     template_name = 'host_detail.html'
 
 

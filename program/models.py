@@ -210,7 +210,7 @@ class MusicFocus(models.Model):
 
 class Host(models.Model):
     name = models.CharField(_("Name"), max_length=128)
-    always_visible = models.BooleanField(_("Always visible"), default=False)
+    is_always_visible = models.BooleanField(_("Is always visible"), default=False)
     is_active = models.BooleanField(_("Is active"), default=True, editable=False)
     email = models.EmailField(_("E-Mail"), blank=True)
     website = models.URLField(_("Website"), blank=True)
