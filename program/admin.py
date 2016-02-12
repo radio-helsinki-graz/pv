@@ -30,7 +30,7 @@ class ShowTopicAdmin(admin.ModelAdmin):
 
 class HostAdmin(admin.ModelAdmin):
     list_display = ('name',)
-    list_filter = ('always_visible', 'is_active')
+    list_filter = ('is_always_visible', 'is_active')
 
 
 class NoteAdmin(admin.ModelAdmin):
