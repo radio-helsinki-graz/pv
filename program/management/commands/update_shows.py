@@ -2,21 +2,28 @@ from django.core.management.base import NoArgsCommand
 
 from program.models import Show
 
-from datetime import date
-
 
 class Command(NoArgsCommand):
     help = 'update shows by setting is_active'
 
     def handle_noargs(self, **options):
-        for show in Show.objects.exclude(pk=1):
-            is_active = None
-            for programslot in show.programslots.all():
-                if programslot.until > date.today():
-                    is_active = True
-                else:
-                    is_active = False
-            show.is_active = is_active
+        activated = 0
+        deactivated = 0
 
-            if not is_active:
-                show.save()
+        for show in Show.objects.exclude(pk=1):
+            for programslot in show.programslots.all():
+                active_programslots = 0
+                if programslot.is_active:
+                    active_programslots += 1
+                else:
+                    active_programslots -= 1
+
+            show.is_active = active_programslots > 0
+            show.save()
+
+            if show.is_active:
+                activated += 1
+            else:
+                deactivated += 1
+
+        print "%s shows activated, %s shows de-activated" % (activated, deactivated)
