@@ -24,14 +24,14 @@
 
         <div class="show-categorization">
             <p id="broadcastformat">{{ show.broadcastformat.format }}</p>
-            {% for item in show.showinformation.all %}
-                <span title="{{ item.information }}" class="abbrev si-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
+            {% for si in show.showinformation.all %}
+                <span title="{{ si.information }}" class="abbrev si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
             {% endfor %}
-            {% for item in show.showtopic.all %}
-                <span title="{{ item.topic }}" class="abbrev st-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
+            {% for st in show.showtopic.all %}
+                <span title="{{ st.topic }}" class="abbrev st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
             {% endfor %}
-            {% for item in show.musicfocus.all %}
-                <span title="{{ item.focus }}" class="abbrev mf-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
+            {% for mf in show.musicfocus.all %}
+                <span title="{{ mf.focus }}" class="abbrev mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
             {% endfor %}
         </div>
 

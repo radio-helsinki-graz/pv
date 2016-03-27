@@ -55,7 +55,13 @@
         {% endif %}
     </p>
 
+    {% load comments %}
 
+    <div class="comments">
+    {% render_comment_list for timeslot %}
+
+    {% render_comment_form for timeslot %}
+    </div>
 </div>
 
 </body>
