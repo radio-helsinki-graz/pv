@@ -229,12 +229,12 @@ class Host(models.Model):
 
 class Show(models.Model):
     predecessor = models.ForeignKey('self', blank=True, null=True, related_name='successors', verbose_name=_("Predecessor"))
-    hosts = models.ManyToManyField(Host, blank=True, null=True, related_name='shows', verbose_name=_("Hosts"))
-    owners = models.ManyToManyField(User, blank=True, null=True, related_name='shows', verbose_name=_("Owners"))
+    hosts = models.ManyToManyField(Host, blank=True, related_name='shows', verbose_name=_("Hosts"))
+    owners = models.ManyToManyField(User, blank=True, related_name='shows', verbose_name=_("Owners"))
     broadcastformat = models.ForeignKey(BroadcastFormat, related_name='shows', verbose_name=_("Broadcast format"))
-    showinformation = models.ManyToManyField(ShowInformation, blank=True, null=True, related_name='shows', verbose_name=_("Show information"))
-    showtopic = models.ManyToManyField(ShowTopic, blank=True, null=True, related_name='shows', verbose_name=_("Show topic"))
-    musicfocus = models.ManyToManyField(MusicFocus, blank=True, null=True, related_name='shows', verbose_name=_("Music focus"))
+    showinformation = models.ManyToManyField(ShowInformation, blank=True, related_name='shows', verbose_name=_("Show information"))
+    showtopic = models.ManyToManyField(ShowTopic, blank=True, related_name='shows', verbose_name=_("Show topic"))
+    musicfocus = models.ManyToManyField(MusicFocus, blank=True, related_name='shows', verbose_name=_("Music focus"))
     name = models.CharField(_("Name"), max_length=255)
     slug = models.CharField(_("Slug"), max_length=255, unique=True)
     image = models.ImageField(_("Image"), blank=True, null=True, upload_to='show_images')
