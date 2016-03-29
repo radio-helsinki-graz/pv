@@ -54,14 +54,6 @@
             <strong>CBA-Link:</strong> <a href="http://cba.fro.at/series/{{ timeslot.show.cba_series_id }}">CBA</a><br/>
         {% endif %}
     </p>
-
-    {% load comments %}
-
-    <div class="comments">
-    {% render_comment_list for timeslot %}
-
-    {% render_comment_form for timeslot %}
-    </div>
 </div>
 
 </body>
