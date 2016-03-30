@@ -53,6 +53,7 @@ class ShowDetailView(DetailView):
     queryset = Show.objects.filter(is_active=True).exclude(id=1).distinct()
     template_name = 'show_detail.html'
 
+
 class TimeSlotDetailView(DetailView):
     queryset = TimeSlot.objects.all()
     template_name = 'timeslot_detail.html'
@@ -65,8 +66,10 @@ class RecommendationsListView(ListView):
     now = datetime.now()
     end = now + timedelta(weeks=1)
 
-    queryset = TimeSlot.objects.filter(Q(note__isnull=False, note__status=1, start__range=(now, end)) |
-                                       Q(show__broadcastformat__slug='sondersendung', start__range=(now, end))).order_by('start')[:20]
+    queryset = TimeSlot.objects.filter(Q(note__isnull=False, note__status=1,
+                                         start__range=(now, end)) |
+                                       Q(show__broadcastformat__slug='sondersendung',
+                                         start__range=(now, end))).order_by('start')[:20]
 
 
 class RecommendationsBoxView(RecommendationsListView):
@@ -118,13 +121,13 @@ class CurrentShowBoxView(TemplateView):
 
     def get_context_data(self, **kwargs):
         current_timeslot = TimeSlot.objects.get_or_create_current()
-        previuos_timeslot = current_timeslot.get_previous_by_start()
+        previous_timeslot = current_timeslot.get_previous_by_start()
         next_timeslot = current_timeslot.get_next_by_start()
         after_next_timeslot = next_timeslot.get_next_by_start()
 
         context = super(CurrentShowBoxView, self).get_context_data(**kwargs)
         context['current_timeslot'] = current_timeslot
-        context['previuos_timeslot'] = previuos_timeslot
+        context['previous_timeslot'] = previous_timeslot
         context['next_timeslot'] = next_timeslot
         context['after_next_timeslot'] = after_next_timeslot
         return context
