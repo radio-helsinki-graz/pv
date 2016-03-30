@@ -13,10 +13,10 @@
                 <tr class="previous">
                     <td class="start">{{ previous_timeslot.start|date:"H:i" }}</td>
                     <td class="format bf-{{ previous_timeslot.show.broadcastformat.slug }}"
-                        title="{{ previoustimeslot.show.broadcastformat.format }}">&nbsp;</td>
+                        title="{{ previous_timeslot.show.broadcastformat.format }}">&nbsp;</td>
                     <td class="show">
                         <h3>
-                            <a href="{% url "timeslot-detail" previuos_timeslot.id %}">{{ previous_timeslot.show.name }}</a>
+                            <a href="{% url "timeslot-detail" previous_timeslot.id %}">{{ previous_timeslot.show.name }}</a>
                         </h3>
                     </td>
                     <td class="show"></td>
