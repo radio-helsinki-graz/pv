@@ -28,8 +28,9 @@
                         <a href="{% url "show-detail" recommendation.show.slug %}">{{ recommendation.show.name }}</a><br/>
                         vom {{ recommendation.start|date:"d.m. H:i" }}-{{ recommendation.end|date:"H:i" }}</h4>
                     {% if recommendation.note %}
-                        <h3 class="show-title"></h3>
-                        <a href="{% url "timeslot-detail" recommendation.id %}">{{ recommendation.note.title }}</a></h3>
+                        <h3 class="show-title">
+                          <a href="{% url "timeslot-detail" recommendation.id %}">{{ recommendation.note.title }}</a>
+                        </h3>
                         <div class="note-content">{{ recommendation.note.content|safe }}</div>
                     {% else %}
                         <h3 class="show-title"><a
