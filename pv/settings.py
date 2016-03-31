@@ -21,6 +21,8 @@ DATABASES = {
     }
 }
 
+DATABASE_ROUTERS = ['nop.dbrouter.NopRouter']
+
 TIME_ZONE = 'Europe/Vienna'
 
 LANGUAGE_CODE = 'de'
