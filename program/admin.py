@@ -40,9 +40,9 @@ class NoteAdmin(admin.ModelAdmin):
     ordering = ('timeslot',)
     save_as = True
 
-    def queryset(self, request):
+    def get_queryset(self, request):
         shows = request.user.shows.all()
-        return super(NoteAdmin, self).queryset(request).filter(show__in=shows)
+        return super(NoteAdmin, self).get_queryset(request).filter(show__in=shows)
 
     def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
         four_weeks = datetime.now() - timedelta(weeks=4)
