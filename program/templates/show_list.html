@@ -6,48 +6,51 @@
 
 {% load content_boxes %}
 <div id="filter-format">
-{% broadcastformat %}
+    {% broadcastformat %}
 </div>
 <div id="filter-topic">
-  <dl id="filter-header" class="portlet">
-    <dt class="portletHeader"><span>Filter<span></dt>
-  </dl>
-{% musicfocus %}
-{% showinformation %}
-{% showtopic %}
+    <dl id="filter-header" class="portlet">
+        <dt class="portletHeader"><span>Filter</span></dt>
+    </dl>
+    {% musicfocus %}
+    {% showinformation %}
+    {% showtopic %}
 </div>
 
 <div id="content-main" class="show-list">
-  <h1>Sendungen A-Z</h1>
+    <h1>Sendungen A-Z</h1>
 
-  <div id="shows">
-    {% for show in show_list %}
-    <div class="show bf-{{ show.broadcastformat.slug }}">
-        <div class="show-abbrevs">
-        {% for item in show.showinformation.all %}
-          <span title="{{item.information}}" class="abbrev si-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
+    <div id="shows">
+        {% for show in show_list %}
+            <div class="show bf-{{ show.broadcastformat.slug }}">
+                <div class="show-abbrevs">
+                    {% for si in show.showinformation.all %}
+                        <span title="{{ si.information }}"
+                              class="abbrev si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
+                    {% endfor %}
+                    {% for st in show.showtopic.all %}
+                        <span title="{{ st.topic }}"
+                              class="abbrev st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
+                    {% endfor %}
+                    {% for mf in show.musicfocus.all %}
+                        <span title="{{ mf.focus }}"
+                              class="abbrev mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
+                    {% endfor %}
+                </div>
+                <div class="show-detail">
+                    <h3 class="show-title"><a href="{% url "show-detail" show.slug %}">{{ show.name }}</a></h3>
+                    <ul class="show-programslots">
+                        {% for programslot in show.programslots.all %}
+                            {% if programslot.is_active %}
+                                <li class="show-programslot">{{ programslot }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                    <p class="show-description">{{ show.short_description }}</p>
+                </div>
+            </div>
         {% endfor %}
-        {% for item in show.showtopic.all %}
-          <span title="{{item.topic}}" class="abbrev st-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
-        {% endfor %}
-        {% for item in show.musicfocus.all %}
-          <span title="{{item.focus}}" class="abbrev mf-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
-        {% endfor %}
-        </div>
-        <div class="show-detail">
-            <h3 class="show-title"><a href="{% url show-detail show.slug %}">{{ show.name }}</a></h3>
-            <ul class="show-programslots">
-            {% for slot in show.programslots.all %}
-              {% if slot.has_active_timeslot %}
-                <li class="show-programslot">{{ slot }}</li>
-              {% endif %}
-            {% endfor %}
-            </ul>
-            <p class="show-description">{{ show.short_description }}</p>
-        </div>
     </div>
-  {% endfor %}
-  </div>
 
 </div>
 

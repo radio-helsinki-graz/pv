@@ -13,9 +13,10 @@ middleware here, or combine a Django application with an application of another
 framework.
 
 """
-import os, sys
+import os
+import sys
 
-sys.path.append('/var/www/pv')
+sys.path.append('/srv/pv/pv')
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pv.settings")
 

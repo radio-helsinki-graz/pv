@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django import forms
 from models import Master, Standby, State
-from program.models import TimeSlot, Note
+from program.models import TimeSlot
 
 import json
 import time
@@ -60,7 +60,8 @@ def _which(timestamp=None):
 def _get_show(datetime=None):
     try:
         if datetime:
-            timeslot = TimeSlot.objects.get(start__lte=datetime, end__gt=datetime)
+            timeslot = TimeSlot.objects.get(start__lte=datetime,
+                                            end__gt=datetime)
         else:
             timeslot = TimeSlot.objects.get_or_create_current()
     except (ObjectDoesNotExist, MultipleObjectsReturned):
@@ -83,7 +84,8 @@ def _current():
     album = None
     show = _get_show()
 
-    if show['id'] in MUSIKPROG_IDS or (show['id'] in SPECIAL_PROGRAM_IDS and not show['note']):
+    if show['id'] in MUSIKPROG_IDS \
+            or (show['id'] in SPECIAL_PROGRAM_IDS and not show['note']):
         result = _which().objects.using(DB).all()[0]
         artist = result.artist
         title = result.title
@@ -106,7 +108,8 @@ def _bydate(year=None, month=None, day=None, hour=None, minute=None):
                  'title': None,
                  'album': None}]
     else:
-        ts = int(time.mktime((int(year), int(month), int(day), int(hour), int(minute), 0, 0, 0, -1))) * 1000000
+        ts = int(time.mktime((int(year), int(month), int(day), int(hour),
+                              int(minute), 0, 0, 0, -1))) * 1000000
         result = _which(ts).objects.using(DB).filter(timestamp__lt=ts)[:5]
         return [{'show': show['name'],
                  'start': _dtstring(time.localtime(item.timestamp//1000000)),
@@ -117,12 +120,12 @@ def _bydate(year=None, month=None, day=None, hour=None, minute=None):
 
 def get_current(request):
     response = json.dumps(_current())
-    return HttpResponse(response, mimetype='application/json')
+    return HttpResponse(response, content_type='application/json')
 
 
 def get(request, year=None, month=None, day=None, hour=None, minute=None):
     response = json.dumps(_bydate(year, month, day, hour, minute))
-    return HttpResponse(response, mimetype='application/json')
+    return HttpResponse(response, content_type='application/json')
 
 
 def nop_form(request):
@@ -130,14 +133,16 @@ def nop_form(request):
     date = None
     time = None
 
-    if request.method == 'GET' and ('date' in request.GET or 'time' in request.GET):
+    if request.method == 'GET' \
+            and ('date' in request.GET or 'time' in request.GET):
         form = NopForm(request.GET)
 
         if form.is_valid():
             date = form.cleaned_data['date']
             time = form.cleaned_data['time']
     else:
-        form = NopForm(initial={'date': datetime.date(datetime.now()), 'time': datetime.time(datetime.now())})
+        form = NopForm(initial={'date': datetime.date(datetime.now()),
+                                'time': datetime.time(datetime.now())})
 
     if not date:
         date = datetime.date(datetime.now())

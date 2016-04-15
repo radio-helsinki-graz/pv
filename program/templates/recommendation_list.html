@@ -1,0 +1,47 @@
+<html>
+<head>
+    <title>Tipps &mdash; Radio Helsinki - Freies Radio Graz</title>
+</head>
+<body>
+
+<div id="content-main" class="recommendations">
+    <h1>Programmhinweise</h1>
+    <div id="shows">
+        {% for recommendation in recommendation_list %}
+            <div class="show recommendation  bf-{{ recommendation.show.broadcastformat.slug }}">
+                <div class="show-abbrevs">
+                    {% for si in recommendation.show.showinformation.all %}
+                        <span title="{{ si.information }}"
+                              class="abbrev si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
+                    {% endfor %}
+                    {% for st in recommendation.show.showtopic.all %}
+                        <span title="{{ st.topic }}"
+                              class="abbrev st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
+                    {% endfor %}
+                    {% for mf in recommendation.show.musicfocus.all %}
+                        <span title="{{ mf.focus }}"
+                              class="abbrev mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
+                    {% endfor %}
+                </div>
+                <div class="show-detail">
+                    <h4>
+                        <a href="{% url "show-detail" recommendation.show.slug %}">{{ recommendation.show.name }}</a><br/>
+                        vom {{ recommendation.start|date:"d.m. H:i" }}-{{ recommendation.end|date:"H:i" }}</h4>
+                    {% if recommendation.note %}
+                        <h3 class="show-title">
+                          <a href="{% url "timeslot-detail" recommendation.id %}">{{ recommendation.note.title }}</a>
+                        </h3>
+                        <div class="note-content">{{ recommendation.note.content|safe }}</div>
+                    {% else %}
+                        <h3 class="show-title"><a
+                                href="{% url "timeslot-detail" recommendation.id %}">{{ recommendation.show.broadcastformat.format }}</a>
+                        </h3>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>

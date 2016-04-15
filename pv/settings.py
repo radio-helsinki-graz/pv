@@ -1,12 +1,12 @@
 # Django settings for pv project.
 
 import os.path
+
 PROJECT_DIR = os.path.dirname(__file__)
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
-ADMINS = ( )
+ADMINS = ()
 
 MANAGERS = ADMINS
 
@@ -21,6 +21,8 @@ DATABASES = {
     }
 }
 
+DATABASE_ROUTERS = ['nop.dbrouter.NopRouter']
+
 TIME_ZONE = 'Europe/Vienna'
 
 LANGUAGE_CODE = 'de'
@@ -30,20 +32,38 @@ SITE_ID = 1
 USE_I18N = True
 USE_L10N = True
 
-LOCALE_PATHS = os.path.join(PROJECT_DIR, 'locale')
+LOCALE_PATHS = (
+    os.path.join(PROJECT_DIR, 'locale'),
+)
 
 MEDIA_ROOT = os.path.join(PROJECT_DIR, 'site_media')
 MEDIA_URL = '/site_media/'
 
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 STATIC_URL = '/static/'
 
 SECRET_KEY = ''
 
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(PROJECT_DIR, 'templates')
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -54,10 +74,6 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'pv.urls'
-
-TEMPLATE_DIRS = (
-    os.path.join(PROJECT_DIR, "templates"),
-)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -74,7 +90,7 @@ INSTALLED_APPS = (
 
 TINYMCE_JS_URL = '/static/js/tiny_mce/tiny_mce.js'
 TINYMCE_DEFAULT_CONFIG = {
-    'plugins' : 'contextmenu',
+    'plugins': 'contextmenu',
     'theme': 'advanced',
     'theme_advanced_toolbar_location': 'top',
 }

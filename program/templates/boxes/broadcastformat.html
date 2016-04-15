@@ -1,10 +1,11 @@
-{% if broadcastformats %}
-<dl id="broadcastformat" class="portlet">
-  <dt class="portletHeader"><span>Legende<span></dt>
-  {% for broadcastformat in broadcastformats %}
-  <dd class="portletItem bcformat bf-{{ broadcastformat.slug }}">
-    <a title="Sendungen mit dem Sendungsformat {{broadcastformat.format}} anzeigen." href="?broadcastformat={{ broadcastformat.slug }}">{{ broadcastformat.format }}</a>
-  </dd>
-  {% endfor %}
-</dl>
+{% if broadcastformat_list %}
+    <dl id="broadcastformat" class="portlet">
+        <dt class="portletHeader"><span>Legende</span></dt>
+        {% for bf in broadcastformat_list %}
+            <dd class="portletItem bcformat bf-{{ bf.slug }}">
+                <a title="Sendungen mit dem Sendungsformat {{ bf.format }} anzeigen."
+                   href="?broadcastformat={{ bf.slug }}">{{ bf.format }}</a>
+            </dd>
+        {% endfor %}
+    </dl>
 {% endif %}

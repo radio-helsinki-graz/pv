@@ -9,18 +9,22 @@
 
     <div id="shows">
         <div id="shows-title">Sendungen</div>
-
-    {% for show in host.shows.all %}
-        <div class="show {{ show.broadcastformat.slug }}"><a href="{% url show-detail show.slug %}">{{ show }}</a></div>
-    {% endfor %}
+        {% for show in host.shows.all %}
+            {% if show.is_active %}
+                <div class="show {{ show.broadcastformat.slug }}"><a
+                        href="{% url "show-detail" show.slug %}">{{ show }}</a></div>
+            {% else %}
+                <div class="show {{ show.broadcastformat.slug }}">{{ show }}</div>
+            {% endif %}
+        {% endfor %}
     </div>
 
     {% if host.email %}
-    <div id="email">E-Mail Adresse: <a href="{{ host.email }}">{{ host.email }}</a></div>
+        <div id="email">E-Mail Adresse: <a href="{{ host.email }}">{{ host.email }}</a></div>
     {% endif %}
 
     {% if host.website %}
-    <div id="website">Website: <a href="{{ host.website }}">{{ host.website }}</a></div>
+        <div id="website">Website: <a href="{{ host.website }}">{{ host.website }}</a></div>
     {% endif %}
 </div>
 

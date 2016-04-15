@@ -8,72 +8,73 @@
 
 <div id="content-main" class="show-detail">
 
-  <div class="show-detail-header bf-{{show.broadcastformat.slug}}">
-    <div class="show-details">
-      <h1 id="name">{{ show.name }}</h1>
-    {% if show.id != 1 %}
-      <p id="programslots">
-      {% for slot in show.programslots.all %}
-        {% if slot.has_active_timeslot %}
-          <span class="programslot">{{ slot }}</span><br />
-        {% endif %}
-      {% endfor %}
-      </p>
-    {% endif %}
-    </div>
+    <div class="show-detail-header bf-{{ show.broadcastformat.slug }}">
+        <div class="show-details">
+            <h1 id="name">{{ show.name }}</h1>
+            {% if show.id != 1 %}
+                <p id="programslots">
+                    {% for slot in show.programslots.all %}
+                        {% if slot.is_active %}
+                            <span class="programslot">{{ slot }}</span><br/>
+                        {% endif %}
+                    {% endfor %}
+                </p>
+            {% endif %}
+        </div>
 
-    <div class="show-categorization">
-      <p id="broadcastformat">{{ show.broadcastformat.format }}</p>
-    {% for item in show.showinformation.all %}
-      <span title="{{item.information}}" class="abbrev si-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
-    {% endfor %}
-    {% for item in show.showtopic.all %}
-      <span title="{{item.topic}}" class="abbrev st-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
-    {% endfor %}
-    {% for item in show.musicfocus.all %}
-      <span title="{{item.focus}}" class="abbrev mf-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
-    {% endfor %}
-    </div>
+        <div class="show-categorization">
+            <p id="broadcastformat">{{ show.broadcastformat.format }}</p>
+            {% for si in show.showinformation.all %}
+                <span title="{{ si.information }}" class="abbrev si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
+            {% endfor %}
+            {% for st in show.showtopic.all %}
+                <span title="{{ st.topic }}" class="abbrev st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
+            {% endfor %}
+            {% for mf in show.musicfocus.all %}
+                <span title="{{ mf.focus }}" class="abbrev mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
+            {% endfor %}
+        </div>
 
-  </div>
+    </div>
 
     <div id="short-description" class="documentDescription">{{ show.short_description }}</div>
 
     {% if show.description %}
-    <div id="description">{{ show.description|safe }}</div>
+        <div id="description">{{ show.description|safe }}</div>
     {% endif %}
 
     {% if show.image and show.image_enabled %}
-    <div id="image" style="float: right;"><img src="/program/static/{{ show.image }}" width="200" alt="image"></div>
+        <div id="image" style="float: right;"><img src="/program/static/{{ show.image }}" width="200" alt="image"></div>
     {% endif %}
 
     <p>
-      {% for host in show.hosts.all %}
-      <a href="{% url host-detail host.id %}">{{ host }}</a><br />
-      {% endfor %}
-      {% if show.email %}
-      <strong>Email:</strong> <a href="mailto:{{ show.email }}">{{ show.email }}</a><br />
-      {% endif %}
-      {% if show.website %}
-      <strong>Website:</strong> <a href="{{ show.website }}">{{ show.website }}</a><br />
-      {% endif %}
-      {% if show.cba_series_id %}
-      <strong>CBA-Link:</strong> <a href="http://cba.fro.at/series/{{ show.cba_series_id }}">CBA</a><br />
-      {% endif %}
+        {% for host in show.hosts.all %}
+            <a href="{% url "host-detail" host.id %}">{{ host }}</a><br/>
+        {% endfor %}
+        {% if show.email %}
+            <strong>Email:</strong> <a href="mailto:{{ show.email }}">{{ show.email }}</a><br/>
+        {% endif %}
+        {% if show.website %}
+            <strong>Website:</strong> <a href="{{ show.website }}">{{ show.website }}</a><br/>
+        {% endif %}
+        {% if show.cba_series_id %}
+            <strong>CBA-Link:</strong> <a href="http://cba.fro.at/series/{{ show.cba_series_id }}">CBA</a><br/>
+        {% endif %}
     </p>
 
     {% if show.notes.all %}
-    <br />
-    <h2>Sendungstipps</h2>
-    <ul class="recommendations-list">
-      {% for note in show.notes.all reversed %}
-      <li>
-        <a href="{% url timeslot-detail note.timeslot.id %}" title="{{ note.title }}">{{ note.start|date:"d. M Y" }}:</a>
-        <div class="title">{{ note.title }}</div>
-      </li>
-      {% endfor %}
-    </ul>
-   {% endif %}
+        <br/>
+        <h2>Sendungstipps</h2>
+        <ul class="recommendations-list">
+            {% for note in show.notes.all reversed %}
+                <li>
+                    <a href="{% url "timeslot-detail" note.timeslot.id %}"
+                       title="{{ note.title }}">{{ note.start|date:"d. M Y" }}:</a>
+                    <div class="title">{{ note.title }}</div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
 </div>
 

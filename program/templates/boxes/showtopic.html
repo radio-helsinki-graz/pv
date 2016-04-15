@@ -1,14 +1,16 @@
-{% if showtopics %}
-<dl id="filterbox_showtopic" class="portlet filterbox">
-  <dt class="portletHeader"><span>Thema / Schwerpunkt<span></dt>
-  <dd class="portletItem">
-    <ul>
-      {% for item in showtopics %}
-      <li>
-        <a title="Sendungen mit dem Schwerpunkt {{item.topic}} anzeigen." class="abbrev st-{{ item.abbrev }}" href="?showtopic={{ item.slug }}">{{ item }}</a>
-      </li>
-      {% endfor %}
-    </ul>
-  </dd>
-</dl>
+{% if showtopic_list %}
+    <dl id="filterbox_showtopic" class="portlet filterbox">
+        <dt class="portletHeader"><span>Thema / Schwerpunkt<span></dt>
+        <dd class="portletItem">
+            <ul>
+                {% for showtopic in showtopic_list %}
+                    <li>
+                        <a title="Sendungen mit dem Schwerpunkt {{ showtopic.topic }} anzeigen."
+                           class="abbrev st-{{ showtopic.abbrev }}"
+                           href="?showtopic={{ showtopic.slug }}">{{ showtopic.topic }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </dd>
+    </dl>
 {% endif %}

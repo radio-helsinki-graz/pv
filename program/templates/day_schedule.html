@@ -1,43 +1,41 @@
 <html>
 <head>
-  <title>Tagesansicht {{ day|date:"l, d.m.Y" }} &mdash; Radio Helsinki - Freies Radio Graz</title>
-  <link type="text/css" href="/program/static/js/jqueryui/jquery-ui.css" rel="stylesheet" />
-
-  <script type="text/javascript" src="/program/static/js/jquery/jquery.min.js"></script>
-  <script type="text/javascript" src="/program/static/js/jqueryui/jquery-ui.min.js"></script>
-  <script type="text/javascript" src="/program/static/js/jqueryui/ui/jquery.ui.datepicker.min.js"></script>
-  <script type="text/javascript">
-jQuery(document).ready(function() {
-    jQuery("#calendar").datepicker({
-	dateFormat: "yy.mm.dd",
-	monthNames: [ "Jänner", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" ],
-	monthNamesShort: [ "Jän", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez" ],
-	dayNames: [ "Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag" ],
-	dayNamesMin: [ "So", "Mo", "Di", "Mi", "Do", "Fr", "Sa" ],
-	dayNamesShort: [ "Son", "Mon", "Die", "Mit", "Don", "Fre", "Sam" ],
-	firstDay: 1,
-	nextText: "Weiter",
-	prevText: "Zurück",
-        defaultDate: location.href.split('/').slice(4, 7).join('.'),
-        onSelect: function(dateText, inst) {
-            location = '/programm/' + dateText.split('.').join('/');
-        }
-    });
-});
-  </script>
+    <title>Tagesansicht {{ day|date:"l, d.m.Y" }} &mdash; Radio Helsinki - Freies Radio Graz</title>
+    <script type="text/javascript" src="/program/static/js/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/program/static/js/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/program/static/js/jquery-ui/ui/jquery.ui.datepicker.min.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            jQuery("#calendar").datepicker({
+                dateFormat: "yy.mm.dd",
+                monthNames: ["Jänner", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+                monthNamesShort: ["Jän", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
+                dayNames: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
+                dayNamesMin: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
+                dayNamesShort: ["Son", "Mon", "Die", "Mit", "Don", "Fre", "Sam"],
+                firstDay: 1,
+                nextText: "Weiter",
+                prevText: "Zurück",
+                defaultDate: location.href.split('/').slice(4, 7).join('.'),
+                onSelect: function (dateText, inst) {
+                    location = '/programm/' + dateText.split('.').join('/');
+                }
+            });
+        });
+    </script>
 </head>
 <body>
 
 <dl id="box_calendar" class="portlet calendar">
-  <dt class="portletHeader"><span>Kalender<span></dt>
-  <dd class="portletItem">
-    <div id="calendar"></div>
-  </dd>
+    <dt class="portletHeader"><span>Kalender<span></dt>
+    <dd class="portletItem">
+        <div id="calendar"></div>
+    </dd>
 </dl>
 
 {% load content_boxes %}
 <div id="filter-format">
-{% broadcastformat %}
+    {% broadcastformat %}
 </div>
 
 {% comment %}
@@ -56,70 +54,76 @@ jQuery(document).ready(function() {
     <h1 id="date">{{ day|date:"l, d.m.Y" }}</h1>
 
     <div id="timeslots">
-    {% for timeslot in timeslots %}
-        {% if forloop.first and timeslot.start != timeslot.get_previous_by_start.end %}
-        <div class="timeslot bf-{{ default_show.broadcastformat.slug }}">
-            <div class="show-start">{{ timeslot.get_previous_by_start.end|date:"H:i" }}</div>
-            <div class="show-abbrevs">
-            {% for item in default_show.showinformation.all %}
-              <span title="{{item.information}}" class="abbrev si-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
-            {% endfor %}
-            {% for item in default_show.showtopic.all %}
-              <span title="{{item.topic}}" class="abbrev st-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
-            {% endfor %}
-            {% for item in default_show.musicfocus.all %}
-              <span title="{{item.focus}}" class="abbrev mf-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
-            {% endfor %}
-            </div>
-            <div class="show-detail">
-                <h3 class="show-title">{{ default_show.name }}</h3>
-                <p class="show-description">{{ default_show.short_description }}</p>
-            </div>
-        </div>
-        {% endif %}
-    <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}">
-        <div class="show-start">{{ timeslot.start|date:"H:i" }}</div>
-        <div class="show-abbrevs">
-        {% for item in timeslot.show.showinformation.all %}
-          <span title="{{item.information}}" class="abbrev si-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
-        {% endfor %}
-        {% for item in timeslot.show.showtopic.all %}
-          <span title="{{item.topic}}" class="abbrev st-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
-        {% endfor %}
-        {% for item in timeslot.show.musicfocus.all %}
-          <span title="{{item.focus}}" class="abbrev mf-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
-        {% endfor %}
-        </div>
-        <div class="show-detail">
-            <h3 class="show-title"><a href="{% url timeslot-detail timeslot.id %}">{{ timeslot.show.name }}</a></h3>
-            {% if timeslot.note %}
-            <p class="note-title"><strong>Heute:</strong> {{ timeslot.note.title }}</p>
-            {% else %}
-            <p class="show-description">{{ timeslot.show.short_description }}</p>
+        {% for timeslot in timeslots %}
+            {% if forloop.first and timeslot.start != timeslot.get_previous_by_start.end %}
+                <div class="timeslot bf-{{ default_show.broadcastformat.slug }}">
+                    <div class="show-start">{{ timeslot.get_previous_by_start.end|date:"H:i" }}</div>
+                    <div class="show-abbrevs">
+                        {% for si in default_show.showinformation.all %}
+                            <span title="{{ si.information }}"
+                                  class="abbrev si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
+                        {% endfor %}
+                        {% for st in default_show.showtopic.all %}
+                            <span title="{{ st.topic }}" class="abbrev st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
+                        {% endfor %}
+                        {% for mf in default_show.musicfocus.all %}
+                            <span title="{{ mf.focus }}" class="abbrev mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
+                        {% endfor %}
+                    </div>
+                    <div class="show-detail">
+                        <h3 class="show-title">{{ default_show.name }}</h3>
+                        <p class="show-description">{{ default_show.short_description }}</p>
+                    </div>
+                </div>
             {% endif %}
-        </div>
-    </div>
-        {% if timeslot.end != timeslot.get_next_by_start.start %}
-            <div class="timeslot bf-{{ default_show.broadcastformat.slug }}">
-                <div class="show-start">{{ timeslot.end|date:"H:i" }}</div>
+            <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}">
+                <div class="show-start">{{ timeslot.start|date:"H:i" }}</div>
                 <div class="show-abbrevs">
-                {% for item in default_show.showinformation.all %}
-                  <span title="{{item.information}}" class="abbrev si-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
-                {% endfor %}
-                {% for item in default_show.showtopic.all %}
-                  <span title="{{item.topic}}" class="abbrev st-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
-                {% endfor %}
-                {% for item in default_show.musicfocus.all %}
-                  <span title="{{item.focus}}" class="abbrev mf-{{ item.abbrev }}"><span>{{ item.abbrev }}</span></span>
-                {% endfor %}
+                    {% for si in timeslot.show.showinformation.all %}
+                        <span title="{{ si.information }}"
+                              class="abbrev si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
+                    {% endfor %}
+                    {% for st in timeslot.show.showtopic.all %}
+                        <span title="{{ st.topic }}"
+                              class="abbrev st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
+                    {% endfor %}
+                    {% for mf in timeslot.show.musicfocus.all %}
+                        <span title="{{ mf.focus }}"
+                              class="abbrev mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
+                    {% endfor %}
                 </div>
                 <div class="show-detail">
-                    <h3 class="show-title">{{ default_show.name }}</h3>
-                    <p class="show-description">{{ default_show.short_description }}</p>
+                    <h3 class="show-title"><a
+                            href="{% url "timeslot-detail" timeslot.id %}">{{ timeslot.show.name }}</a></h3>
+                    {% if timeslot.note %}
+                        <p class="note-title"><strong>Heute:</strong> {{ timeslot.note.title }}</p>
+                    {% else %}
+                        <p class="show-description">{{ timeslot.show.short_description }}</p>
+                    {% endif %}
                 </div>
             </div>
-        {% endif %}
-    {% endfor %}
+            {% if timeslot.end != timeslot.get_next_by_start.start %}
+                <div class="timeslot bf-{{ default_show.broadcastformat.slug }}">
+                    <div class="show-start">{{ timeslot.end|date:"H:i" }}</div>
+                    <div class="show-abbrevs">
+                        {% for si in default_show.showinformation.all %}
+                            <span title="{{ si.information }}"
+                                  class="abbrev si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
+                        {% endfor %}
+                        {% for st in default_show.showtopic.all %}
+                            <span title="{{ st.topic }}" class="abbrev st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
+                        {% endfor %}
+                        {% for mf in default_show.musicfocus.all %}
+                            <span title="{{ mf.focus }}" class="abbrev mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
+                        {% endfor %}
+                    </div>
+                    <div class="show-detail">
+                        <h3 class="show-title">{{ default_show.name }}</h3>
+                        <p class="show-description">{{ default_show.short_description }}</p>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
     </div>
 </div>
 
