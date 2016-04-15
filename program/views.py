@@ -198,11 +198,11 @@ def json_day_schedule(request, year=None, month=None, day=None):
     timeslots = TimeSlot.objects.get_24h_timeslots(today)
     schedule = []
     for ts in timeslots:
-	entry = { 'start': ts.start.strftime('%H:%M:%S'), 'title': ts.programslot.show.name, 'id': -1 }
+	entry = { 'start': ts.start.strftime('%H:%M:%S'), 'title': ts.programslot.show.name, 'id': ts.programslot.show.id, 'automation-id': -1 }
         if ts.programslot.automation_id:
-            entry['id'] = ts.programslot.automation_id
+            entry['automation-id'] = ts.programslot.automation_id
         elif ts.programslot.show.automation_id:
-            entry['id'] = ts.programslot.show.automation_id
+            entry['automation-id'] = ts.programslot.show.automation_id
 
 	schedule.append(entry)
 
