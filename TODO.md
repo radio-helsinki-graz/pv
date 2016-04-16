@@ -1,0 +1,5 @@
+- [ ] list notes of predecessor, if available, on show detail page
+- [ ] list notes of successor, if available to show detail page
+- [ ] add management command to automatically renew program slots
+- [ ] add jingle field (File) to Show model
+- [ ] customize the admin interface for program slot
