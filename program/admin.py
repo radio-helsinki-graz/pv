@@ -58,11 +58,12 @@ class NoteAdmin(admin.ModelAdmin):
 
 class TimeSlotInline(admin.TabularInline):
     model = TimeSlot
-
+    ordering = ('-end',)
 
 class ProgramSlotAdmin(admin.ModelAdmin):
     actions = ('renew',)
     inlines = (TimeSlotInline,)
+    fields = (('rrule', 'byweekday'), ('dstart', 'tstart', 'tend'), 'until', 'is_repetition', 'automation_id')
     list_display = ('show', 'byweekday', 'rrule', 'tstart', 'tend', 'until')
     list_filter = ('byweekday', 'rrule', 'is_repetition', 'is_active')
     ordering = ('byweekday', 'dstart')
@@ -83,7 +84,7 @@ class ProgramSlotAdmin(admin.ModelAdmin):
 
 class ProgramSlotInline(admin.TabularInline):
     model = ProgramSlot
-
+    ordering = ('-until',)
 
 class ShowAdmin(admin.ModelAdmin):
     filter_horizontal = ('hosts', 'owners', 'musicfocus', 'showinformation', 'showtopic')
