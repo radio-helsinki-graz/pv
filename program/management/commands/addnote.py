@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand, CommandError
 from django.core.exceptions import ValidationError
 
@@ -6,6 +5,7 @@ from datetime import datetime
 import sys
 
 from program.models import Show, TimeSlot, Note
+
 
 class Command(BaseCommand):
     help = 'adds a note to a timeslot'
@@ -40,11 +40,13 @@ class Command(BaseCommand):
             timeslot = TimeSlot.objects.get(show=show, start__year=year, start__month=month, start__day=day)
         except TimeSlot.DoesNotExist as dne:
             raise CommandError(dne)
-        except TimeSlot.MultipleObjectsReturned as mor:
+        except TimeSlot.MultipleObjectsReturned:
             if not index:
-                raise  CommandError('you must provide the show_id, start_date, status index')
+                raise CommandError('you must provide the show_id, start_date, status index')
             try:
-                timeslot = TimeSlot.objects.filter(show=show, start__year=year, start__month=month, start__day=day).order_by('start')[int(index)]
+                timeslot = \
+                    TimeSlot.objects.filter(show=show, start__year=year, start__month=month, start__day=day).order_by(
+                        'start')[int(index)]
             except IndexError as ie:
                 raise CommandError(ie)
 
@@ -63,4 +65,3 @@ class Command(BaseCommand):
         else:
             note.save()
             print 'added note "%s" to "%s"' % (title, timeslot)
-

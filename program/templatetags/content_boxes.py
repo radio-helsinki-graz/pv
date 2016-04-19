@@ -1,9 +1,8 @@
-# http://docs.djangoproject.com/en/1.2/howto/custom-template-tags/
-
 from django import template
-register = template.Library()
 
 from program.models import BroadcastFormat, MusicFocus, ShowInformation, ShowTopic
+
+register = template.Library()
 
 
 @register.inclusion_tag('boxes/broadcastformat.html')

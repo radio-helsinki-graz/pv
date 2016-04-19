@@ -3,6 +3,7 @@ from django.core.management.base import BaseCommand, CommandError
 
 from optparse import make_option
 
+
 class Command(BaseCommand):
     help = 'deletes an user'
     option_list = BaseCommand.option_list + (

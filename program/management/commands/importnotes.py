@@ -1,7 +1,6 @@
-from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned, ValidationError
 from django.core.management.base import NoArgsCommand
-from django.utils.html import clean_html, strip_tags
+from django.utils.html import strip_tags
 
 import MySQLdb
 
@@ -10,6 +9,7 @@ from program.models import Note, Show, TimeSlot
 USER = 'helsinki'
 PASSWD = 'helsinki'
 DB = 'helsinki'
+
 
 class Command(NoArgsCommand):
     help = 'Import notes from current program'
@@ -26,7 +26,7 @@ WHERE n.sendung_id in (SELECT id FROM sendungen WHERE letzter_termin > current_d
         for ntitel, datum, stitel, notiz in cursor.fetchall():
             ntitel = strip_tags(ntitel) if ntitel else strip_tags(stitel)
             stitel = strip_tags(stitel)
-            notiz = clean_html(notiz)
+            notiz = strip_tags(notiz)
 
             if stitel.endswith('(Wiederholung)'):
                 stitel = stitel[:-15]
@@ -39,7 +39,8 @@ WHERE n.sendung_id in (SELECT id FROM sendungen WHERE letzter_termin > current_d
                     print 'show with name "%s" not found' % stitel
                 else:
                     try:
-                        timeslot = TimeSlot.objects.get(programslot__show=show, start__year=year, start__month=month, start__day=day)
+                        timeslot = TimeSlot.objects.get(programslot__show=show, start__year=year, start__month=month,
+                                                        start__day=day)
                     except ObjectDoesNotExist:
                         print 'no timeslot found for sendung "%s" and datum "%s"' % (stitel, datum)
                     except MultipleObjectsReturned:

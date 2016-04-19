@@ -60,6 +60,7 @@ class TimeSlotInline(admin.TabularInline):
     model = TimeSlot
     ordering = ('-end',)
 
+
 class ProgramSlotAdmin(admin.ModelAdmin):
     actions = ('renew',)
     inlines = (TimeSlotInline,)
@@ -85,6 +86,7 @@ class ProgramSlotAdmin(admin.ModelAdmin):
 class ProgramSlotInline(admin.TabularInline):
     model = ProgramSlot
     ordering = ('-until',)
+
 
 class ShowAdmin(admin.ModelAdmin):
     filter_horizontal = ('hosts', 'owners', 'musicfocus', 'showinformation', 'showtopic')

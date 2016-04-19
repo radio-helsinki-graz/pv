@@ -18,6 +18,7 @@ RRULES = {
     28: RRule.objects.get(pk=5)
 }
 
+
 class Command(NoArgsCommand):
     help = 'Import programslots from the current program'
 
@@ -49,8 +50,8 @@ WHERE letzter_termin > current_date AND titel NOT LIKE 'Musikprogramm' AND titel
                 except ObjectDoesNotExist:
                     print 'show with name "%s" not found' % titel
                 else:
-                    programslot = ProgramSlot(rrule=rrule, byweekday=termin, show=show, dstart=erster_termin, tstart=tstart,
-                                              tend=tend, until=letzter_termin)
+                    programslot = ProgramSlot(rrule=rrule, byweekday=termin, show=show, dstart=erster_termin,
+                                              tstart=tstart, tend=tend, until=letzter_termin)
                     try:
                         programslot.save()
                         counter += 1
@@ -81,7 +82,8 @@ WHERE letzter_termin > current_date AND titel LIKE '%%(Wiederholung)'""")
                 except ObjectDoesNotExist:
                     print 'show with name "%s" not found' % titel
                 else:
-                    programslot = ProgramSlot(rrule=rrule, byweekday=termin, show=show, dstart=erster_termin, tstart=tstart, tend=tend, until=letzter_termin, is_repetition=True)
+                    programslot = ProgramSlot(rrule=rrule, byweekday=termin, show=show, dstart=erster_termin,
+                                              tstart=tstart, tend=tend, until=letzter_termin, is_repetition=True)
                     try:
                         programslot.save()
                         counter += 1

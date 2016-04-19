@@ -8,7 +8,6 @@ import os
 
 PROGRAM_SITE_MEDIA = os.path.join(os.path.dirname(__file__), '../site_media')
 
-
 urlpatterns = patterns('',
                        url(r'^today/?$', views.DayScheduleView.as_view()),
                        url(r'^week/?$', views.WeekScheduleView.as_view()),
@@ -25,5 +24,6 @@ urlpatterns = patterns('',
                        url(r'^styles.css$', views.StylesView.as_view())
                        )
 if settings.DEBUG:
-    urlpatterns += patterns('',
-                            url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': PROGRAM_SITE_MEDIA}))
+    urlpatterns += \
+        patterns('',
+                 url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': PROGRAM_SITE_MEDIA}))

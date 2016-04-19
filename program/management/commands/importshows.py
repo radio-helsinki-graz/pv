@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.core.management.base import NoArgsCommand
 from django.template.defaultfilters import slugify
-from django.utils.html import clean_html, strip_tags
+from django.utils.html import strip_tags
 
 import MySQLdb
 
@@ -13,9 +13,10 @@ DB = 'helsinki'
 
 TALK = BroadcastFormat.objects.get(pk=1)
 
+
 class Command(NoArgsCommand):
     help = 'Import shows from the current program'
-    
+
     def handle_noargs(self, **options):
         connection = MySQLdb.connect(user=USER, passwd=PASSWD, db=DB)
         cursor = connection.cursor()
@@ -29,7 +30,7 @@ ORDER BY titel, beginn, ende""")
 
         for titel, beschreibung, web, macher in cursor.fetchall():
             titel = strip_tags(titel)
-            beschreibung = clean_html(beschreibung)
+            beschreibung = strip_tags(beschreibung)
 
             slug = slugify(titel)
 
@@ -50,7 +51,8 @@ ORDER BY titel, beginn, ende""")
                 show = Show.objects.get(name=titel)
                 print 'sendung "%s" already imported as show "%s"' % (titel, show)
             except ObjectDoesNotExist:
-                show = Show(broadcastformat=TALK, name=titel, slug=slug, short_description='FIXME', description=beschreibung)
+                show = Show(broadcastformat=TALK, name=titel, slug=slug, short_description='FIXME',
+                            description=beschreibung)
                 try:
                     show.save()
                     counter += 1
