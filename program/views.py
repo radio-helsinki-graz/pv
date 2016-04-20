@@ -199,7 +199,8 @@ def json_day_schedule(request, year=None, month=None, day=None):
     schedule = []
     for ts in timeslots:
         entry = {
-            'start': ts.start.strftime('%H:%M:%S'),
+            'start': ts.start.strftime('%Y-%m-%d_%H:%M:%S'),
+            'end': ts.end.strftime('%Y-%m-%d_%H:%M:%S'),
             'title': ts.programslot.show.name,
             'id': ts.programslot.show.id,
             'automation-id': -1
