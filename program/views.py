@@ -50,7 +50,7 @@ class ShowListView(ListView):
 
 
 class ShowDetailView(DetailView):
-    queryset = Show.objects.filter(is_active=True).exclude(id=1).distinct()
+    queryset = Show.objects.all().exclude(id=1)
     template_name = 'show_detail.html'
 
 

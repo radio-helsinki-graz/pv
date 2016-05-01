@@ -75,7 +75,7 @@
             {% endfor %}
             {% if show.predecessor and show.predecessor.notes.all %}
                 {% if show.name != show.predecessor.name %}
-                    <h3>Davor als {{ show.predecessor.name }}</h3>
+                    <h3>Davor als <a href="{% url "show-detail" show.predecessor.slug %}">{{ show.predecessor.name }}</a></h3>
                 {%  endif %}
                 {% for note in show.predecessor.notes.all reversed %}
                     <li>
