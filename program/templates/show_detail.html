@@ -73,9 +73,20 @@
                     <div class="title">{{ note.title }}</div>
                 </li>
             {% endfor %}
+            {% if show.predecessor and show.predecessor.notes.all %}
+                {% if show.name != show.predecessor.name %}
+                    <h3>Davor als {{ show.predecessor.name }}</h3>
+                {%  endif %}
+                {% for note in show.predecessor.notes.all reversed %}
+                    <li>
+                        <a href="{%  url "timeslot-detail" note.timeslot.id %}"
+                           title="{{ note.title }}">{{ note.start|date:"d. M Y" }}:</a>
+                        <div class="title">{{ note.title }}</div>
+                    </li>
+                {% endfor %}
+            {% endif %}
         </ul>
     {% endif %}
-
 </div>
 
 </body>
