@@ -336,14 +336,20 @@ class ProgramSlot(models.Model):
     def save(self, *args, **kwargs):
         if self.pk:
             old = ProgramSlot.objects.get(pk=self.pk)
-            if self.rrule != old.rrule \
-                    or self.byweekday != old.byweekday \
-                    or self.show != old.show \
-                    or self.dstart != old.dstart \
-                    or self.tstart != old.tstart \
-                    or self.tend != old.tend \
-                    or self.is_repetition != old.is_repetition:
-                raise ValidationError(u"only until can be changed")
+            if self.rrule != old.rrule:
+                raise ValidationError(u"Recurrence rule cannot ba changed")
+            if self.byweekday != old.byweekday:
+                raise ValidationError(u"Weekday cannot be changed")
+            if self.show != old.show:
+                raise ValidationError(u"Show cannot be changed")
+            if self.dstart != old.dstart:
+                raise ValidationError(u"First date cannot ba changed")
+            if self.tstart != old.tstart:
+                raise ValidationError(u"Start time cannot be changed")
+            if self.tend != old.tend:
+                raise ValidationError(u"End time cannot be changed")
+            if self.is_repetition != old.is_repetition:
+                raise ValidationError(u"Is repetition cannot be changed")
         else:
             old = False
 
