@@ -20,7 +20,10 @@ MUSIKPROG_IDS = (
     204,  # Radyo Mezopotamya
     206,  # Abunda Lingva
     290,  # styrian underground
-    523   # Songbirds
+    523,  # Songbirds
+    562,  # Singing Birds
+    563,  # canzoni italiane
+    564   # on connait la chanson
 )
 
 SPECIAL_PROGRAM_IDS = (
