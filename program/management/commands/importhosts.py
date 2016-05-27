@@ -8,6 +8,7 @@ USER = 'helsinki'
 PASSWD = 'helsinki'
 DB = 'helsinki'
 
+
 class Command(NoArgsCommand):
     help = 'Import hosts from current program'
 

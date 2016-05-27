@@ -3,10 +3,12 @@ from django.db import transaction
 
 from program.models import Show, TimeSlot, ProgramSlot
 
+
 class Command(NoArgsCommand):
+    help = 'removes default shows without note'
+
     @transaction.commit_manually
     def handle_noargs(self, **options):
-        help = 'removes default shows without note'
 
         default_show = Show.objects.get(pk=1)
         try:
@@ -18,4 +20,3 @@ class Command(NoArgsCommand):
             transaction.rollback()
         else:
             transaction.commit()
-

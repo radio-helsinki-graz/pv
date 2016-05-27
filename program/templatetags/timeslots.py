@@ -1,8 +1,8 @@
 from django import template
 
-register = template.Library()
-
 from datetime import datetime, time, timedelta
+
+register = template.Library()
 
 
 @register.simple_tag

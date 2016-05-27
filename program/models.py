@@ -244,7 +244,6 @@ class Show(models.Model):
     email = models.EmailField(_("E-Mail"), blank=True, null=True)
     website = models.URLField(_("Website"), blank=True, null=True)
     is_active = models.BooleanField(_("Is active"), default=True, editable=False)
-    cba_series_id = models.IntegerField(_("CBA series ID"), blank=True, null=True)
     automation_id = models.IntegerField(_("Automation ID"), blank=True, null=True, choices=get_automation_id_choices())
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_updated = models.DateTimeField(auto_now=True, editable=False)
@@ -255,7 +254,7 @@ class Show(models.Model):
         verbose_name_plural = _("Shows")
 
     def __unicode__(self):
-        return u'%s' % self.name
+        return u'%04d | %s' % (self.id, self.name)
 
     def get_absolute_url(self):
         return reverse('show-detail', args=[self.slug])
@@ -489,7 +488,6 @@ class Note(models.Model):
     title = models.CharField(_("Title"), max_length=128)
     content = tinymce_models.HTMLField(_("Content"))
     status = models.IntegerField(_("Status"), choices=STATUS_CHOICES, default=1)
-    cba_entry_id = models.IntegerField(_("CBA entry ID"), blank=True, null=True)
     start = models.DateTimeField(editable=False)
     show = models.ForeignKey(Show, editable=False, related_name='notes')
     created = models.DateTimeField(auto_now_add=True, editable=False)
