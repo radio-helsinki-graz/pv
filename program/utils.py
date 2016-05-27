@@ -25,7 +25,7 @@ def get_automation_id_choices():
             with open(cached_shows, 'w') as cache:
                 cache.write(shows_json)
 
-        shows = [(s['id'], s['title']) for s in shows_list]
+        shows = [(s['id'], '%d | %s' % (s['id'], s['title'])) for s in shows_list]
     return shows
 
 
