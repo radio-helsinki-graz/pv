@@ -50,7 +50,7 @@ class ShowListView(ListView):
 
 
 class ShowDetailView(DetailView):
-    queryset = Show.objects.filter(is_active=True).exclude(id=1).distinct()
+    queryset = Show.objects.all().exclude(id=1)
     template_name = 'show_detail.html'
 
 
@@ -205,6 +205,7 @@ def json_day_schedule(request, year=None, month=None, day=None):
             'id': ts.programslot.show.id,
             'automation-id': -1
         }
+
         if ts.programslot.automation_id:
             entry['automation-id'] = ts.programslot.automation_id
         elif ts.programslot.show.automation_id:
