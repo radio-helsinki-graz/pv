@@ -254,7 +254,7 @@ class Show(models.Model):
         verbose_name_plural = _("Shows")
 
     def __unicode__(self):
-        return u'%s' % self.name
+        return u'%04d | %s' % (self.id, self.name)
 
     def get_absolute_url(self):
         return reverse('show-detail', args=[self.slug])
