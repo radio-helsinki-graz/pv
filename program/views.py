@@ -27,7 +27,7 @@ class HostDetailView(DetailView):
 
 class ShowListView(ListView):
     context_object_name = 'show_list'
-    queryset = Show.objects.filter(is_active=True).exclude(id=1).distinct()
+    queryset = Show.objects.filter(is_active=True).exclude(id=1)
     template_name = 'show_list.html'
 
     def get_queryset(self):
@@ -50,7 +50,7 @@ class ShowListView(ListView):
 
 
 class ShowDetailView(DetailView):
-    queryset = Show.objects.all().exclude(id=1)
+    queryset = Show.objects.exclude(id=1)
     template_name = 'show_detail.html'
 
 
@@ -195,7 +195,7 @@ def json_day_schedule(request, year=None, month=None, day=None):
     else:
         today = datetime.strptime('%s__%s__%s__00__00' % (year, month, day), '%Y__%m__%d__%H__%M')
 
-    timeslots = TimeSlot.objects.get_24h_timeslots(today)
+    timeslots = TimeSlot.objects.get_24h_timeslots(today).select_related('programslot')
     schedule = []
     for ts in timeslots:
         entry = {

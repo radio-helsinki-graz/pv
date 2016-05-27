@@ -1,5 +1,9 @@
-- [ ] list notes of predecessor, if available, on show detail page
-- [ ] list notes of successor, if available to show detail page
+- [*] list notes of predecessor, if available, on show detail page
+- [ ] list notes of successor, if available, on show detail page
+- [*] optimize the export for the day schedule
+- [ ] handle exceptions better
+- [ ] optimize the selection of a predecessor for a show
+- [ ] optimize the selection of a timeslot for a note
 - [ ] add management command to automatically renew program slots
 - [ ] add jingle field (File) to Show model
 - [ ] customize the admin interface for program slot
