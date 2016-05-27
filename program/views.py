@@ -27,7 +27,7 @@ class HostDetailView(DetailView):
 
 class ShowListView(ListView):
     context_object_name = 'show_list'
-    queryset = Show.objects.filter(is_active=True).exclude(id=1)
+    queryset = Show.objects.filter(is_active=True).exclude(id=1).distinct()
     template_name = 'show_list.html'
 
     def get_queryset(self):
@@ -50,7 +50,7 @@ class ShowListView(ListView):
 
 
 class ShowDetailView(DetailView):
-    queryset = Show.objects.exclude(id=1)
+    queryset = Show.objects.all().exclude(id=1)
     template_name = 'show_detail.html'
 
 
