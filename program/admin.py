@@ -65,7 +65,7 @@ class ProgramSlotAdmin(admin.ModelAdmin):
     actions = ('renew',)
     inlines = (TimeSlotInline,)
     fields = (('rrule', 'byweekday'), ('dstart', 'tstart', 'tend'), 'until', 'is_repetition', 'automation_id')
-    list_display = ('show', 'byweekday', 'rrule', 'tstart', 'tend', 'until')
+    list_display = ('get_show_name', 'byweekday', 'rrule', 'tstart', 'tend', 'until')
     list_filter = ('byweekday', 'rrule', 'is_repetition', 'is_active')
     ordering = ('byweekday', 'dstart')
     save_on_top = True
@@ -81,6 +81,10 @@ class ProgramSlotAdmin(admin.ModelAdmin):
             message = _("%s program slots were renewed until %s") % until
         self.message_user(request, message)
     renew.short_description = _("Renew selected program slots")
+
+    def get_show_name(self, obj):
+        return obj.show.name
+    get_show_name.admin_order_field = 'show'
 
 
 class ProgramSlotInline(admin.TabularInline):
