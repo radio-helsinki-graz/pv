@@ -85,6 +85,7 @@ class ProgramSlotAdmin(admin.ModelAdmin):
     def get_show_name(self, obj):
         return obj.show.name
     get_show_name.admin_order_field = 'show'
+    get_show_name.short_description = "Show"
 
 
 class ProgramSlotInline(admin.TabularInline):
