@@ -107,6 +107,17 @@ class ShowAdmin(admin.ModelAdmin):
         'musicfocus',
     )
 
+    def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
+        try:
+            show_id = int(request.get_full_path().split('/')[-2])
+        except ValueError:
+            show_id = None
+
+        if db_field.name == 'predecessor' and show_id:
+            kwargs['queryset'] = Show.objects.exclude(pk=show_id)
+
+        return super(ShowAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
 admin.site.register(BroadcastFormat, BroadcastFormatAdmin)
 admin.site.register(MusicFocus, MusicFocusAdmin)
 admin.site.register(ShowInformation, ShowInformationAdmin)
