@@ -98,13 +98,18 @@ class ShowAdmin(admin.ModelAdmin):
     search_fields = ('name', 'short_description', 'description')
     fields = (
         'predecessor', 'broadcastformat', 'name', 'slug', 'image', 'image_enabled', 'short_description', 'description',
-        'email', 'website', 'cba_series_id', 'automation_id', 'hosts', 'owners', 'showinformation', 'showtopic',
+        'email', 'website', 'automation_id', 'hosts', 'owners', 'showinformation', 'showtopic',
         'musicfocus',
     )
 
     def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
-        if db_field.name == 'predecessor':
-            kwargs['queryset'] = Show.objects.exclude(pk=352)       # FIXME!
+        try:
+            show_id = int(request.get_full_path().split('/')[-2])
+        except ValueError:
+            show_id = None
+
+        if db_field.name == 'predecessor' and show_id:
+            kwargs['queryset'] = Show.objects.exclude(pk=show_id)
 
         return super(ShowAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
