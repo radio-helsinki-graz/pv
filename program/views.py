@@ -208,8 +208,6 @@ def json_day_schedule(request, year=None, month=None, day=None):
 
         if ts.programslot.automation_id:
             entry['automation-id'] = ts.programslot.automation_id
-        elif ts.programslot.show.automation_id:
-            entry['automation-id'] = ts.programslot.show.automation_id
 
         schedule.append(entry)
 
