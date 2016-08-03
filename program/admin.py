@@ -8,7 +8,7 @@ from datetime import date, datetime, timedelta
 
 
 class BroadcastFormatAdmin(admin.ModelAdmin):
-    list_display = ('format', 'enabled', 'admin_color')
+    list_display = ('format', 'admin_color', 'enabled')
     prepopulated_fields = {'slug': ('format',)}
 
 
@@ -29,8 +29,8 @@ class ShowTopicAdmin(admin.ModelAdmin):
 
 
 class HostAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-    list_filter = ('is_always_visible', 'is_active')
+    list_display = ('name', 'is_active')
+    list_filter = ('is_active', 'is_always_visible')
 
 
 class NoteAdmin(admin.ModelAdmin):
@@ -45,10 +45,17 @@ class NoteAdmin(admin.ModelAdmin):
         return super(NoteAdmin, self).get_queryset(request).filter(show__in=shows)
 
     def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
-        four_weeks = datetime.now() - timedelta(weeks=4)
+        four_weeks_ago = datetime.now() - timedelta(weeks=4)
+        in_eight_weeks = datetime.now() + timedelta(weeks=8)
         if db_field.name == 'timeslot':
-            shows = request.user.shows.all()
-            kwargs['queryset'] = TimeSlot.objects.filter(show__in=shows, start__gt=four_weeks)
+            try:
+                timeslot_id = int(request.get_full_path().split('/')[-2])
+            except ValueError:
+                shows = request.user.shows.all()
+                kwargs['queryset'] = TimeSlot.objects.filter(show__in=shows, note__isnull=True, start__gt=four_weeks_ago,
+                                                             start__lt=in_eight_weeks)
+            else:
+                kwargs['queryset'] = TimeSlot.objects.filter(note=timeslot_id)
 
         return super(NoteAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
@@ -66,7 +73,7 @@ class ProgramSlotAdmin(admin.ModelAdmin):
     inlines = (TimeSlotInline,)
     fields = (('rrule', 'byweekday'), ('dstart', 'tstart', 'tend'), 'until', 'is_repetition', 'automation_id')
     list_display = ('get_show_name', 'byweekday', 'rrule', 'tstart', 'tend', 'until')
-    list_filter = ('byweekday', 'rrule', 'is_repetition', 'is_active')
+    list_filter = ('is_active', 'byweekday', 'rrule', 'is_repetition')
     ordering = ('byweekday', 'dstart')
     save_on_top = True
     search_fields = ('show__name',)
@@ -96,8 +103,8 @@ class ProgramSlotInline(admin.TabularInline):
 class ShowAdmin(admin.ModelAdmin):
     filter_horizontal = ('hosts', 'owners', 'musicfocus', 'showinformation', 'showtopic')
     inlines = (ProgramSlotInline,)
-    list_display = ('name', 'short_description', 'broadcastformat')
-    list_filter = ('broadcastformat', 'showinformation', 'showtopic', 'musicfocus', 'is_active')
+    list_display = ('name', 'short_description', 'is_active')
+    list_filter = ('is_active', 'broadcastformat', 'showinformation', 'showtopic', 'musicfocus')
     ordering = ('slug',)
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ('name', 'short_description', 'description')

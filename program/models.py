@@ -465,10 +465,10 @@ class TimeSlot(models.Model):
         verbose_name_plural = _("Time slots")
 
     def __unicode__(self):
-        start = self.start.strftime('%d. %b %Y %H:%M')
+        start = self.start.strftime('%d.%m.%Y %H:%M')
         end = self.end.strftime('%H:%M')
 
-        return u'%s: %s - %s' % (self.show, start, end)
+        return u'%s - %s  |  %s' % (start, end, self.show.name)
 
     def save(self, *args, **kwargs):
         self.show = self.programslot.show
