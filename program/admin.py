@@ -110,7 +110,7 @@ class ShowAdmin(admin.ModelAdmin):
     search_fields = ('name', 'short_description', 'description')
     fields = (
         'predecessor', 'broadcastformat', 'name', 'slug', 'image', 'image_enabled', 'short_description', 'description',
-        'email', 'website', 'automation_id', 'hosts', 'owners', 'showinformation', 'showtopic',
+        'email', 'website', 'hosts', 'owners', 'showinformation', 'showtopic',
         'musicfocus',
     )
 
