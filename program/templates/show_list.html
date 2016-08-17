@@ -41,9 +41,7 @@
                     <h3 class="show-title"><a href="{% url "show-detail" show.slug %}">{{ show.name }}</a></h3>
                     <ul class="show-programslots">
                         {% for programslot in show.programslots.all %}
-                            {% if programslot.is_active %}
-                                <li class="show-programslot">{{ programslot }}</li>
-                            {% endif %}
+                            <li class="show-programslot">{{ programslot }}</li>
                         {% endfor %}
                     </ul>
                     <p class="show-description">{{ show.short_description }}</p>

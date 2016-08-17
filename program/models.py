@@ -211,7 +211,6 @@ class MusicFocus(models.Model):
 class Host(models.Model):
     name = models.CharField(_("Name"), max_length=128)
     is_always_visible = models.BooleanField(_("Is always visible"), default=False)
-    is_active = models.BooleanField(_("Is active"), default=True, editable=False)
     email = models.EmailField(_("E-Mail"), blank=True)
     website = models.URLField(_("Website"), blank=True)
 
@@ -243,7 +242,6 @@ class Show(models.Model):
     description = tinymce_models.HTMLField(_("Description"), blank=True, null=True)
     email = models.EmailField(_("E-Mail"), blank=True, null=True)
     website = models.URLField(_("Website"), blank=True, null=True)
-    is_active = models.BooleanField(_("Is active"), default=True, editable=False)
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_updated = models.DateTimeField(auto_now=True, editable=False)
 
@@ -306,7 +304,6 @@ class ProgramSlot(models.Model):
     tstart = models.TimeField(_("Start time"))
     tend = models.TimeField(_("End time"))
     until = models.DateField(_("Last date"))
-    is_active = models.BooleanField(_("Is active"), default=True, editable=False)
     is_repetition = models.BooleanField(_("Is repetition"), default=False)
     automation_id = models.IntegerField(_("Automation ID"), blank=True, null=True, choices=get_automation_id_choices())
     created = models.DateTimeField(auto_now_add=True, editable=False)
@@ -350,9 +347,6 @@ class ProgramSlot(models.Model):
                 raise ValidationError(u"Is repetition cannot be changed")
         else:
             old = False
-
-        self.is_active = self.until > date.today()
-        self.show.is_active = self.until > date.today()
 
         super(ProgramSlot, self).save(*args, **kwargs)
 

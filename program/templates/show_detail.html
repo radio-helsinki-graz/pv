@@ -14,9 +14,7 @@
             {% if show.id != 1 %}
                 <p id="programslots">
                     {% for slot in show.programslots.all %}
-                        {% if slot.is_active %}
-                            <span class="programslot">{{ slot }}</span><br/>
-                        {% endif %}
+                        <span class="programslot">{{ slot }}</span><br/>
                     {% endfor %}
                 </p>
             {% endif %}
