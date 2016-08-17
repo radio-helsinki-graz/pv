@@ -7,6 +7,47 @@ from forms import MusicFocusForm
 from datetime import date, datetime, timedelta
 
 
+class ActivityFilter(admin.SimpleListFilter):
+    title = _("Activity")
+
+    def lookups(self, request, model_admin):
+        return (
+            ('yes', _("active")),
+            ('no', _("inactive"))
+        )
+
+    def queryset(self, request, queryset):
+        if self.parameter_name == 'has_timeslots':  # active/inactive ProgramSlots
+            if self.value() == 'yes':
+                return queryset.filter(until__gt=datetime.now()).distinct()
+            if self.value() == 'no':
+                return queryset.filter(until__lt=datetime.now()).distinct()
+
+        if self.parameter_name == 'has_programslots_timeslots':  # active/inactive Shows
+            if self.value() == 'yes':
+                return queryset.filter(programslots__until__gt=datetime.now()).distinct()
+            if self.value() == 'no':
+                return queryset.filter(programslots__until__lt=datetime.now()).distinct()
+
+        if self.parameter_name == 'has_shows_programslots_timeslots':  # active/inactive Hosts
+            if self.value() == 'yes':
+                return queryset.filter(shows__programslots__until__gt=datetime.now()).distinct()
+            if self.value() == 'no':
+                return queryset.filter(shows__programslots__until__lt=datetime.now()).distinct()
+
+
+class ActiveProgramSlotsFilter(ActivityFilter):
+    parameter_name = 'has_timeslots'
+
+
+class ActiveShowsFilter(ActivityFilter):
+    parameter_name = 'has_programslots_timeslots'
+
+
+class ActiveHostsFilter(ActivityFilter):
+    parameter_name = 'has_shows_programslots_timeslots'
+
+
 class BroadcastFormatAdmin(admin.ModelAdmin):
     list_display = ('format', 'admin_color', 'enabled')
     prepopulated_fields = {'slug': ('format',)}
@@ -30,7 +71,7 @@ class ShowTopicAdmin(admin.ModelAdmin):
 
 class HostAdmin(admin.ModelAdmin):
     list_display = ('name',)
-    list_filter = ('is_always_visible',)
+    list_filter = (ActiveHostsFilter, 'is_always_visible',)
 
 
 class NoteAdmin(admin.ModelAdmin):
@@ -73,7 +114,7 @@ class ProgramSlotAdmin(admin.ModelAdmin):
     inlines = (TimeSlotInline,)
     fields = (('rrule', 'byweekday'), ('dstart', 'tstart', 'tend'), 'until', 'is_repetition', 'automation_id')
     list_display = ('get_show_name', 'byweekday', 'rrule', 'tstart', 'tend', 'until')
-    list_filter = ('byweekday', 'rrule', 'is_repetition')
+    list_filter = (ActiveProgramSlotsFilter, 'byweekday', 'rrule', 'is_repetition')
     ordering = ('byweekday', 'dstart')
     save_on_top = True
     search_fields = ('show__name',)
@@ -85,7 +126,7 @@ class ProgramSlotAdmin(admin.ModelAdmin):
         if renewed == 1:
             message = _("1 program slot was renewed until %s") % until
         else:
-            message = _("%s program slots were renewed until %s") % until
+            message = _("%s program slots were renewed until %s") % (renewed, until)
         self.message_user(request, message)
     renew.short_description = _("Renew selected program slots")
 
@@ -104,7 +145,7 @@ class ShowAdmin(admin.ModelAdmin):
     filter_horizontal = ('hosts', 'owners', 'musicfocus', 'showinformation', 'showtopic')
     inlines = (ProgramSlotInline,)
     list_display = ('name', 'short_description')
-    list_filter = ('broadcastformat', 'showinformation', 'showtopic', 'musicfocus')
+    list_filter = (ActiveShowsFilter, 'broadcastformat', 'showinformation', 'showtopic', 'musicfocus')
     ordering = ('slug',)
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ('name', 'short_description', 'description')
