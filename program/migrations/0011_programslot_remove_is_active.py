@@ -7,7 +7,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('program', '0010_show_remove_is_active.py'),
+        ('program', '0010_show_remove_is_active'),
     ]
 
     operations = [
