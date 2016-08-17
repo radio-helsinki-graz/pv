@@ -29,8 +29,8 @@ class ShowTopicAdmin(admin.ModelAdmin):
 
 
 class HostAdmin(admin.ModelAdmin):
-    list_display = ('name', 'is_active')
-    list_filter = ('is_active', 'is_always_visible')
+    list_display = ('name',)
+    list_filter = ('is_always_visible',)
 
 
 class NoteAdmin(admin.ModelAdmin):
@@ -73,7 +73,7 @@ class ProgramSlotAdmin(admin.ModelAdmin):
     inlines = (TimeSlotInline,)
     fields = (('rrule', 'byweekday'), ('dstart', 'tstart', 'tend'), 'until', 'is_repetition', 'automation_id')
     list_display = ('get_show_name', 'byweekday', 'rrule', 'tstart', 'tend', 'until')
-    list_filter = ('is_active', 'byweekday', 'rrule', 'is_repetition')
+    list_filter = ('byweekday', 'rrule', 'is_repetition')
     ordering = ('byweekday', 'dstart')
     save_on_top = True
     search_fields = ('show__name',)
@@ -103,8 +103,8 @@ class ProgramSlotInline(admin.TabularInline):
 class ShowAdmin(admin.ModelAdmin):
     filter_horizontal = ('hosts', 'owners', 'musicfocus', 'showinformation', 'showtopic')
     inlines = (ProgramSlotInline,)
-    list_display = ('name', 'short_description', 'is_active')
-    list_filter = ('is_active', 'broadcastformat', 'showinformation', 'showtopic', 'musicfocus')
+    list_display = ('name', 'short_description')
+    list_filter = ('broadcastformat', 'showinformation', 'showtopic', 'musicfocus')
     ordering = ('slug',)
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ('name', 'short_description', 'description')

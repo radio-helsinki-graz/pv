@@ -10,12 +10,7 @@
     <div id="shows">
         <div id="shows-title">Sendungen</div>
         {% for show in host.shows.all %}
-            {% if show.is_active %}
-                <div class="show {{ show.broadcastformat.slug }}"><a
-                        href="{% url "show-detail" show.slug %}">{{ show }}</a></div>
-            {% else %}
-                <div class="show {{ show.broadcastformat.slug }}">{{ show }}</div>
-            {% endif %}
+            <div class="show {{ show.broadcastformat.slug }}">{{ show }}</div>
         {% endfor %}
     </div>
 
