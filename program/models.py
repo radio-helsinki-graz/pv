@@ -225,6 +225,9 @@ class Host(models.Model):
     def get_absolute_url(self):
         return reverse('host-detail', args=[str(self.id)])
 
+    def active_shows(self):
+        return self.shows.filter(programslots__until__gt=datetime.today())
+
 
 class Show(models.Model):
     predecessor = models.ForeignKey('self', blank=True, null=True, related_name='successors', verbose_name=_("Predecessor"))
@@ -255,6 +258,9 @@ class Show(models.Model):
 
     def get_absolute_url(self):
         return reverse('show-detail', args=[self.slug])
+
+    def active_programslots(self):
+        return self.programslots.filter(until__gt=date.today()).distinct()
 
 
 class RRule(models.Model):
