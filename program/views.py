@@ -15,24 +15,22 @@ from program.utils import tofirstdayinisoweek
 
 class HostListView(ListView):
     context_object_name = 'host_list'
-    queryset = Host.objects.filter(is_always_visible=True).distinct()
+    queryset = Host.objects.filter(Q(is_always_visible=True) | Q(shows__programslots__until__gt=datetime.now())).distinct()
     template_name = 'host_list.html'
 
 
 class HostDetailView(DetailView):
     context_object_name = 'host'
-    queryset = Host.objects.filter(is_always_visible=True).distinct()
+    queryset = Host.objects.all()
     template_name = 'host_detail.html'
 
 
 class ShowListView(ListView):
     context_object_name = 'show_list'
-    queryset = Show.objects.exclude(id=1).distinct()
     template_name = 'show_list.html'
 
     def get_queryset(self):
         queryset = Show.objects.filter(programslots__until__gt=date.today()).exclude(id=1).distinct()
-
         if 'broadcastformat' in self.request.GET:
             broadcastformat = get_object_or_404(BroadcastFormat, slug=self.request.GET['broadcastformat'])
             queryset = queryset.filter(broadcastformat=broadcastformat)
