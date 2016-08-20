@@ -260,7 +260,7 @@ class Show(models.Model):
         return reverse('show-detail', args=[self.slug])
 
     def active_programslots(self):
-        return self.programslots.filter(until__gt=date.today()).distinct()
+        return self.programslots.filter(until__gt=date.today())
 
 
 class RRule(models.Model):
