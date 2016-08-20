@@ -13,7 +13,7 @@
             <h1 id="name">{{ show.name }}</h1>
             {% if show.id != 1 %}
                 <p id="programslots">
-                    {% for slot in show.programslots.all %}
+                    {% for slot in show.active_programslots %}
                         <span class="programslot">{{ slot }}</span><br/>
                     {% endfor %}
                 </p>

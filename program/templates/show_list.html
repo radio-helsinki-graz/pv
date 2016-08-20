@@ -40,7 +40,7 @@
                 <div class="show-detail">
                     <h3 class="show-title"><a href="{% url "show-detail" show.slug %}">{{ show.name }}</a></h3>
                     <ul class="show-programslots">
-                        {% for programslot in show.programslots.all %}
+                        {% for programslot in show.active_program_slots %}
                             <li class="show-programslot">{{ programslot }}</li>
                         {% endfor %}
                     </ul>
