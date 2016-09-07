@@ -46,14 +46,14 @@ class NoteAdmin(admin.ModelAdmin):
 
     def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
         four_weeks_ago = datetime.now() - timedelta(weeks=4)
-        in_eight_weeks = datetime.now() + timedelta(weeks=8)
+        in_twelf_weeks = datetime.now() + timedelta(weeks=12)
         if db_field.name == 'timeslot':
             try:
                 timeslot_id = int(request.get_full_path().split('/')[-2])
             except ValueError:
                 shows = request.user.shows.all()
                 kwargs['queryset'] = TimeSlot.objects.filter(show__in=shows, note__isnull=True, start__gt=four_weeks_ago,
-                                                             start__lt=in_eight_weeks)
+                                                             start__lt=in_twelf_weeks)
             else:
                 kwargs['queryset'] = TimeSlot.objects.filter(note=timeslot_id)
 
