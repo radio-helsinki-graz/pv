@@ -2,6 +2,7 @@ from django.conf import settings
 
 import json
 import urllib
+import bisect
 from os.path import join
 from datetime import datetime, date, timedelta
 
@@ -15,17 +16,27 @@ def get_automation_id_choices():
         try:
             shows_json = urllib.urlopen(base_url).read()
             shows_list = json.loads(shows_json)['shows']
+            multi_shows_list = json.loads(shows_json)['multi-shows']
         except IOError:
             try:
                 with open(cached_shows) as cache:
                     shows_list = json.loads(cache.read())['shows']
+                    multi_shows_list = json.loads(cache.read())['multi-shows']
             except IOError:
                 shows_list = []
+                multi_shows_list = []
         else:
             with open(cached_shows, 'w') as cache:
                 cache.write(shows_json)
 
-        shows = [(s['id'], '%d | %s' % (s['id'], s['title'])) for s in shows_list]
+        shows = [(s['id'], '%d | %s' % (s['id'], s['title']), s['title']) for s in shows_list if not s.get('multi')]
+
+        [bisect.insort(shows, (s['id'], '%05d | %s' % (s['id'], s['title']), s['title'])) for s in multi_shows_list]
+
+        shows.sort(key=lambda show: show[2].lower())
+
+        shows = [(s[0], s[1]) for s in shows]
+
     return shows
 
 
