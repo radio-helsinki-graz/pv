@@ -89,7 +89,7 @@ def _current():
 
     if show['id'] in MUSIKPROG_IDS \
             or (show['id'] in SPECIAL_PROGRAM_IDS and not show['note']):
-        result = _which().objects.using(DB).all()[0]
+        result = _which().objects.using(DB).filter(carttype__exact='pool')[0]
         artist = result.artist
         title = result.title
         album = result.album
