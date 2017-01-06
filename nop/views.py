@@ -113,7 +113,7 @@ def _bydate(year=None, month=None, day=None, hour=None, minute=None):
     else:
         ts = int(time.mktime((int(year), int(month), int(day), int(hour),
                               int(minute), 0, 0, 0, -1))) * 1000000
-        result = _which(ts).objects.using(DB).filter(timestamp__lt=ts)[:5]
+        result = _which(ts).objects.using(DB).filter(carttype__exact='pool').filter(timestamp__lt=ts)[:5]
         return [{'show': show['name'],
                  'start': _dtstring(time.localtime(item.timestamp//1000000)),
                  'artist': item.artist,
