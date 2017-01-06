@@ -1,5 +1,16 @@
 from django.db import models
 
+class CartTypeField(models.Field):
+    def __init__(self, *args, **kwargs):
+        self.types = [('show', 'Show'),
+                      ('pool', 'Musicpool'),
+                      ('jingle', 'Jingle'),
+                     ]
+        super(CartTypeField, self).__init__(*args, **kwargs)
+
+    def db_type(self, connection):
+        return "ENUM({})".format(','.join("'{}'".format(col)
+                                          for col, _ in self.types))
 
 class Master(models.Model):
     timestamp = models.BigIntegerField(primary_key=True)
@@ -9,7 +20,7 @@ class Master(models.Model):
     title = models.CharField(max_length=765, blank=True)
     artist = models.CharField(max_length=765, blank=True)
     album = models.CharField(max_length=765, blank=True)
-    ismusic = models.IntegerField(null=True, blank=True)
+    carttype = CartTypeField(max_length=64, blank=True)
 
     class Meta:
         db_table = u'master'
@@ -24,7 +35,7 @@ class Standby(models.Model):
     title = models.CharField(max_length=765, blank=True)
     artist = models.CharField(max_length=765, blank=True)
     album = models.CharField(max_length=765, blank=True)
-    ismusic = models.IntegerField(null=True, blank=True)
+    carttype = CartTypeField(max_length=64, blank=True)
 
     class Meta:
         db_table = u'standby'
