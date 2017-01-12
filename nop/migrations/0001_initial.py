@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
+import nop.models
 
 
 class Migration(migrations.Migration):
@@ -22,7 +23,7 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=765, blank=True)),
                 ('artist', models.CharField(max_length=765, blank=True)),
                 ('album', models.CharField(max_length=765, blank=True)),
-                ('ismusic', models.IntegerField(null=True, blank=True)),
+                ('carttype', nop.models.CartTypeField(max_length=64, blank=True)),
             ],
             options={
                 'ordering': ['-timestamp'],
@@ -39,7 +40,7 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=765, blank=True)),
                 ('artist', models.CharField(max_length=765, blank=True)),
                 ('album', models.CharField(max_length=765, blank=True)),
-                ('ismusic', models.IntegerField(null=True, blank=True)),
+                ('carttype', nop.models.CartTypeField(max_length=64, blank=True)),
             ],
             options={
                 'ordering': ['-timestamp'],
