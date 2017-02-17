@@ -23,7 +23,8 @@ MUSIKPROG_IDS = (
     523,  # Songbirds
     562,  # Singing Birds
     563,  # canzoni italiane
-    564   # on connait la chanson
+    564,  # on connait la chanson
+    604   # pussy*whipped
 )
 
 SPECIAL_PROGRAM_IDS = (
