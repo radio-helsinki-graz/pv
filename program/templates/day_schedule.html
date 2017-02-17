@@ -18,7 +18,7 @@
                 prevText: "Zurück",
                 defaultDate: location.href.split('/').slice(4, 7).join('.'),
                 onSelect: function (dateText, inst) {
-                    location = '/programm/' + dateText.split('.').join('/');
+                    location = '/programm/details/@@proxyview/' + dateText.split('.').join('/');
                 }
             });
         });
