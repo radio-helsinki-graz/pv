@@ -15,7 +15,7 @@ from program.utils import tofirstdayinisoweek
 
 class HostListView(ListView):
     context_object_name = 'host_list'
-    queryset = Host.objects.filter(Q(is_always_visible=True) | Q(shows__programslots__until__gt=datetime.now())).distinct()
+    queryset = Host.objects.filter(Q(is_always_visible=True) | Q(shows__programslots__until__gt=datetime.now)).distinct()
     template_name = 'host_list.html'
 
 
