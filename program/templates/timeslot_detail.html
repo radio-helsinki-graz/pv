@@ -13,7 +13,7 @@
         {% if timeslot.note %}
             <h2>{{ timeslot.note.title }}</h2>
         {% endif %}
-        <strong>Sendung am {{ timeslot.start|date:"d.m. H:i" }} bis {{ timeslot.end|date:"H:i" }}</strong>
+        <strong>Sendung am {{ timeslot.start|date:"d.m.Y H:i" }} bis {{ timeslot.end|date:"H:i" }}</strong>
 
         <div class="show-abbrevs">
             {% for si in timeslot.show.showinformation.all %}

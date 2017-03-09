@@ -226,7 +226,7 @@ class Host(models.Model):
         return reverse('host-detail', args=[str(self.id)])
 
     def active_shows(self):
-        return self.shows.filter(programslots__until__gt=datetime.today())
+        return self.shows.filter(programslots__until__gt=datetime.today)
 
 
 class Show(models.Model):
@@ -404,16 +404,16 @@ class TimeSlotManager(models.Manager):
     @staticmethod
     def get_or_create_current():
         try:
-            return TimeSlot.objects.get(start__lte=datetime.now(), end__gt=datetime.now())
+            return TimeSlot.objects.get(start__lte=datetime.now, end__gt=datetime.now)
         except MultipleObjectsReturned:
-            return TimeSlot.objects.filter(start__lte=datetime.now(), end__gt=datetime.now())[0]
+            return TimeSlot.objects.filter(start__lte=datetime.now, end__gt=datetime.now)[0]
         except ObjectDoesNotExist:
             once = RRule.objects.get(pk=1)
             today = date.today().weekday()
             default = Show.objects.get(pk=1)
 
-            previous_timeslot = TimeSlot.objects.filter(end__lte=datetime.now()).order_by('-start')[0]
-            next_timeslot = TimeSlot.objects.filter(start__gte=datetime.now())[0]
+            previous_timeslot = TimeSlot.objects.filter(end__lte=datetime.now).order_by('-start')[0]
+            next_timeslot = TimeSlot.objects.filter(start__gte=datetime.now)[0]
 
             dstart, tstart = previous_timeslot.end.date(), previous_timeslot.end.time()
             until, tend = next_timeslot.start.date(), next_timeslot.start.time()
