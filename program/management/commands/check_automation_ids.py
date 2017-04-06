@@ -14,22 +14,31 @@ class Command(NoArgsCommand):
         cache_dir = getattr(settings, 'AUTOMATION_CACHE_DIR', 'cache')
         cached_shows = join(cache_dir, 'shows.json')
         with open(cached_shows) as shows_json:
-            shows = json.loads(shows_json.read())['shows']
+            shows = json.loads(shows_json.read())
 
-            automation_ids = []
-            for show in shows:
-                automation_ids.append(show['id'])
-            automation_ids.sort()
+            rd_ids = {}
+            for show in shows['shows']:
+                rd_ids[show['id']] = show
+            for show in shows['multi-shows']:
+                rd_ids[show['id']] = show
 
-            automation_ids2 = []
+            pv_ids = []
             for programslot in ProgramSlot.objects.filter(automation_id__isnull=False):
-                automation_ids2.append(int(programslot.automation_id))
-            automation_ids2.sort()
+                pv_ids.append(int(programslot.automation_id))
 
-            for automation_id in automation_ids:
-                if automation_id not in automation_ids2:
-                    print '+', automation_id
+            for automation_id in sorted(rd_ids.iterkeys()):
+                if rd_ids[automation_id]['type'] == 's':
+                    continue
 
-            for automation_id in automation_ids2:
-                if automation_id not in automation_ids:
+                multi_id = -1
+                if 'multi' in rd_ids[automation_id]:
+                    multi_id = rd_ids[automation_id]['multi']['id']
+                if automation_id not in pv_ids and multi_id not in pv_ids:
+                    if multi_id < 0:
+                        print '+ %d' % (automation_id)
+                    else:
+                        print '+ %d (%d)' % (automation_id, multi_id)
+
+            for automation_id in sorted(pv_ids):
+                if automation_id not in rd_ids:
                     print '-', automation_id
