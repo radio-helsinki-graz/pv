@@ -40,6 +40,16 @@ def get_automation_id_choices():
     return shows
 
 
+def get_cached_shows():
+    cache_dir = getattr(settings, 'AUTOMATION_CACHE_DIR', 'cache')
+    cached_shows = join(cache_dir, 'shows.json')
+    shows = {}
+    with open(cached_shows) as shows_json:
+        shows = json.loads(shows_json.read())
+
+    return shows
+
+
 def tofirstdayinisoweek(year, week):
     # http://stackoverflow.com/questions/5882405/get-date-from-iso-week-number-in-python
     ret = datetime.strptime('%04d-%02d-1' % (year, week), '%Y-%W-%w')

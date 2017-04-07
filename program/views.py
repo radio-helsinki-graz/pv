@@ -10,7 +10,7 @@ from django.views.generic.list import ListView
 
 from models import BroadcastFormat, MusicFocus, Note, Show, ShowInformation, ShowTopic, TimeSlot, Host
 
-from program.utils import tofirstdayinisoweek
+from program.utils import tofirstdayinisoweek, get_cached_shows
 
 
 class HostListView(ListView):
@@ -210,4 +210,22 @@ def json_day_schedule(request, year=None, month=None, day=None):
         schedule.append(entry)
 
     return HttpResponse(json.dumps(schedule, ensure_ascii=False, encoding='utf8').encode('utf8'),
+                        content_type="application/json; charset=utf-8")
+
+def json_timeslots_specials(request):
+    specials = {}
+    shows = get_cached_shows()['shows']
+    for show in shows:
+        show['pv_id'] = -1
+        if show['type'] == 's':
+            specials[show['id']] = show
+
+    for ts in TimeSlot.objects.filter(end__gt=datetime.now).filter(programslot__automation_id__in=specials.iterkeys()):
+        automation_id = ts.programslot.automation_id
+        specials[automation_id]['pv_id'] = int(ts.programslot.show.id)
+        specials[automation_id]['pv_name'] = ts.programslot.show.name
+        specials[automation_id]['pv_start'] = ts.start.strftime('%Y-%m-%d_%H:%M:%S')
+        specials[automation_id]['pv_end'] = ts.end.strftime('%Y-%m-%d_%H:%M:%S')
+
+    return HttpResponse(json.dumps(specials, ensure_ascii=False, encoding='utf8').encode('utf8'),
                         content_type="application/json; charset=utf-8")
