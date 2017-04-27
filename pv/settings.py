@@ -97,6 +97,11 @@ TINYMCE_DEFAULT_CONFIG = {
 
 CACHE_BACKEND = 'locmem://'
 
+MUSIKPROG_IDS = (
+    1,    # unmodieriertes musikprogramm
+)
+SPECIAL_PROGRAM_IDS = ()
+
 try:
     from local_settings import *
 except ImportError:

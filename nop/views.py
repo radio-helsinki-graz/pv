@@ -1,5 +1,6 @@
 # coding=utf-8
 
+from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
@@ -12,26 +13,6 @@ import time
 from datetime import datetime
 
 DB = 'nop'
-
-MUSIKPROG_IDS = (
-    1,    # unmodieriertes musikprogramm
-    17,   # bumbumtschak
-    203,  # Hotel Passage
-    204,  # Radyo Mezopotamya
-    206,  # Abunda Lingva
-    290,  # styrian underground
-    523,  # Songbirds
-    562,  # Singing Birds
-    563,  # canzoni italiane
-    564,  # on connait la chanson
-    604   # pussy*whipped
-)
-
-SPECIAL_PROGRAM_IDS = (
-    66,   # Probebühne
-    374   # musikprogramm bunt gemischt
-)
-
 
 class NopForm(forms.Form):
     date = forms.DateField(
@@ -88,8 +69,8 @@ def _current():
     album = None
     show = _get_show()
 
-    if show['id'] in MUSIKPROG_IDS \
-            or (show['id'] in SPECIAL_PROGRAM_IDS and not show['note']):
+    if show['id'] in settings.MUSIKPROG_IDS \
+            or (show['id'] in settings.SPECIAL_PROGRAM_IDS and not show['note']):
         result = _which().objects.using(DB).filter(carttype__exact='pool')[0]
         artist = result.artist
         title = result.title
@@ -105,7 +86,7 @@ def _current():
 def _bydate(year=None, month=None, day=None, hour=None, minute=None):
     show = _get_show(datetime(year, month, day, hour, minute))
 
-    if show['id'] and show['id'] not in MUSIKPROG_IDS:
+    if show['id'] and show['id'] not in settings.MUSIKPROG_IDS:
         return [{'show': show['name'],
                  'start': show['start'],
                  'artist': None,
