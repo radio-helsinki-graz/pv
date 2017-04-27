@@ -193,14 +193,14 @@ def json_day_schedule(request, year=None, month=None, day=None):
     else:
         today = datetime.strptime('%s__%s__%s__00__00' % (year, month, day), '%Y__%m__%d__%H__%M')
 
-    timeslots = TimeSlot.objects.get_24h_timeslots(today).select_related('programslot')
+    timeslots = TimeSlot.objects.get_24h_timeslots(today).select_related('programslot').select_related('show')
     schedule = []
     for ts in timeslots:
         entry = {
             'start': ts.start.strftime('%Y-%m-%d_%H:%M:%S'),
             'end': ts.end.strftime('%Y-%m-%d_%H:%M:%S'),
-            'title': ts.programslot.show.name,
-            'id': ts.programslot.show.id,
+            'title': ts.show.name,
+            'id': ts.show.id,
             'automation-id': -1
         }
 
@@ -220,10 +220,10 @@ def json_timeslots_specials(request):
         if show['type'] == 's':
             specials[show['id']] = show
 
-    for ts in TimeSlot.objects.filter(end__gt=datetime.now).filter(programslot__automation_id__in=specials.iterkeys()):
+    for ts in TimeSlot.objects.filter(end__gt=datetime.now, programslot__automation_id__in=specials.iterkeys()).select_related('show'):
         automation_id = ts.programslot.automation_id
-        specials[automation_id]['pv_id'] = int(ts.programslot.show.id)
-        specials[automation_id]['pv_name'] = ts.programslot.show.name
+        specials[automation_id]['pv_id'] = int(ts.show.id)
+        specials[automation_id]['pv_name'] = ts.show.name
         specials[automation_id]['pv_start'] = ts.start.strftime('%Y-%m-%d_%H:%M:%S')
         specials[automation_id]['pv_end'] = ts.end.strftime('%Y-%m-%d_%H:%M:%S')
 
