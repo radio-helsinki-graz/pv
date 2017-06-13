@@ -15,7 +15,7 @@ from program.utils import tofirstdayinisoweek, get_cached_shows
 
 class HostListView(ListView):
     context_object_name = 'host_list'
-    queryset = Host.objects.filter(Q(is_always_visible=True) | Q(shows__programslots__until__gt=datetime.now)).distinct()
+    queryset = Host.objects.filter(Q(is_always_visible=True) | Q(shows__programslots__until__gt=datetime.now())).distinct()
     template_name = 'host_list.html'
 
 
@@ -212,6 +212,7 @@ def json_day_schedule(request, year=None, month=None, day=None):
     return HttpResponse(json.dumps(schedule, ensure_ascii=False, encoding='utf8').encode('utf8'),
                         content_type="application/json; charset=utf-8")
 
+
 def json_timeslots_specials(request):
     specials = {}
     shows = get_cached_shows()['shows']
@@ -220,7 +221,8 @@ def json_timeslots_specials(request):
         if show['type'] == 's':
             specials[show['id']] = show
 
-    for ts in TimeSlot.objects.filter(end__gt=datetime.now, programslot__automation_id__in=specials.iterkeys()).select_related('show'):
+    for ts in TimeSlot.objects.filter(end__gt=datetime.now(),
+                                      programslot__automation_id__in=specials.iterkeys()).select_related('show'):
         automation_id = ts.programslot.automation_id
         specials[automation_id]['pv_id'] = int(ts.show.id)
         specials[automation_id]['pv_name'] = ts.show.name

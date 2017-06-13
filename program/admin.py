@@ -19,21 +19,21 @@ class ActivityFilter(admin.SimpleListFilter):
     def queryset(self, request, queryset):
         if self.parameter_name == 'has_timeslots':  # active/inactive ProgramSlots
             if self.value() == 'yes':
-                return queryset.filter(until__gt=datetime.now).distinct()
+                return queryset.filter(until__gt=datetime.now()).distinct()
             if self.value() == 'no':
-                return queryset.filter(until__lt=datetime.now).distinct()
+                return queryset.filter(until__lt=datetime.now()).distinct()
 
         if self.parameter_name == 'has_programslots_timeslots':  # active/inactive Shows
             if self.value() == 'yes':
-                return queryset.filter(programslots__until__gt=datetime.now).distinct()
+                return queryset.filter(programslots__until__gt=datetime.now()).distinct()
             if self.value() == 'no':
-                return queryset.filter(programslots__until__lt=datetime.now).distinct()
+                return queryset.filter(programslots__until__lt=datetime.now()).distinct()
 
         if self.parameter_name == 'has_shows_programslots_timeslots':  # active/inactive Hosts
             if self.value() == 'yes':
-                return queryset.filter(shows__programslots__until__gt=datetime.now).distinct()
+                return queryset.filter(shows__programslots__until__gt=datetime.now()).distinct()
             if self.value() == 'no':
-                return queryset.filter(shows__programslots__until__lt=datetime.now).distinct()
+                return queryset.filter(shows__programslots__until__lt=datetime.now()).distinct()
 
 
 class ActiveProgramSlotsFilter(ActivityFilter):
