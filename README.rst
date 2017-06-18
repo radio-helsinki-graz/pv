@@ -7,8 +7,14 @@ Installation
 
 To get setup you must have the following installed:
 
- * Python 2.7
+ * MySQL-Client Development libraries 
+ * JPEG library development files
+ * Python 2.7 including Development files
  * virtualenv 1.11
+
+In Debian or Ubuntu (or derivatives) you should be able to achieve this with this command:
+
+    $ sudo apt-get install libmysqlclient-dev libjpeg-dev python2.7-dev virtualenv
 
 
 Setting up the environment
@@ -20,7 +26,7 @@ Create a virtual environment where the dependencies will live::
     $ source python/bin/activate
     (python)$
 
-Install the project dependencies::
+Change into the base directory of this software and install the project dependencies::
 
     (python)$ pip install -r requirements.txt
 
@@ -28,9 +34,15 @@ Install the project dependencies::
 Setting up the database
 -----------------------
 
-By default the project is set up to run on a SQLite database.  You can run::
+By default the project is set up to run on a SQLite database.  
 
-    (python)$ python manage.py syncdb
+First edit pv/settings.py and change the line 
+    SECRET_KEY = ''
+such that there is a value for SECRET_KEY.
+
+Then run::
+
+    (python)$ python manage.py migrate
     (python)$ python manage.py loaddata program/fixtures/*.yaml
 
 
