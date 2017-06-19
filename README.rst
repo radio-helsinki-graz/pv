@@ -36,9 +36,11 @@ Setting up the database
 
 By default the project is set up to run on a SQLite database.  
 
-First edit pv/settings.py and change the line 
-    SECRET_KEY = ''
-such that there is a value for SECRET_KEY.
+Create a file pv/local_settings.py and add at least the line 
+
+    SECRET_KEY = 'secret key'
+
+(obviously replacing "secret key" with a key of you choice).
 
 Then run::
 
