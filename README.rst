@@ -48,9 +48,20 @@ Then run::
     (python)$ python manage.py loaddata program/fixtures/*.yaml
 
 
+Adding an admin user
+--------------------
+
+In order to create an admin user (which you will need to login to the webinterface after the next step) run::
+
+    (python)$ python manage.py createsuperuser
+
+
 Running a web server
 --------------------
 
 In development you should run::
 
     (python)$ python manage.py runserver
+
+After this you can open http://127.0.0.1:8000/admin in your browser and log in with the admin credential you created previously.
+
