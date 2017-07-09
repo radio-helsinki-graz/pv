@@ -36,14 +36,24 @@ Setting up the database
 
 By default the project is set up to run on a SQLite database.  
 
-First edit pv/settings.py and change the line 
-    SECRET_KEY = ''
-such that there is a value for SECRET_KEY.
+Create a file pv/local_settings.py and add at least the line 
+
+    SECRET_KEY = 'secret key'
+
+(obviously replacing "secret key" with a key of you choice).
 
 Then run::
 
     (python)$ python manage.py migrate
     (python)$ python manage.py loaddata program/fixtures/*.yaml
+
+
+Adding an admin user
+--------------------
+
+In order to create an admin user (which you will need to login to the webinterface after the next step) run::
+
+    (python)$ python manage.py createsuperuser
 
 
 Running a web server
@@ -52,3 +62,6 @@ Running a web server
 In development you should run::
 
     (python)$ python manage.py runserver
+
+After this you can open http://127.0.0.1:8000/admin in your browser and log in with the admin credential you created previously.
+
