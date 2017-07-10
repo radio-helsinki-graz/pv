@@ -8,7 +8,7 @@ from program.views import json_day_schedule, json_timeslots_specials
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', admin.site.urls),
     url(r'^program/', include('program.urls')),
     url(r'^nop', include('nop.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
