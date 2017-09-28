@@ -222,10 +222,16 @@ def json_timeslots_specials(request):
 
     for ts in TimeSlot.objects.filter(end__gt=datetime.now, programslot__automation_id__in=specials.iterkeys()).select_related('show'):
         automation_id = ts.programslot.automation_id
+        start = ts.start.strftime('%Y-%m-%d_%H:%M:%S')
+        end = ts.end.strftime('%Y-%m-%d_%H:%M:%S')
+        if specials[automation_id]['pv_id'] != -1:
+            if specials[automation_id]['pv_start'] < start:
+                continue
+
         specials[automation_id]['pv_id'] = int(ts.show.id)
         specials[automation_id]['pv_name'] = ts.show.name
-        specials[automation_id]['pv_start'] = ts.start.strftime('%Y-%m-%d_%H:%M:%S')
-        specials[automation_id]['pv_end'] = ts.end.strftime('%Y-%m-%d_%H:%M:%S')
+        specials[automation_id]['pv_start'] = start
+        specials[automation_id]['pv_end'] = end
 
     return HttpResponse(json.dumps(specials, ensure_ascii=False, encoding='utf8').encode('utf8'),
                         content_type="application/json; charset=utf-8")
