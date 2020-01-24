@@ -1,61 +1,61 @@
 {% load timeslots %}
 
 {% if forloop.first and timeslot.start != timeslot.get_previous_by_start.end %}
-    <div class="timeslot bf-{{ default_show.broadcastformat.slug }}" {% duration_until timeslot.start %}>
+    <div class="timeslot bf-{{ default_show.broadcastformat.slug }}" style="height: {% height_until timeslot.start %}px;">
         <div>{{ default_show.name }}</div>
     </div>
 {% endif %}
 
 {% if forloop.first and timeslot.start == timeslot.get_next_by_start.end and timeslot.start != "06:00" %}
-    <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}" {% duration timeslot.start timeslot.end %}>
+    <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}" style="height: {% height timeslot.start timeslot.end %}px;">
         <div><a href="{% url "timeslot-detail" timeslot.id %}">{{ timeslot.show.name }}</a></div>
     </div>
 {% endif %}
 
 {% if forloop.first and timeslot.start != "06:00" and timeslot.show == default_show %}
-    <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}" {% duration_until timeslot.end %}>
+    <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}" style="height: {% height_until timeslot.end %}px;">
         <div><a href="{% url "timeslot-detail" timeslot.id %}">{{ timeslot.show.name }}</a></div>
     </div>
 {% endif %}
 
 {% if forloop.first and timeslot.start != "06:00" and timeslot.show != default_show %}
-    <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}" {% duration timeslot.start timeslot.end %}>
+    <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}" style="height: {% height timeslot.start timeslot.end %}px;">
         <div><a href="{% url "timeslot-detail" timeslot.id %}">{{ timeslot.show.name }}</a></div>
     </div>
 {% endif %}
 
 {% if forloop.first and  timeslot.end != timeslot.get_next_by_start.start %}
-    <div class="timeslot bf-{{ default_show.broadcastformat.slug }}" {% duration timeslot.end timeslot.get_next_by_start.start %}>
+    <div class="timeslot bf-{{ default_show.broadcastformat.slug }}" style="height: {% height timeslot.end timeslot.get_next_by_start.start %}px;">
         <div>{{ default_show.name }}</div>
     </div>
 {% endif %}
 
 
 {% if not forloop.first and not forloop.last %}
-    <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}" {% duration timeslot.start timeslot.end %}>
+    <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}" style="height: {% height timeslot.start timeslot.end %}px;">
         <div><a href="{% url "timeslot-detail" timeslot.id %}">{{ timeslot.show.name }}</a></div>
     </div>
     {% if timeslot.end != timeslot.get_next_by_start.start %}
-        <div class="timeslot bf-{{ default_show.broadcastformat.slug }}" {% duration timeslot.end timeslot.get_next_by_start.start %}>
+        <div class="timeslot bf-{{ default_show.broadcastformat.slug }}" style="height: {% height timeslot.end timeslot.get_next_by_start.start %}px;">
             <div>{{ default_show.name }}</div>
         </div>
     {% endif %}
 {% endif %}
 
 {% if forloop.last and timeslot.end != "06:00" and timeslot.show == default_show %}
-    <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}" {% duration_since timeslot.start %}>
+    <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}" style="height: {% height_since timeslot.start %}px;">
         <div><a href="{% url "timeslot-detail" timeslot.id %}">{{ timeslot.show.name }}</a></div>
     </div>
 {% endif %}
 
 {% if forloop.last and timeslot.end != "06:00" and timeslot.show != default_show %}
-    <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}" {% duration timeslot.start timeslot.end %}>
+    <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}" style="height: {% height timeslot.start timeslot.end %}px;">
         <div><a href="{% url "timeslot-detail" timeslot.id %}">{{ timeslot.show.name }}</a></div>
     </div>
 {% endif %}
 
 {% if forloop.last and timeslot.end != timeslot.get_next_by_start.start %}
-    <div class="timeslot bf-{{ default_show.broadcastformat.slug }}" {% duration_since timeslot.end %}>
+    <div class="timeslot bf-{{ default_show.broadcastformat.slug }}" style="height: {% height_since timeslot.end %}px;">
         <div>{{ default_show.name }}</div>
     </div>
 {% endif %}
