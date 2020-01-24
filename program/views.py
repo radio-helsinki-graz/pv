@@ -166,6 +166,8 @@ class WeekScheduleView(TemplateView):
         context['saturday_timeslots'] = TimeSlot.objects.get_day_timeslots(saturday)
         context['sunday_timeslots'] = TimeSlot.objects.get_day_timeslots(sunday)
         context['last_w'] = datetime.strftime(monday - timedelta(days=7), '%G/%V')
+        context['current_year'] = datetime.strftime(monday, '%G')
+        context['current_week'] = datetime.strftime(monday, '%V')
         context['cur_w'] = datetime.strftime(monday, '%G/%V')
         context['next_w1'] = datetime.strftime(monday + timedelta(days=7), '%G/%V')
         context['next_w2'] = datetime.strftime(monday + timedelta(days=14), '%G/%V')
