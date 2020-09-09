@@ -1,18 +1,18 @@
-# -*- coding: utf-8 -*-
-
-from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
-from django.shortcuts import render_to_response
-from django.http import HttpResponse
-from django import forms
-from models import Master, Standby, State
-from program.models import TimeSlot
-
 import json
 import time
 from datetime import datetime
 
+from django import forms
+from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
+from django.http import HttpResponse
+from django.shortcuts import render_to_response
+
+from program.models import TimeSlot
+from .models import Master, Standby, State
+
 DB = 'nop'
+
 
 class NopForm(forms.Form):
     date = forms.DateField(
@@ -97,7 +97,7 @@ def _bydate(year=None, month=None, day=None, hour=None, minute=None):
                               int(minute), 0, 0, 0, -1))) * 1000000
         result = _which(ts).objects.using(DB).filter(carttype__exact='pool').filter(timestamp__lt=ts)[:5]
         return [{'show': show['name'],
-                 'start': _dtstring(time.localtime(item.timestamp//1000000)),
+                 'start': _dtstring(time.localtime(item.timestamp // 1000000)),
                  'artist': item.artist,
                  'title': item.title,
                  'album': item.album} for item in result]

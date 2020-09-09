@@ -1,9 +1,9 @@
+import os
+
 from django.conf.urls import url
 from django.views.static import serve
 
-from views import get, get_current, nop_form
-
-import os
+from .views import get, get_current, nop_form
 
 NOP_SITE_MEDIA = os.path.join(os.path.dirname(__file__), 'site_media')
 
