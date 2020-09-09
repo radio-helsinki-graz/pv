@@ -1,10 +1,10 @@
+from datetime import date, datetime, timedelta
+
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
-from models import BroadcastFormat, MusicFocus, ShowInformation, ShowTopic, Host, Note, ProgramSlot, Show, TimeSlot
-from forms import MusicFocusForm
-
-from datetime import date, datetime, timedelta
+from .forms import MusicFocusForm
+from .models import BroadcastFormat, MusicFocus, ShowInformation, ShowTopic, Host, Note, ProgramSlot, Show, TimeSlot
 
 
 class ActivityFilter(admin.SimpleListFilter):
@@ -128,10 +128,12 @@ class ProgramSlotAdmin(admin.ModelAdmin):
         else:
             message = _("%s program slots were renewed until %s") % (renewed, until)
         self.message_user(request, message)
+
     renew.short_description = _("Renew selected program slots")
 
     def get_show_name(self, obj):
         return obj.show.name
+
     get_show_name.admin_order_field = 'show'
     get_show_name.short_description = "Show"
 
@@ -165,6 +167,7 @@ class ShowAdmin(admin.ModelAdmin):
             kwargs['queryset'] = Show.objects.exclude(pk=show_id)
 
         return super(ShowAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
 
 admin.site.register(BroadcastFormat, BroadcastFormatAdmin)
 admin.site.register(MusicFocus, MusicFocusAdmin)

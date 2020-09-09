@@ -1,17 +1,16 @@
-from django.contrib.auth.models import User
-from django.core.exceptions import ObjectDoesNotExist, ValidationError, MultipleObjectsReturned
-from django.urls import reverse
-from django.db import models
-from django.db.models import Q
-from django.utils.translation import ugettext_lazy as _
-
-from tinymce import models as tinymce_models
-
 from datetime import date, datetime, time, timedelta
+
 from dateutil.relativedelta import relativedelta
 from dateutil.rrule import rrule
+from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist, ValidationError, MultipleObjectsReturned
+from django.db import models
+from django.db.models import Q
+from django.urls import reverse
+from django.utils.translation import ugettext_lazy as _
+from tinymce import models as tinymce_models
 
-from utils import get_automation_id_choices
+from .utils import get_automation_id_choices
 
 
 class BroadcastFormat(models.Model):
@@ -234,7 +233,8 @@ class Show(models.Model):
     hosts = models.ManyToManyField(Host, blank=True, related_name='shows', verbose_name=_("Hosts"))
     owners = models.ManyToManyField(User, blank=True, related_name='shows', verbose_name=_("Owners"))
     broadcastformat = models.ForeignKey(BroadcastFormat, related_name='shows', verbose_name=_("Broadcast format"))
-    showinformation = models.ManyToManyField(ShowInformation, blank=True, related_name='shows', verbose_name=_("Show information"))
+    showinformation = models.ManyToManyField(ShowInformation, blank=True, related_name='shows',
+                                             verbose_name=_("Show information"))
     showtopic = models.ManyToManyField(ShowTopic, blank=True, related_name='shows', verbose_name=_("Show topic"))
     musicfocus = models.ManyToManyField(MusicFocus, blank=True, related_name='shows', verbose_name=_("Music focus"))
     name = models.CharField(_("Name"), max_length=255)

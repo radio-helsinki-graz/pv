@@ -1,10 +1,10 @@
-from django.conf import settings
-
+import bisect
 import json
 import urllib
-import bisect
-from os.path import join
 from datetime import datetime, date, timedelta
+from os.path import join
+
+from django.conf import settings
 
 
 def get_automation_id_choices():

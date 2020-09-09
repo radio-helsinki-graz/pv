@@ -1,5 +1,5 @@
-from django.forms import ModelForm, ValidationError
 from django.core.files.images import get_image_dimensions
+from django.forms import ModelForm, ValidationError
 
 from program.models import MusicFocus, ShowInformation, ShowTopic
 
