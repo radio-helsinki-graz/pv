@@ -8,7 +8,9 @@ register = template.Library()
 @register.simple_tag
 def height(start, end):
     if start.year == 2020 and int(start.strftime('%V')) >= 5 and start.hour == 12 and start.minute == 0:
-        return '30'
+        if end.minute == 5:
+            return '30'
+        return '%d' % (((end - start).seconds / 60) + 25)
     else:
         return '%d' % ((end - start).seconds / 60)
 
