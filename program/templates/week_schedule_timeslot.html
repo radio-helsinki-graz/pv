@@ -28,7 +28,7 @@
 {% endif %}
 
 {% if forloop.last %}
-    {% if timeslot.end|time:"Hi" <= "0600" and timeslot.pk != 99678 %}
+    {% if timeslot.end|time:"Hi" <= "0600" %}
         <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}"
              style="height: {% height timeslot.start timeslot.end %}px;">
             <div><a href="{% url "timeslot-detail" timeslot.id %}">{{ timeslot.show.name }}</a></div>
