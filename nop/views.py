@@ -109,7 +109,7 @@ def get_current(request):
 
 
 def get(request, year=None, month=None, day=None, hour=None, minute=None):
-    response = json.dumps(_bydate(year, month, day, hour, minute))
+    response = json.dumps(_bydate(int(year), int(month), int(day), int(hour), int(minute)))
     return HttpResponse(response, content_type='application/json')
 
 
