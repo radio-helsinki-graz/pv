@@ -15,7 +15,8 @@ class Migration(migrations.Migration):
             name='Language',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('name', models.CharField(max_length=32, verbose_name='Language')),
+                ('slug', models.SlugField(unique=True, max_length=32, verbose_name='Slug')),
+                ('name', models.CharField(max_length=32, verbose_name='Name')),
                 ('native_name', models.CharField(max_length=32, verbose_name='Native Name')),
             ],
             options={

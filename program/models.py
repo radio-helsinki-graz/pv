@@ -209,11 +209,12 @@ class MusicFocus(models.Model):
 
 
 class Language(models.Model):
-    name = models.CharField(_("Language"), max_length=32)
+    slug = models.SlugField(_("Slug"), max_length=32, unique=True)
+    name = models.CharField(_("Name"), max_length=32)
     native_name = models.CharField(_("Native Name"), max_length=32)
 
     class Meta:
-        ordering = ('language',)
+        ordering = ('name',)
         verbose_name = _("Language")
         verbose_name_plural = _("Languages")
 
@@ -246,7 +247,7 @@ class Show(models.Model):
     predecessor = models.ForeignKey('self', blank=True, null=True, related_name='successors', verbose_name=_("Predecessor"))
     hosts = models.ManyToManyField(Host, blank=True, related_name='shows', verbose_name=_("Hosts"))
     owners = models.ManyToManyField(User, blank=True, related_name='shows', verbose_name=_("Owners"))
-    language = models.ManyToManyField(Language, blank=True, related_name='language', verbose_name=_("Language"))
+    language = models.ManyToManyField(Language, blank=True, related_name='shows', verbose_name=_("Language"))
     broadcastformat = models.ForeignKey(BroadcastFormat, related_name='shows', verbose_name=_("Broadcast format"))
     showinformation = models.ManyToManyField(ShowInformation, blank=True, related_name='shows', verbose_name=_("Show information"))
     showtopic = models.ManyToManyField(ShowTopic, blank=True, related_name='shows', verbose_name=_("Show topic"))
