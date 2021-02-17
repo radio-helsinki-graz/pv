@@ -1,0 +1,12 @@
+- model: program.language
+  pk: 1
+  fields:
+    name: Deutsch
+    native_name: Deutsch
+    slug: de
+- model: program.language
+  pk: 2
+  fields:
+    name: Englisch
+    native_name: English
+    slug: en
