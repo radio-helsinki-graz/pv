@@ -208,6 +208,19 @@ class MusicFocus(models.Model):
         return u'%s' % self.focus
 
 
+class Language(models.Model):
+    name = models.CharField(_("Language"), max_length=32)
+    native_name = models.CharField(_("Native Name"), max_length=32)
+
+    class Meta:
+        ordering = ('language',)
+        verbose_name = _("Language")
+        verbose_name_plural = _("Languages")
+
+    def __unicode__(self):
+        return '%s' % self.name
+
+
 class Host(models.Model):
     name = models.CharField(_("Name"), max_length=128)
     is_always_visible = models.BooleanField(_("Is always visible"), default=False)
@@ -233,6 +246,7 @@ class Show(models.Model):
     predecessor = models.ForeignKey('self', blank=True, null=True, related_name='successors', verbose_name=_("Predecessor"))
     hosts = models.ManyToManyField(Host, blank=True, related_name='shows', verbose_name=_("Hosts"))
     owners = models.ManyToManyField(User, blank=True, related_name='shows', verbose_name=_("Owners"))
+    language = models.ManyToManyField(Language, blank=True, related_name='language', verbose_name=_("Language"))
     broadcastformat = models.ForeignKey(BroadcastFormat, related_name='shows', verbose_name=_("Broadcast format"))
     showinformation = models.ManyToManyField(ShowInformation, blank=True, related_name='shows', verbose_name=_("Show information"))
     showtopic = models.ManyToManyField(ShowTopic, blank=True, related_name='shows', verbose_name=_("Show topic"))

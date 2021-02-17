@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
-from models import BroadcastFormat, MusicFocus, ShowInformation, ShowTopic, Host, Note, ProgramSlot, Show, TimeSlot
+from models import BroadcastFormat, MusicFocus, ShowInformation, ShowTopic, Language, Host, Note, ProgramSlot, Show, TimeSlot
 from forms import MusicFocusForm
 
 from datetime import date, datetime, timedelta
@@ -67,6 +67,10 @@ class ShowInformationAdmin(admin.ModelAdmin):
 class ShowTopicAdmin(admin.ModelAdmin):
     list_display = ('topic', 'abbrev', 'admin_buttons')
     prepopulated_fields = {'slug': ('topic',)}
+
+
+class LanguageAdmin(admin.ModelAdmin):
+    list_display = ('name', 'native_name')
 
 
 class HostAdmin(admin.ModelAdmin):
@@ -142,16 +146,16 @@ class ProgramSlotInline(admin.TabularInline):
 
 
 class ShowAdmin(admin.ModelAdmin):
-    filter_horizontal = ('hosts', 'owners', 'musicfocus', 'showinformation', 'showtopic')
+    filter_horizontal = ('hosts', 'owners', 'musicfocus', 'showinformation', 'showtopic', 'language')
     inlines = (ProgramSlotInline,)
     list_display = ('name', 'short_description')
-    list_filter = (ActiveShowsFilter, 'broadcastformat', 'showinformation', 'showtopic', 'musicfocus')
+    list_filter = (ActiveShowsFilter, 'broadcastformat', 'showinformation', 'showtopic', 'musicfocus', 'language')
     ordering = ('slug',)
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ('name', 'short_description', 'description')
     fields = (
         'predecessor', 'broadcastformat', 'name', 'slug', 'image', 'image_enabled', 'short_description', 'description',
-        'email', 'website', 'hosts', 'owners', 'showinformation', 'showtopic',
+        'email', 'website', 'hosts', 'owners', 'showinformation', 'showtopic', 'language',
         'musicfocus',
     )
 
@@ -166,10 +170,12 @@ class ShowAdmin(admin.ModelAdmin):
 
         return super(ShowAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
+
 admin.site.register(BroadcastFormat, BroadcastFormatAdmin)
 admin.site.register(MusicFocus, MusicFocusAdmin)
 admin.site.register(ShowInformation, ShowInformationAdmin)
 admin.site.register(ShowTopic, ShowTopicAdmin)
+admin.site.register(Language, LanguageAdmin)
 admin.site.register(Host, HostAdmin)
 admin.site.register(Note, NoteAdmin)
 admin.site.register(ProgramSlot, ProgramSlotAdmin)
