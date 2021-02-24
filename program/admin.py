@@ -70,7 +70,7 @@ class ShowTopicAdmin(admin.ModelAdmin):
 
 
 class LanguageAdmin(admin.ModelAdmin):
-    list_display = ('name', 'native_name')
+    list_display = ('slug', 'name', 'native_name')
 
 
 class HostAdmin(admin.ModelAdmin):
