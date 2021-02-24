@@ -5,6 +5,8 @@ from program.models import BroadcastFormat, MusicFocus, ShowInformation, ShowTop
 register = template.Library()
 
 
+# Legacy Tags for Homepage until 2021
+
 @register.inclusion_tag('boxes/broadcastformat.html')
 def broadcastformat():
     return {'broadcastformat_list': BroadcastFormat.objects.filter(enabled=True)}
@@ -27,4 +29,31 @@ def showtopic():
 
 @register.inclusion_tag('boxes/language.html')
 def language():
+    return {'language_list': Language.objects.all()}
+
+
+# V2 Tags added for new Homepage 2021
+
+@register.inclusion_tag('v2/boxes/broadcastformat.html')
+def broadcastformatV2():
+    return {'broadcastformat_list': BroadcastFormat.objects.filter(enabled=True)}
+
+
+@register.inclusion_tag('v2/boxes/musicfocus.html')
+def musicfocusV2():
+    return {'musicfocus_list': MusicFocus.objects.all()}
+
+
+@register.inclusion_tag('v2/boxes/showinformation.html')
+def showinformationV2():
+    return {'showinformation_list': ShowInformation.objects.all()}
+
+
+@register.inclusion_tag('v2/boxes/showtopic.html')
+def showtopicV2():
+    return {'showtopic_list': ShowTopic.objects.all()}
+
+
+@register.inclusion_tag('v2/boxes/language.html')
+def languageV2():
     return {'language_list': Language.objects.all()}

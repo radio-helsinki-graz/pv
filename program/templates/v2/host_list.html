@@ -1,0 +1,19 @@
+<html>
+<head>
+    <title>Sendungsmacherinnen &mdash; Radio Helsinki - Freies Radio Graz</title>
+</head>
+<body>
+
+<div id="content-main">
+    <h1>Sendungsmachende A-Z</h1>
+    <div class="host-list">
+        {% for host in host_list %}
+            <div class="host">
+                <a href="{% url "host-detail" host.id %}">{{ host.name }}</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>

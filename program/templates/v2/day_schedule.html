@@ -1,0 +1,101 @@
+<html>
+<head>
+    <title>Tagesansicht {{ day|date:"l, d.m.Y" }} &mdash; Radio Helsinki - Freies Radio Graz</title>
+</head>
+<body>
+
+{% load content_boxes %}
+<div id="filter-format">
+    {% broadcastformatV2 %}
+</div>
+
+<div id="filter-topic">
+  <dl id="filter-header" class="portlet">
+    <dt class="portletHeader"><span>Filter</span></dt>
+  </dl>
+{% musicfocusV2 %}
+{% showinformationV2 %}
+{% showtopicV2 %}
+{% languageV2 %}
+</div>
+
+<div id="content-main" class="day-schedule">
+    <h2>Tagesansicht</h2>
+    <h1 id="date">{{ day|date:"l, d.m.Y" }}</h1>
+
+    <div id="timeslots">
+        {% for timeslot in timeslots %}
+            {% if forloop.first and timeslot.start != timeslot.get_previous_by_start.end %}
+                <div class="timeslot bf-{{ default_show.broadcastformat.slug }}">
+                    <div class="show-start">{{ timeslot.get_previous_by_start.end|date:"H:i" }}</div>
+                    <div class="show-abbrevs">
+                        {% for si in default_show.showinformation.all %}
+                            <span title="{{ si.information }}"
+                                  class="abbrev si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
+                        {% endfor %}
+                        {% for st in default_show.showtopic.all %}
+                            <span title="{{ st.topic }}" class="abbrev st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
+                        {% endfor %}
+                        {% for mf in default_show.musicfocus.all %}
+                            <span title="{{ mf.focus }}" class="abbrev mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
+                        {% endfor %}
+                    </div>
+                    <div class="show-detail">
+                        <h3 class="show-title">{{ default_show.name }}</h3>
+                        <p class="show-description">{{ default_show.short_description }}</p>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}">
+                <div class="show-start">{{ timeslot.start|date:"H:i" }}</div>
+                <div class="show-abbrevs">
+                    {% for si in timeslot.show.showinformation.all %}
+                        <span title="{{ si.information }}"
+                              class="abbrev si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
+                    {% endfor %}
+                    {% for st in timeslot.show.showtopic.all %}
+                        <span title="{{ st.topic }}"
+                              class="abbrev st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
+                    {% endfor %}
+                    {% for mf in timeslot.show.musicfocus.all %}
+                        <span title="{{ mf.focus }}"
+                              class="abbrev mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
+                    {% endfor %}
+                </div>
+                <div class="show-detail">
+                    <h3 class="show-title"><a
+                            href="{% url "timeslot-detail" timeslot.id %}">{{ timeslot.show.name }}</a></h3>
+                    {% if timeslot.note %}
+                        <p class="note-title"><strong>Heute:</strong> {{ timeslot.note.title }}</p>
+                    {% else %}
+                        <p class="show-description">{{ timeslot.show.short_description }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% if timeslot.end != timeslot.get_next_by_start.start %}
+                <div class="timeslot bf-{{ default_show.broadcastformat.slug }}">
+                    <div class="show-start">{{ timeslot.end|date:"H:i" }}</div>
+                    <div class="show-abbrevs">
+                        {% for si in default_show.showinformation.all %}
+                            <span title="{{ si.information }}"
+                                  class="abbrev si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
+                        {% endfor %}
+                        {% for st in default_show.showtopic.all %}
+                            <span title="{{ st.topic }}" class="abbrev st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
+                        {% endfor %}
+                        {% for mf in default_show.musicfocus.all %}
+                            <span title="{{ mf.focus }}" class="abbrev mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
+                        {% endfor %}
+                    </div>
+                    <div class="show-detail">
+                        <h3 class="show-title">{{ default_show.name }}</h3>
+                        <p class="show-description">{{ default_show.short_description }}</p>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>

@@ -21,7 +21,18 @@ urlpatterns = patterns('',
                        url(r'^shows/?$', views.ShowListView.as_view()),
                        url(r'^shows/(?P<slug>[\w-]+)/?$', views.ShowDetailView.as_view(), name='show-detail'),
                        url(r'^(?P<pk>\d+)/?$', views.TimeSlotDetailView.as_view(), name='timeslot-detail'),
-                       url(r'^styles.css$', views.StylesView.as_view())
+                       url(r'^styles.css$', views.StylesView.as_view()),
+                       # V2 Patterns for new Homepage 2021
+                       url(r'^v2/today/?$', views.DayScheduleViewV2.as_view()),
+                       url(r'^v2/(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})/?$', views.DayScheduleViewV2.as_view()),
+                       url(r'^v2/current_box/?$', cache_page(60)(views.CurrentShowBoxViewV2.as_view())),
+                       url(r'^v2/hosts/?$', views.HostListViewV2.as_view()),
+                       url(r'^v2/hosts/(?P<pk>\d+)/?$', views.HostDetailViewV2.as_view(), name='host-detail'),
+                       url(r'^v2/tips/?$', views.RecommendationsListViewV2.as_view()),
+                       url(r'^v2/tips_box/?$', views.RecommendationsBoxViewV2.as_view()),
+                       url(r'^v2/shows/?$', views.ShowListViewV2.as_view()),
+                       url(r'^v2/shows/(?P<slug>[\w-]+)/?$', views.ShowDetailViewV2.as_view(), name='show-detail'),
+                       url(r'^v2/(?P<pk>\d+)/?$', views.TimeSlotDetailViewV2.as_view(), name='timeslot-detail'),
                        )
 if settings.DEBUG:
     urlpatterns += \
