@@ -8,7 +8,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
-from models import BroadcastFormat, MusicFocus, Note, Show, ShowInformation, ShowTopic, TimeSlot, Host
+from models import BroadcastFormat, MusicFocus, Note, Show, ShowInformation, ShowTopic, Language, TimeSlot, Host
 
 from program.utils import tofirstdayinisoweek, get_cached_shows
 
@@ -43,6 +43,9 @@ class ShowListView(ListView):
         elif 'showtopic' in self.request.GET:
             showtopic = get_object_or_404(ShowTopic, slug=self.request.GET['showtopic'])
             queryset = queryset.filter(showtopic=showtopic)
+        elif 'language' in self.request.GET:
+            language = get_object_or_404(Language, slug=self.request.GET['language'])
+            queryset = queryset.filter(language=language)
 
         return queryset
 
@@ -108,6 +111,9 @@ class DayScheduleView(TemplateView):
         elif 'showtopic' in self.request.GET:
             showtopic = get_object_or_404(ShowTopic, slug=self.request.GET['showtopic'])
             context['showtopic'] = timeslots.filter(show__showtopic=showtopic)
+        elif 'language' in self.request.GET:
+            language = get_object_or_404(Language, slug=self.request.GET['language'])
+            context['showtopic'] = timeslots.filter(show__language=language)
         else:
             context['timeslots'] = timeslots
         return context
@@ -213,6 +219,7 @@ def json_day_schedule(request, year=None, month=None, day=None):
 
     return HttpResponse(json.dumps(schedule, ensure_ascii=False, encoding='utf8').encode('utf8'),
                         content_type="application/json; charset=utf-8")
+
 
 def json_timeslots_specials(request):
     specials = {}

@@ -1,6 +1,6 @@
 from django import template
 
-from program.models import BroadcastFormat, MusicFocus, ShowInformation, ShowTopic
+from program.models import BroadcastFormat, MusicFocus, ShowInformation, ShowTopic, Language
 
 register = template.Library()
 
@@ -23,3 +23,8 @@ def showinformation():
 @register.inclusion_tag('boxes/showtopic.html')
 def showtopic():
     return {'showtopic_list': ShowTopic.objects.all()}
+
+
+@register.inclusion_tag('boxes/language.html')
+def language():
+    return {'language_list': Language.objects.all()}
