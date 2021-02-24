@@ -10,3 +10,81 @@
     name: Englisch
     native_name: English
     slug: en
+- model: program.language
+  pk: 3
+  fields:
+    name: Ungarisch
+    native_name: Magyar
+    slug: hu
+- model: program.language
+  pk: 4
+  fields:
+    name: Italienisch
+    native_name: Italiano
+    slug: it
+- model: program.language
+  pk: 5
+  fields:
+    name: Spanisch
+    native_name: Español
+    slug: es
+- model: program.language
+  pk: 6
+  fields:
+    name: Rumänisch
+    native_name: Română
+    slug: ro
+- model: program.language
+  pk: 7
+  fields:
+    name: Französisch
+    native_name: Français
+    slug: fr
+- model: program.language
+  pk: 8
+  fields:
+    name: Albanisch
+    native_name: Shqip
+    slug: sq
+- model: program.language
+  pk: 9
+  fields:
+    name: Bosnisch
+    native_name: Bosanski
+    slug: bs
+- model: program.language
+  pk: 10
+  fields:
+    name: Kroatisch
+    native_name: Hrvatski
+    slug: hr
+- model: program.language
+  pk: 11
+  fields:
+    name: Serbisch
+    native_name: Српски
+    slug: sr
+- model: program.language
+  pk: 12
+  fields:
+    name: Russisch
+    native_name: Русский
+    slug: ru
+- model: program.language
+  pk: 13
+  fields:
+    name: Slowenisch
+    native_name: Slovenščina
+    slug: sl
+- model: program.language
+  pk: 14
+  fields:
+    name: Türkisch
+    native_name: Türkçe
+    slug: tr
+- model: program.language
+  pk: 15
+  fields:
+    name: Kurdisch
+    native_name: كوردی
+    slug: ku
