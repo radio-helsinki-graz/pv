@@ -13,6 +13,8 @@ from models import BroadcastFormat, MusicFocus, Note, Show, ShowInformation, Sho
 from program.utils import tofirstdayinisoweek, get_cached_shows
 
 
+# Legacy Views for Homepage until 2021
+
 class HostListView(ListView):
     context_object_name = 'host_list'
     queryset = Host.objects.filter(Q(is_always_visible=True) | Q(shows__programslots__until__gt=datetime.now)).distinct()
@@ -194,6 +196,134 @@ class StylesView(TemplateView):
         context['showtopic'] = ShowTopic.objects.all()
         return context
 
+
+# V2 Views added for new Homepage 2021
+
+class HostListViewV2(ListView):
+    context_object_name = 'host_list'
+    queryset = Host.objects.filter(Q(is_always_visible=True) | Q(shows__programslots__until__gt=datetime.now)).distinct()
+    template_name = 'v2/host_list.html'
+
+
+class HostDetailViewV2(DetailView):
+    context_object_name = 'host'
+    queryset = Host.objects.all()
+    template_name = 'v2/host_detail.html'
+
+
+class ShowListViewV2(ListView):
+    context_object_name = 'show_list'
+    template_name = 'v2/show_list.html'
+
+    def get_queryset(self):
+        queryset = Show.objects.filter(programslots__until__gt=date.today()).exclude(id=1).distinct()
+        if 'broadcastformat' in self.request.GET:
+            broadcastformat = get_object_or_404(BroadcastFormat, slug=self.request.GET['broadcastformat'])
+            queryset = queryset.filter(broadcastformat=broadcastformat)
+        elif 'musicfocus' in self.request.GET:
+            musicfocus = get_object_or_404(MusicFocus, slug=self.request.GET['musicfocus'])
+            queryset = queryset.filter(musicfocus=musicfocus)
+        elif 'showinformation' in self.request.GET:
+            showinformation = get_object_or_404(ShowInformation, slug=self.request.GET['showinformation'])
+            queryset = queryset.filter(showinformation=showinformation)
+        elif 'showtopic' in self.request.GET:
+            showtopic = get_object_or_404(ShowTopic, slug=self.request.GET['showtopic'])
+            queryset = queryset.filter(showtopic=showtopic)
+        elif 'language' in self.request.GET:
+            language = get_object_or_404(Language, slug=self.request.GET['language'])
+            queryset = queryset.filter(language=language)
+
+        return queryset
+
+
+class ShowDetailViewV2(DetailView):
+    queryset = Show.objects.all().exclude(id=1)
+    template_name = 'v2/show_detail.html'
+
+
+class TimeSlotDetailViewV2(DetailView):
+    queryset = TimeSlot.objects.all()
+    template_name = 'v2/timeslot_detail.html'
+
+
+class RecommendationsListViewV2(ListView):
+    context_object_name = 'recommendation_list'
+    template_name = 'v2/recommendation_list.html'
+
+    now = datetime.now()
+    end = now + timedelta(weeks=1)
+
+    queryset = TimeSlot.objects.filter(Q(note__isnull=False, note__status=1,
+                                         start__range=(now, end)) |
+                                       Q(show__broadcastformat__slug='sondersendung',
+                                         start__range=(now, end))).order_by('start')[:20]
+
+
+class RecommendationsBoxViewV2(RecommendationsListViewV2):
+    template_name = 'v2/recommendation.html'
+
+
+class CurrentShowBoxViewV2(TemplateView):
+    context_object_name = 'recommendation_list'
+    template_name = 'v2/current_show.html'
+
+    def get_context_data(self, **kwargs):
+        current_timeslot = TimeSlot.objects.get_or_create_current()
+        previous_timeslot = current_timeslot.get_previous_by_start()
+        next_timeslot = current_timeslot.get_next_by_start()
+        after_next_timeslot = next_timeslot.get_next_by_start()
+
+        context = super(CurrentShowBoxViewV2, self).get_context_data(**kwargs)
+        context['current_timeslot'] = current_timeslot
+        context['previous_timeslot'] = previous_timeslot
+        context['next_timeslot'] = next_timeslot
+        context['after_next_timeslot'] = after_next_timeslot
+        return context
+
+
+class DayScheduleViewV2(TemplateView):
+    template_name = 'v2/day_schedule.html'
+
+    def get_context_data(self, **kwargs):
+        year = self.kwargs.get('year', None)
+        month = self.kwargs.get('month', None)
+        day = self.kwargs.get('day', None)
+
+        if year is None and month is None and day is None:
+            today = datetime.combine(date.today(), time(6, 0))
+        else:
+            today = datetime.strptime('%s__%s__%s__06__00' % (year, month, day), '%Y__%m__%d__%H__%M')
+
+        tomorrow = today + timedelta(days=1)
+
+        context = super(DayScheduleViewV2, self).get_context_data(**kwargs)
+        context['day'] = today
+        context['recommendations'] = Note.objects.filter(status=1, timeslot__start__range=(today, tomorrow))
+        context['default_show'] = Show.objects.get(pk=1)
+
+        timeslots = TimeSlot.objects.get_day_timeslots(today)
+
+        if 'broadcastformat' in self.request.GET:
+            broadcastformat = get_object_or_404(BroadcastFormat, slug=self.request.GET['broadcastformat'])
+            context['timeslots'] = timeslots.filter(show__broadcastformat=broadcastformat)
+        elif 'musicfocus' in self.request.GET:
+            musicfocus = get_object_or_404(MusicFocus, slug=self.request.GET['musicfocus'])
+            context['timeslots'] = timeslots.filter(show__musicfocus=musicfocus)
+        elif 'showinformation' in self.request.GET:
+            showinformation = get_object_or_404(ShowInformation, slug=self.request.GET['showinformation'])
+            context['timeslots'] = timeslots.filter(show__showinformation=showinformation)
+        elif 'showtopic' in self.request.GET:
+            showtopic = get_object_or_404(ShowTopic, slug=self.request.GET['showtopic'])
+            context['showtopic'] = timeslots.filter(show__showtopic=showtopic)
+        elif 'language' in self.request.GET:
+            language = get_object_or_404(Language, slug=self.request.GET['language'])
+            context['showtopic'] = timeslots.filter(show__language=language)
+        else:
+            context['timeslots'] = timeslots
+        return context
+
+
+# Exports
 
 def json_day_schedule(request, year=None, month=None, day=None):
     if year is None and month is None and day is None:

@@ -1,0 +1,27 @@
+<html>
+<head>
+    <title>Host: {{ host.name }} &mdash; Radio Helsinki - Freies Radio Graz</title>
+</head>
+<body>
+
+<div id="content-main" class="host-detail">
+    <div id="name">{{ host.name }}</div>
+
+    <div id="shows">
+        <div id="shows-title">Sendungen</div>
+        {% for show in host.active_shows %}
+            <div class="show {{ show.broadcastformat.slug }}"><a href="{% url "show-detail" show.slug %}"> {{ show.name }}</a></div>
+        {% endfor %}
+    </div>
+
+    {% if host.email %}
+        <div id="email">E-Mail Adresse: <a href="{{ host.email }}">{{ host.email }}</a></div>
+    {% endif %}
+
+    {% if host.website %}
+        <div id="website">Website: <a href="{{ host.website }}">{{ host.website }}</a></div>
+    {% endif %}
+</div>
+
+</body>
+</html>
