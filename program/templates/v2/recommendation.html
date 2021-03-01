@@ -10,7 +10,7 @@
         <li class="bf-{{ recommendation.show.broadcastformat.slug }}">
             <div class="time">{{ recommendation.start|date:"d.m. H:i" }} - {{ recommendation.end|date:"H:i" }}</td>
             <div class="show-name">
-                <a href="{% url "timeslot-detail" recommendation.id %}">{{ recommendation.show.name }}</a>
+                <a href="{% url "timeslot-detail-v2" recommendation.id %}">{{ recommendation.show.name }}</a>
             </div>
             <div class="show-content">
 {%   if recommendation.note %}
@@ -19,7 +19,7 @@
                 {{ recommendation.show.short_description }}
 {%   endif %}
                 <br/>
-                <a href="{% url "timeslot-detail" recommendation.id %}">[weiter]</a>
+                <a href="{% url "timeslot-detail-v2" recommendation.id %}">[weiter]</a>
             </div>
         </li>
 {% endfor %}
