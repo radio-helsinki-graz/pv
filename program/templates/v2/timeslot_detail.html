@@ -8,7 +8,7 @@
 
     <div class="show-detail-header bf-{{ timeslot.show.broadcastformat.slug }}">
         <h1 id="name">
-            <a href="{% url "show-detail" timeslot.show.slug %}">{{ timeslot.show.name }}</a>
+            <a href="{% url "show-detail-v2" timeslot.show.slug %}">{{ timeslot.show.name }}</a>
         </h1>
         {% if timeslot.note %}
             <h2>{{ timeslot.note.title }}</h2>
@@ -42,7 +42,7 @@
 
     <p>
         {% for host in timeslot.show.hosts.all %}
-            <a href="{% url "host-detail" host.id %}">{{ host }}</a><br/>
+            <a href="{% url "host-detail-v2" host.id %}">{{ host }}</a><br/>
         {% endfor %}
         {% if timeslot.show.email %}
             <strong>Email:</strong> <a href="mailto:{{ timeslot.show.email }}">{{ timeslot.show.email }}</a><br/>

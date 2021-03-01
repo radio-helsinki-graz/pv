@@ -47,7 +47,7 @@
 
     <p>
         {% for host in show.hosts.all %}
-            <a href="{% url "host-detail" host.id %}">{{ host }}</a><br/>
+            <a href="{% url "host-detail-v2" host.id %}">{{ host }}</a><br/>
         {% endfor %}
         {% if show.email %}
             <strong>Email:</strong> <a href="mailto:{{ show.email }}">{{ show.email }}</a><br/>
@@ -63,18 +63,18 @@
         <ul class="recommendations-list">
             {% for note in show.notes.all reversed %}
                 <li>
-                    <a href="{% url "timeslot-detail" note.timeslot.id %}"
+                    <a href="{% url "timeslot-detail-v2" note.timeslot.id %}"
                        title="{{ note.title }}">{{ note.start|date:"d. M Y" }}:</a>
                     <div class="title">{{ note.title }}</div>
                 </li>
             {% endfor %}
             {% if show.predecessor and show.predecessor.notes.all %}
                 {% if show.name != show.predecessor.name %}
-                    <h3>Davor als <a href="{% url "show-detail" show.predecessor.slug %}">{{ show.predecessor.name }}</a></h3>
+                    <h3>Davor als <a href="{% url "show-detail-v2" show.predecessor.slug %}">{{ show.predecessor.name }}</a></h3>
                 {%  endif %}
                 {% for note in show.predecessor.notes.all reversed %}
                     <li>
-                        <a href="{%  url "timeslot-detail" note.timeslot.id %}"
+                        <a href="{%  url "timeslot-detail-v2" note.timeslot.id %}"
                            title="{{ note.title }}">{{ note.start|date:"d. M Y" }}:</a>
                         <div class="title">{{ note.title }}</div>
                     </li>

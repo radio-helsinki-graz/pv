@@ -10,7 +10,7 @@
         <li id="previous" class="bf-{{ previous_timeslot.show.broadcastformat.slug }}">
             <div class="time">{{ previous_timeslot.start|date:"H:i" }}</div>
             <div class="show-name">
-                <a href="{% url "timeslot-detail" previous_timeslot.id %}">{{ previous_timeslot.show.name }}</a>
+                <a href="{% url "timeslot-detail-v2" previous_timeslot.id %}">{{ previous_timeslot.show.name }}</a>
             </div>
             <div class="show-content">
             </div>
@@ -20,7 +20,7 @@
         <li id="current" class="bf-{{ current_timeslot.show.broadcastformat.slug }}">
             <div class="time">{{ current_timeslot.start|date:"H:i" }}</div>
             <div class="show-name">
-                <a href="{% url "timeslot-detail" current_timeslot.id %}">{{ current_timeslot.show.name }}</a>
+                <a href="{% url "timeslot-detail-v2" current_timeslot.id %}">{{ current_timeslot.show.name }}</a>
             </div>
             <div class="show-content">
 {%     if current_timeslot.note %}
@@ -35,7 +35,7 @@
         <li id="next" class="bf-{{ next_timeslot.show.broadcastformat.slug }}">
             <div class="time">{{ next_timeslot.start|date:"H:i" }}</div>
             <div class="show-name">
-                <a href="{% url "timeslot-detail" next_timeslot.id %}">{{ next_timeslot.show.name }}</a>
+                <a href="{% url "timeslot-detail-v2" next_timeslot.id %}">{{ next_timeslot.show.name }}</a>
             </div>
             <div class="show-content">
             </div>
@@ -45,7 +45,7 @@
         <li id="after_next" class="bf-{{ after_next_timeslot.show.broadcastformat.slug }}">
             <div class="timer">{{ after_next_timeslot.start|date:"H:i" }}</div>
             <div class="show-name">
-                <a href="{% url "timeslot-detail" after_next_timeslot.id %}">{{ after_next_timeslot.show.name }}</a>
+                <a href="{% url "timeslot-detail-v2" after_next_timeslot.id %}">{{ after_next_timeslot.show.name }}</a>
             </div>
             <div class="show-content">
             </div>
