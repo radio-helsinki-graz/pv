@@ -301,6 +301,10 @@ class DayScheduleViewV2(TemplateView):
         return context
 
 
+class ShowFilterListViewV2(TemplateView):
+    template_name = 'v2/show_filters.html'
+
+
 # Exports
 
 def json_day_schedule(request, year=None, month=None, day=None):
