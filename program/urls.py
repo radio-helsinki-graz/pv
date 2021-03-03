@@ -26,11 +26,11 @@ urlpatterns = patterns('',
                        url(r'^v2/today/?$', views.DayScheduleViewV2.as_view()),
                        url(r'^v2/(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})/?$', views.DayScheduleViewV2.as_view()),
                        url(r'^v2/hosts/?$', views.HostListViewV2.as_view()),
-                       url(r'^v2/hosts/(?P<pk>\d+)/?$', views.HostDetailViewV2.as_view(), name='host-detail-v2'),
+                       url(r'^v2/hosts/(?P<pk>\d+)/?$', views.HostDetailViewV2.as_view()),
                        url(r'^v2/tips/?$', views.RecommendationsListViewV2.as_view()),
                        url(r'^v2/shows/?$', views.ShowListViewV2.as_view()),
-                       url(r'^v2/shows/(?P<slug>[\w-]+)/?$', views.ShowDetailViewV2.as_view(), name='show-detail-v2'),
-                       url(r'^v2/(?P<pk>\d+)/?$', views.TimeSlotDetailViewV2.as_view(), name='timeslot-detail-v2'),
+                       url(r'^v2/shows/(?P<slug>[\w-]+)/?$', views.ShowDetailViewV2.as_view()),
+                       url(r'^v2/(?P<pk>\d+)/?$', views.TimeSlotDetailViewV2.as_view()),
                        )
 if settings.DEBUG:
     urlpatterns += \
