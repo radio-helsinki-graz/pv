@@ -26,17 +26,15 @@
                 <div class="show-detail">
                     <h4>
                         <a href="/program/shows/{{ recommendation.show.slug }}">{{ recommendation.show.name }}</a><br/>
-                        vom {{ recommendation.start|date:"d.m. H:i" }}-{{ recommendation.end|date:"H:i" }}</h4>
+                        vom {{ recommendation.start|date:"d.m. H:i" }}-{{ recommendation.end|date:"H:i" }}
+                    </h4>
+                    <h3 class="show-title">
                     {% if recommendation.note %}
-                        <h3 class="show-title">
-                          <a href="/program/{{ recommendation.id }}">{{ recommendation.note.title }}</a>
-                        </h3>
-                        <div class="note-content">{{ recommendation.note.content|safe }}</div>
+                       <a href="/program/{{ recommendation.id }}">{{ recommendation.note.title }}</a>
                     {% else %}
-                        <h3 class="show-title"><a
-                                href="/program/{{ recommendation.id }}">{{ recommendation.show.broadcastformat.format }}</a>
-                        </h3>
+                       <a href="/program/{{ recommendation.id }}">{{ recommendation.show.broadcastformat.format }}</a>
                     {% endif %}
+                    </h3>
                 </div>
             </div>
         {% endfor %}
