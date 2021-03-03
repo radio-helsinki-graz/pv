@@ -4,15 +4,6 @@
 </head>
 <body>
 
-{% load filters %}
-<div id="filter">
-{% broadcastformatV2 %}
-{% musicfocusV2 %}
-{% showinformationV2 %}
-{% showtopicV2 %}
-{% languageV2 %}
-</div>
-
 <div id="content-main" class="day-schedule">
     <h2>Tagesansicht</h2>
     <h1 id="date">{{ day|date:"l, d.m.Y" }}</h1>
