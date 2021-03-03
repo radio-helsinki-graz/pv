@@ -9,7 +9,7 @@
     <div class="host-list">
         {% for host in host_list %}
             <div class="host">
-                <a href="{% url "host-detail-v2" host.id %}">{{ host.name }}</a>
+                <a href="/program/hosts/{{ host.id }}">{{ host.name }}</a>
             </div>
         {% endfor %}
     </div>

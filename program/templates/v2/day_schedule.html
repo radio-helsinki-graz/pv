@@ -58,7 +58,7 @@
                 </div>
                 <div class="show-detail">
                     <h3 class="show-title"><a
-                            href="{% url "timeslot-detail-v2" timeslot.id %}">{{ timeslot.show.name }}</a></h3>
+                            href="/program/{{ timeslot.id }}">{{ timeslot.show.name }}</a></h3>
                     {% if timeslot.note %}
                         <p class="note-title"><strong>Heute:</strong> {{ timeslot.note.title }}</p>
                     {% else %}
