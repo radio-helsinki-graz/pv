@@ -259,28 +259,6 @@ class RecommendationsListViewV2(ListView):
                                          start__range=(now, end))).order_by('start')[:20]
 
 
-class RecommendationsBoxViewV2(RecommendationsListViewV2):
-    template_name = 'v2/recommendation.html'
-
-
-class CurrentShowBoxViewV2(TemplateView):
-    context_object_name = 'recommendation_list'
-    template_name = 'v2/current_show.html'
-
-    def get_context_data(self, **kwargs):
-        current_timeslot = TimeSlot.objects.get_or_create_current()
-        previous_timeslot = current_timeslot.get_previous_by_start()
-        next_timeslot = current_timeslot.get_next_by_start()
-        after_next_timeslot = next_timeslot.get_next_by_start()
-
-        context = super(CurrentShowBoxViewV2, self).get_context_data(**kwargs)
-        context['current_timeslot'] = current_timeslot
-        context['previous_timeslot'] = previous_timeslot
-        context['next_timeslot'] = next_timeslot
-        context['after_next_timeslot'] = after_next_timeslot
-        return context
-
-
 class DayScheduleViewV2(TemplateView):
     template_name = 'v2/day_schedule.html'
 
