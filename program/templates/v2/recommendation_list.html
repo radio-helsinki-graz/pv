@@ -7,37 +7,34 @@
 <div id="content-main" class="recommendations">
     <h1>Programmhinweise</h1>
     <div id="shows">
-        {% for recommendation in recommendation_list %}
-            <div class="show recommendation  bf-{{ recommendation.show.broadcastformat.slug }}">
-                <div class="show-abbrevs">
-                    {% for si in recommendation.show.showinformation.all %}
-                        <span title="{{ si.information }}"
-                              class="abbrev si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
-                    {% endfor %}
-                    {% for st in recommendation.show.showtopic.all %}
-                        <span title="{{ st.topic }}"
-                              class="abbrev st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
-                    {% endfor %}
-                    {% for mf in recommendation.show.musicfocus.all %}
-                        <span title="{{ mf.focus }}"
-                              class="abbrev mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
-                    {% endfor %}
-                </div>
-                <div class="show-detail">
-                    <h4>
-                        <a href="/program/shows/{{ recommendation.show.slug }}">{{ recommendation.show.name }}</a><br/>
-                        vom {{ recommendation.start|date:"d.m. H:i" }}-{{ recommendation.end|date:"H:i" }}
-                    </h4>
-                    <h3 class="show-title">
-                    {% if recommendation.note %}
-                       <a href="/program/{{ recommendation.id }}">{{ recommendation.note.title }}</a>
-                    {% else %}
-                       <a href="/program/{{ recommendation.id }}">{{ recommendation.show.broadcastformat.format }}</a>
-                    {% endif %}
-                    </h3>
-                </div>
+{% for recommendation in recommendation_list %}
+        <div class="show recommendation  bf-{{ recommendation.show.broadcastformat.slug }}">
+            <div class="show-abbrevs">
+{%   for si in recommendation.show.showinformation.all %}
+                <span title="{{ si.information }}" class="abbrev si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
+{%   endfor %}
+{%   for st in recommendation.show.showtopic.all %}
+                <span title="{{ st.topic }}" class="abbrev st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
+{%   endfor %}
+{%   for mf in recommendation.show.musicfocus.all %}
+                <span title="{{ mf.focus }}" class="abbrev mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
+{%   endfor %}
             </div>
-        {% endfor %}
+            <div class="show-detail">
+                <h4>
+                    <a href="/program/shows/{{ recommendation.show.slug }}">{{ recommendation.show.name }}</a><br/>
+                    vom {{ recommendation.start|date:"d.m. H:i" }}-{{ recommendation.end|date:"H:i" }}
+                </h4>
+                <h3 class="show-title">
+{%   if recommendation.note %}
+                   <a href="/program/{{ recommendation.id }}">{{ recommendation.note.title }}</a>
+{%   else %}
+                   <a href="/program/{{ recommendation.id }}">{{ recommendation.show.broadcastformat.format }}</a>
+{%   endif %}
+                </h3>
+            </div>
+        </div>
+{% endfor %}
     </div>
 </div>
 
