@@ -1,6 +1,6 @@
 {% if language_list %}
     <ul id="filter_language">
 {%   for language in language_list %}
-       <li><a title="Sendungen auf {{ language.name }} anzeigen." href="?language={{ language.slug }}">{{ language.name }}/{{ language.native_name }}</a></li>{% endfor %}
+        <li><a title="Sendungen auf {{ language.name }} anzeigen." class="lang-{{ language.slug }}" href="?language={{ language.slug }}">{{ language.name }}/{{ language.native_name }}</a></li>{% endfor %}
     </ul>
 {% endif %}

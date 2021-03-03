@@ -1,6 +1,6 @@
 {% if showtopic_list %}
     <ul id="filter_showtopic">
 {%   for showtopic in showtopic_list %}
-       <li><a title="Sendungen mit dem Schwerpunkt {{ showtopic.topic }} anzeigen." href="?showtopic={{ showtopic.slug }}">{{ showtopic.topic }}</a></li>{% endfor %}
+        <li><a title="Sendungen mit dem Schwerpunkt {{ showtopic.topic }} anzeigen." class="st-{{ showtopic.abbrev }}" href="?showtopic={{ showtopic.slug }}">{{ showtopic.topic }}</a></li>{% endfor %}
     </ul>
 {% endif %}
