@@ -1,6 +1,6 @@
 {% if showinformation_list %}
     <ul id="filter_showinformation">
 {%   for si in showinformation_list %}
-      <li><a title="Sendungen mit der Information {{ si.information }} anzeigen." href="?showinformation={{ si.slug }}">{{ si.information }}</a></li>{% endfor %}
+        <li><a title="Sendungen mit der Information {{ si.information }} anzeigen." class="si-{{ si.abbrev }}" href="?showinformation={{ si.slug }}">{{ si.information }}</a></li>{% endfor %}
     </ul>
 {% endif %}

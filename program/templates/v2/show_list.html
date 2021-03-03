@@ -5,17 +5,12 @@
 <body>
 
 {% load filters %}
-<div id="filter-format">
-    {% broadcastformatV2 %}
-</div>
-<div id="filter-topic">
-    <dl id="filter-header" class="portlet">
-        <dt class="portletHeader"><span>Filter</span></dt>
-    </dl>
-    {% musicfocusV2 %}
-    {% showinformationV2 %}
-    {% showtopicV2 %}
-    {% languageV2 %}
+<div id="filter">
+{% broadcastformatV2 %}
+{% musicfocusV2 %}
+{% showinformationV2 %}
+{% showtopicV2 %}
+{% languageV2 %}
 </div>
 
 <div id="content-main" class="show-list">

@@ -1,6 +1,6 @@
 {% if broadcastformat_list %}
     <ul id="filter_broadcastformat">
 {%   for bf in broadcastformat_list %}
-      <li><a title="Sendungen mit dem Sendungsformat {{ bf.format }} anzeigen." href="?broadcastformat={{ bf.slug }}">{{ bf.format }}</a></li>{% endfor %}
+        <li><a title="Sendungen mit dem Sendungsformat {{ bf.format }} anzeigen." class="bf-{{ bf.slug }}" href="?broadcastformat={{ bf.slug }}">{{ bf.format }}</a></li>{% endfor %}
     </ul>
 {% endif %}
