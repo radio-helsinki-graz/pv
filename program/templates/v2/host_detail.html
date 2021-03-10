@@ -5,12 +5,12 @@
 <body>
 
 <div id="content-main" class="host-detail">
-    <div id="name">{{ host.name }}</div>
+    <h1>{{ host.name }}</h1>
 
     <div id="shows">
         <div id="shows-title">Sendungen</div>
 {% for show in host.active_shows %}
-        <div class="show {{ show.broadcastformat.slug }}"><a href="/program/shows/{{ show.slug }}"> {{ show.name }}</a></div>
+        <div class="show bf-{{ show.broadcastformat.slug }}"><a href="/program/shows/{{ show.slug }}"> {{ show.name }}</a></div>
 {% endfor %}
     </div>
 {% if host.email %}

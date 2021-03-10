@@ -12,15 +12,18 @@
 {%   if forloop.first and timeslot.start != timeslot.get_previous_by_start.end %}
             <div class="timeslot bf-{{ default_show.broadcastformat.slug }}">
                 <div class="show-start">{{ timeslot.get_previous_by_start.end|date:"H:i" }}</div>
-                <div class="show-abbrevs">
+                <div class="show-categories">
 {%     for si in default_show.showinformation.all %}
-                    <span title="{{ si.information }}" class="abbrev si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
+                    <span title="{{ si.information }}" class="category category-si si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
 {%     endfor %}
 {%     for st in default_show.showtopic.all %}
-                    <span title="{{ st.topic }}" class="abbrev st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
+                    <span title="{{ st.topic }}" class="category category-st st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
 {%     endfor %}
 {%     for mf in default_show.musicfocus.all %}
-                    <span title="{{ mf.focus }}" class="abbrev mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
+                    <span title="{{ mf.focus }}" class="category category-mf mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
+{%     endfor %}
+{%     for lang in default_show.language.all %}
+                    <span title="{{ lang.name }}/{{ lang.native_name }}" class="catetory category-lang lang-{{ lang.slug }}"><span>{{ lang.slug }}</span></span>
 {%     endfor %}
                 </div>
                 <div class="show-detail">
@@ -31,15 +34,18 @@
 {%   endif %}
             <div class="timeslot bf-{{ timeslot.show.broadcastformat.slug }}">
                 <div class="show-start">{{ timeslot.start|date:"H:i" }}</div>
-                <div class="show-abbrevs">
+                <div class="show-categories">
 {%   for si in timeslot.show.showinformation.all %}
-                    <span title="{{ si.information }}" class="abbrev si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
+                    <span title="{{ si.information }}" class="category category-si si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
 {%   endfor %}
 {%   for st in timeslot.show.showtopic.all %}
-                    <span title="{{ st.topic }}" class="abbrev st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
+                    <span title="{{ st.topic }}" class="category category-st st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
 {%   endfor %}
 {%   for mf in timeslot.show.musicfocus.all %}
-                    <span title="{{ mf.focus }}" class="abbrev mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
+                    <span title="{{ mf.focus }}" class="category category-mf mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
+{%   endfor %}
+{%   for lang in timeslot.show.language.all %}
+                    <span title="{{ lang.name }}/{{ lang.native_name }}" class="catetory category-lang lang-{{ lang.slug }}"><span>{{ lang.slug }}</span></span>
 {%   endfor %}
                 </div>
                 <div class="show-detail">
@@ -54,15 +60,18 @@
 {%   if timeslot.end != timeslot.get_next_by_start.start %}
             <div class="timeslot bf-{{ default_show.broadcastformat.slug }}">
                 <div class="show-start">{{ timeslot.end|date:"H:i" }}</div>
-                <div class="show-abbrevs">
+                <div class="show-categories">
 {%     for si in default_show.showinformation.all %}
-                    <span title="{{ si.information }}" class="abbrev si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
+                    <span title="{{ si.information }}" class="category category-si si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
 {%     endfor %}
 {%     for st in default_show.showtopic.all %}
-                    <span title="{{ st.topic }}" class="abbrev st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
+                    <span title="{{ st.topic }}" class="category category-st st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
 {%     endfor %}
 {%     for mf in default_show.musicfocus.all %}
-                    <span title="{{ mf.focus }}" class="abbrev mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
+                    <span title="{{ mf.focus }}" class="category category-mf mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
+{%     endfor %}
+{%     for lang in default_show.language.all %}
+                    <span title="{{ lang.name }}/{{ lang.native_name }}" class="catetory category-lang lang-{{ lang.slug }}"><span>{{ lang.slug }}</span></span>
 {%     endfor %}
                 </div>
                 <div class="show-detail">
