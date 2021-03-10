@@ -6,51 +6,56 @@
 
 <div id="content-main" class="timeslot-detail">
 
+    <h1><a href="/program/shows/{{ timeslot.show.slug }}">{{ timeslot.show.name }}</a></h1>
+
     <div class="show-detail-header bf-{{ timeslot.show.broadcastformat.slug }}">
-        <h1 id="name">
-            <a href="/program/shows/{{ timeslot.show.slug }}">{{ timeslot.show.name }}</a>
-        </h1>
 {% if timeslot.note %}
         <h2>{{ timeslot.note.title }}</h2>
 {% endif %}
         <strong>Sendung am {{ timeslot.start|date:"d.m.Y H:i" }} bis {{ timeslot.end|date:"H:i" }}</strong>
 
-        <div class="show-abbrevs">
+        <div class="show-categories">
 {% for si in timeslot.show.showinformation.all %}
-            <span title="{{ si.information }}" class="abbrev si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
+            <span title="{{ si.information }}" class="catetory si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
 {% endfor %}
 {% for st in timeslot.show.showtopic.all %}
-            <span title="{{ st.topic }}" class="abbrev st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
+            <span title="{{ st.topic }}" class="catetory st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
 {% endfor %}
 {% for mf in timeslot.show.musicfocus.all %}
-            <span title="{{ mf.focus }}" class="abbrev mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
+            <span title="{{ mf.focus }}" class="catetory mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
+{% endfor %}
+{% for lang in timeslot.show.language.all %}
+            <span title="{{ lang.name  }}/{{ lang.native_name }}" class="catetory lang-{{ lang.slug }}"><span>{{ lang.slug }}</span></span>
 {% endfor %}
         </div>
 
-        <p id="broadcastformat">{{ timeslot.show.broadcastformat.format }}</p>
-    </div>
+        <div id="broadcastformat">{{ timeslot.show.broadcastformat.format }}</div>
 
 {% if timeslot.note %}
-    <p class="timeslot-note">{{ timeslot.note.content|safe }}</p>
+        <div class="timeslot-note">{{ timeslot.note.content|safe }}</div>
 {% endif %}
+    </div>
 
-    <div id="short-description" class="documentDescription">{{ timeslot.show.short_description }}</div>
+    <h2 class="lead">Information zur Sendereihe</h2>
+    <div class="timslot-description">
+        <div id="short-description" class="documentDescription">{{ timeslot.show.short_description }}</div>
 
 {% if timeslot.show.description %}
-    <div id="description">{{ timeslot.show.description|safe }}</div>
+        <div id="description">{{ timeslot.show.description|safe }}</div>
 {% endif %}
 
-    <p>
+        <p>
 {% for host in timeslot.show.hosts.all %}
-        <a href="/program/hosts/{{ host.id }}">{{ host }}</a><br/>
+            <a href="/program/hosts/{{ host.id }}">{{ host }}</a><br/>
 {% endfor %}
 {% if timeslot.show.email %}
-        <strong>Email:</strong> <a href="mailto:{{ timeslot.show.email }}">{{ timeslot.show.email }}</a><br/>
+            <strong>Email:</strong> <a href="mailto:{{ timeslot.show.email }}">{{ timeslot.show.email }}</a><br/>
 {% endif %}
 {% if timeslot.show.website %}
-        <strong>Website:</strong> <a href="{{ timeslot.show.website }}">{{ timeslot.show.website }}</a><br/>
+            <strong>Website:</strong> <a href="{{ timeslot.show.website }}">{{ timeslot.show.website }}</a><br/>
 {% endif %}
-    </p>
+        </p>
+    </div>
 </div>
 
 </body>
