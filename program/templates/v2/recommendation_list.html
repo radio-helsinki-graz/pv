@@ -6,6 +6,7 @@
 
 <div id="content-main" class="recommendation-list">
     <h1>Programmhinweise</h1>
+
     <div id="shows">
 {% for recommendation in recommendation_list %}
         <div class="show recommendation  bf-{{ recommendation.show.broadcastformat.slug }}">
@@ -20,7 +21,7 @@
                 <span title="{{ mf.focus }}" class="category category-mf mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
 {%   endfor %}
 {%   for lang in recommendation.show.language.all %}
-                <span title="{{ lang.name }}/{{ lang.native_name }}" class="catetory category-lang lang-{{ lang.slug }}"><span>{{ lang.slug }}</span></span>
+                <span title="{{ lang.name }}/{{ lang.native_name }}" class="category category-lang lang-{{ lang.slug }}"><span>{{ lang.slug }}</span></span>
 {%   endfor %}
             </div>
             <div class="show-detail">

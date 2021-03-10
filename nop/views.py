@@ -14,6 +14,7 @@ from datetime import datetime
 
 DB = 'nop'
 
+
 class NopForm(forms.Form):
     date = forms.DateField(
         required=True,
@@ -50,7 +51,7 @@ def _get_show(datetime=None):
         else:
             timeslot = TimeSlot.objects.get_or_create_current()
     except (ObjectDoesNotExist, MultipleObjectsReturned):
-        return {'start': None, 'id': None, 'name': None}
+        return {'start': None, 'timeslot-id': None, 'note': None, 'id': None, 'slug': None, 'name': None}
     else:
         try:
             note = timeslot.note
@@ -58,9 +59,11 @@ def _get_show(datetime=None):
             note = None
 
         return {'start': _dtstring(timeslot.start.timetuple()),
+                'timeslot-id': timeslot.id,
+                'note': note,
                 'id': timeslot.show.id,
-                'name': timeslot.show.name,
-                'note': note}
+                'slug': timeslot.show.slug,
+                'name': timeslot.show.name}
 
 
 def _current():
@@ -76,8 +79,10 @@ def _current():
         title = result.title
         album = result.album
 
-    return {'show': show['name'],
-            'start': show['start'],
+    return {'start': show['start'],
+            'timeslot': show['timeslot-id'],
+            'show': show['slug'],
+            'show-title': show['name'],
             'artist': artist,
             'title': title,
             'album': album}
@@ -87,8 +92,10 @@ def _bydate(year=None, month=None, day=None, hour=None, minute=None):
     show = _get_show(datetime(year, month, day, hour, minute))
 
     if show['id'] and show['id'] not in settings.MUSIKPROG_IDS:
-        return [{'show': show['name'],
-                 'start': show['start'],
+        return [{'start': show['start'],
+                 'timeslot': show['timeslot-id'],
+                 'show': show['slug'],
+                 'show-title': show['name'],
                  'artist': None,
                  'title': None,
                  'album': None}]
@@ -96,8 +103,10 @@ def _bydate(year=None, month=None, day=None, hour=None, minute=None):
         ts = int(time.mktime((int(year), int(month), int(day), int(hour),
                               int(minute), 0, 0, 0, -1))) * 1000000
         result = _which(ts).objects.using(DB).filter(carttype__exact='pool').filter(timestamp__lt=ts)[:5]
-        return [{'show': show['name'],
-                 'start': _dtstring(time.localtime(item.timestamp//1000000)),
+        return [{'start': _dtstring(time.localtime(item.timestamp//1000000)),
+                 'timeslot': show['timeslot-id'],
+                 'show': show['slug'],
+                 'show-title': show['name'],
                  'artist': item.artist,
                  'title': item.title,
                  'album': item.album} for item in result]

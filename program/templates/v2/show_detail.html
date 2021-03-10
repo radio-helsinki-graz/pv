@@ -5,7 +5,6 @@
 <body>
 
 <div id="content-main" class="show-detail">
-
     <h1>{{ show.name }}</h1>
 
     <div class="show-detail-header bf-{{ show.broadcastformat.slug }}">
@@ -30,7 +29,7 @@
             <span title="{{ mf.focus }}" class="category category-mf mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
 {% endfor %}
 {% for lang in show.language.all %}
-            <span title="{{ lang.name }}/{{ lang.native_name }}" class="catetory category-lang lang-{{ lang.slug }}"><span>{{ lang.slug }}</span></span>
+            <span title="{{ lang.name }}/{{ lang.native_name }}" class="category category-lang lang-{{ lang.slug }}"><span>{{ lang.slug }}</span></span>
 {% endfor %}
         </div>
 

@@ -5,7 +5,7 @@
 <body>
 
 <div id="content-main" class="day-schedule">
-    <h1 id="date">{{ day|date:"l, d.m.Y" }}</h1>
+    <h1>{{ day|date:"l, d.m.Y" }}</h1>
 
     <div id="timeslots">
 {% for timeslot in timeslots %}
@@ -23,7 +23,7 @@
                     <span title="{{ mf.focus }}" class="category category-mf mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
 {%     endfor %}
 {%     for lang in default_show.language.all %}
-                    <span title="{{ lang.name }}/{{ lang.native_name }}" class="catetory category-lang lang-{{ lang.slug }}"><span>{{ lang.slug }}</span></span>
+                    <span title="{{ lang.name }}/{{ lang.native_name }}" class="category category-lang lang-{{ lang.slug }}"><span>{{ lang.slug }}</span></span>
 {%     endfor %}
                 </div>
                 <div class="show-detail">
@@ -45,7 +45,7 @@
                     <span title="{{ mf.focus }}" class="category category-mf mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
 {%   endfor %}
 {%   for lang in timeslot.show.language.all %}
-                    <span title="{{ lang.name }}/{{ lang.native_name }}" class="catetory category-lang lang-{{ lang.slug }}"><span>{{ lang.slug }}</span></span>
+                    <span title="{{ lang.name }}/{{ lang.native_name }}" class="category category-lang lang-{{ lang.slug }}"><span>{{ lang.slug }}</span></span>
 {%   endfor %}
                 </div>
                 <div class="show-detail">
@@ -71,7 +71,7 @@
                     <span title="{{ mf.focus }}" class="category category-mf mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
 {%     endfor %}
 {%     for lang in default_show.language.all %}
-                    <span title="{{ lang.name }}/{{ lang.native_name }}" class="catetory category-lang lang-{{ lang.slug }}"><span>{{ lang.slug }}</span></span>
+                    <span title="{{ lang.name }}/{{ lang.native_name }}" class="category category-lang lang-{{ lang.slug }}"><span>{{ lang.slug }}</span></span>
 {%     endfor %}
                 </div>
                 <div class="show-detail">
