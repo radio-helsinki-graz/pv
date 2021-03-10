@@ -15,16 +15,16 @@
 
         <div class="show-categories">
 {% for si in timeslot.show.showinformation.all %}
-            <span title="{{ si.information }}" class="catetory catetory-si si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
+            <span title="{{ si.information }}" class="category category-si si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
 {% endfor %}
 {% for st in timeslot.show.showtopic.all %}
-            <span title="{{ st.topic }}" class="catetory catetory-st st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
+            <span title="{{ st.topic }}" class="category category-st st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
 {% endfor %}
 {% for mf in timeslot.show.musicfocus.all %}
-            <span title="{{ mf.focus }}" class="catetory catetory-mf mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
+            <span title="{{ mf.focus }}" class="category category-mf mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
 {% endfor %}
 {% for lang in timeslot.show.language.all %}
-            <span title="{{ lang.name  }}/{{ lang.native_name }}" class="catetory catetory-lang lang-{{ lang.slug }}"><span>{{ lang.slug }}</span></span>
+            <span title="{{ lang.name  }}/{{ lang.native_name }}" class="category category-lang lang-{{ lang.slug }}"><span>{{ lang.slug }}</span></span>
 {% endfor %}
         </div>
 
