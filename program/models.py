@@ -240,7 +240,7 @@ class Host(models.Model):
         return reverse('host-detail', args=[str(self.id)])
 
     def active_shows(self):
-        return self.shows.filter(programslots__until__gt=datetime.today)
+        return self.shows.filter(programslots__until__gt=datetime.today).distinct()
 
 
 class Show(models.Model):
