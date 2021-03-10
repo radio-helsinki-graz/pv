@@ -90,11 +90,16 @@ INSTALLED_APPS = (
     'tinymce',
 )
 
-TINYMCE_JS_URL = '/static/js/tiny_mce/tiny_mce.js'
 TINYMCE_DEFAULT_CONFIG = {
-    'plugins': 'contextmenu',
+    'plugins': 'advimage,advlink,advlist,autoresize,contextmenu,paste',
     'theme': 'advanced',
     'theme_advanced_toolbar_location': 'top',
+    'theme_advanced_toolbar_align': 'center',
+    'theme_advanced_statusbar_location': 'bottom',
+    'theme_advanced_resizing': 'true',
+    'theme_advanced_path': 'false',
+    'theme_advanced_buttons3_add': 'separator,pastetext,pasteword,selectall',
+    'paste_block_drop': 'true',
 }
 
 CACHE_BACKEND = 'locmem://'
