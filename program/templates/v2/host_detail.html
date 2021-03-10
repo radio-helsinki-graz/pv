@@ -7,18 +7,20 @@
 <div id="content-main" class="host-detail">
     <h1>{{ host.name }}</h1>
 
-    <div id="shows">
-        <div id="shows-title">Sendungen</div>
+    <div class="host">
+        <div id="shows">
+            <div id="shows-title">Sendungen</div>
 {% for show in host.active_shows %}
-        <div class="show bf-{{ show.broadcastformat.slug }}"><a href="/program/shows/{{ show.slug }}"> {{ show.name }}</a></div>
+            <div class="show bf-{{ show.broadcastformat.slug }}"><a href="/program/shows/{{ show.slug }}"> {{ show.name }}</a></div>
 {% endfor %}
-    </div>
+        </div>
 {% if host.email %}
-    <div id="email">E-Mail Adresse: <a href="{{ host.email }}">{{ host.email }}</a></div>
+        <div id="email">E-Mail Adresse: <a href="{{ host.email }}">{{ host.email }}</a></div>
 {% endif %}
 {% if host.website %}
-    <div id="website">Website: <a href="{{ host.website }}">{{ host.website }}</a></div>
+        <div id="website">Website: <a href="{{ host.website }}">{{ host.website }}</a></div>
 {% endif %}
+    </div>
 </div>
 
 </body>
