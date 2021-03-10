@@ -6,9 +6,10 @@
 
 <div id="content-main" class="show-detail">
 
+    <h1>{{ show.name }}</h1>
+
     <div class="show-detail-header bf-{{ show.broadcastformat.slug }}">
         <div class="show-details">
-            <h1 id="name">{{ show.name }}</h1>
 {% if show.id != 1 %}
             <p id="programslots">
 {%   for slot in show.active_programslots %}
@@ -18,18 +19,22 @@
 {% endif %}
         </div>
 
-        <div class="show-categorization">
-            <p id="broadcastformat">{{ show.broadcastformat.format }}</p>
+        <div class="show-categories">
 {% for si in show.showinformation.all %}
-            <span title="{{ si.information }}" class="abbrev si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
+            <span title="{{ si.information }}" class="category category-si si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
 {% endfor %}
 {% for st in show.showtopic.all %}
-            <span title="{{ st.topic }}" class="abbrev st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
+            <span title="{{ st.topic }}" class="category category-st st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
 {% endfor %}
 {% for mf in show.musicfocus.all %}
-            <span title="{{ mf.focus }}" class="abbrev mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
+            <span title="{{ mf.focus }}" class="category category-mf mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
+{% endfor %}
+{% for lang in show.language.all %}
+            <span title="{{ lang.name }}/{{ lang.native_name }}" class="catetory category-lang lang-{{ lang.slug }}"><span>{{ lang.slug }}</span></span>
 {% endfor %}
         </div>
+
+        <div id="broadcastformat">{{ show.broadcastformat.format }}</div>
     </div>
 
     <div id="short-description" class="documentDescription">{{ show.short_description }}</div>

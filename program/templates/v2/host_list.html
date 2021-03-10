@@ -6,7 +6,7 @@
 
 <div id="content-main" class="host-list">
     <h1>Sendungsmachende A-Z</h1>
-    <div class="host-list">
+    <div id="hosts">
 {% for host in host_list %}
         <div class="host"><a href="/program/hosts/{{ host.id }}">{{ host.name }}</a></div>
 {% endfor %}
