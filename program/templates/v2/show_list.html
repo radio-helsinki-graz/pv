@@ -12,13 +12,13 @@
         <div class="show bf-{{ show.broadcastformat.slug }}">
             <div class="show-categories">
 {% for si in show.showinformation.all %}
-                <span title="{{ si.information }}" class="category categor-si si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
+                <span title="{{ si.information }}" class="category category-si si-{{ si.abbrev }}"><span>{{ si.abbrev }}</span></span>
 {% endfor %}
 {% for st in show.showtopic.all %}
-                <span title="{{ st.topic }}" class="category categor-st st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
+                <span title="{{ st.topic }}" class="category category-st st-{{ st.abbrev }}"><span>{{ st.abbrev }}</span></span>
 {% endfor %}
 {% for mf in show.musicfocus.all %}
-                <span title="{{ mf.focus }}" class="category categor-mf mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
+                <span title="{{ mf.focus }}" class="category category-mf mf-{{ mf.abbrev }}"><span>{{ mf.abbrev }}</span></span>
 {% endfor %}
 {% for lang in show.language.all %}
                 <span title="{{ lang.name }}/{{ lang.native_name }}" class="category category-lang lang-{{ lang.slug }}"><span>{{ lang.slug }}</span></span>
