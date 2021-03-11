@@ -11,7 +11,7 @@
 {% if timeslot.note %}
         <h2>{{ timeslot.note.title }}</h2>
 {% endif %}
-        <strong>Sendung am {{ timeslot.start|date:"d.m.Y H:i" }} bis {{ timeslot.end|date:"H:i" }}</strong>
+        <strong>Sendetermin {{ timeslot.start|date:"d.m.Y H:i" }} bis {{ timeslot.end|date:"H:i" }}</strong>
 
         <div class="show-categories">
 {% for si in timeslot.show.showinformation.all %}
@@ -36,7 +36,9 @@
     </div>
 
     <h2 class="lead">Information zur Sendereihe</h2>
-    <div class="timslot-description">
+    <div class="timeslot-description">
+        <div class="timeslot-description-title">{{ timeslot.show.name }}</div>
+
         <div id="short-description" class="documentDescription">{{ timeslot.show.short_description }}</div>
 
 {% if timeslot.show.description %}
