@@ -3,8 +3,10 @@ from django.conf import settings
 import json
 import urllib
 import bisect
+import hashlib
 from os.path import join
 from datetime import datetime, date, timedelta
+from functools import partial
 
 
 def get_automation_id_choices():
@@ -56,3 +58,11 @@ def tofirstdayinisoweek(year, week):
     if date(year, 1, 4).isoweekday() > 4:
         ret -= timedelta(days=7)
     return ret
+
+
+def hash_file(file, block_size=65536):
+    hasher = hashlib.sha256()
+    for buf in iter(partial(file.read, block_size), b''):
+        hasher.update(buf)
+
+    return hasher.hexdigest()

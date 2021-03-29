@@ -1,3 +1,4 @@
+import os
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist, ValidationError, MultipleObjectsReturned
 from django.core.urlresolvers import reverse
@@ -11,7 +12,7 @@ from datetime import date, datetime, time, timedelta
 from dateutil.relativedelta import relativedelta
 from dateutil.rrule import rrule
 
-from utils import get_automation_id_choices
+from utils import get_automation_id_choices, hash_file
 
 
 class BroadcastFormat(models.Model):
@@ -243,6 +244,12 @@ class Host(models.Model):
         return self.shows.filter(programslots__until__gt=datetime.today).distinct()
 
 
+def show_image_filename(instance, filename):
+    instance.image.open()
+    filename_base, filename_ext = os.path.splitext(filename)
+    return "shows/%s/%s%s" % (instance.slug, hash_file(instance.image.file), filename_ext)
+
+
 class Show(models.Model):
     predecessor = models.ForeignKey('self', blank=True, null=True, related_name='successors', verbose_name=_("Predecessor"))
     hosts = models.ManyToManyField(Host, blank=True, related_name='shows', verbose_name=_("Hosts"))
@@ -254,8 +261,7 @@ class Show(models.Model):
     musicfocus = models.ManyToManyField(MusicFocus, blank=True, related_name='shows', verbose_name=_("Music focus"))
     name = models.CharField(_("Name"), max_length=255)
     slug = models.CharField(_("Slug"), max_length=255, unique=True)
-    image = models.ImageField(_("Image"), blank=True, null=True, upload_to='show_images')
-    image_enabled = models.BooleanField(_("show Image"), default=True)
+    image = models.ImageField(_("Image"), blank=True, null=True, upload_to=show_image_filename)
     short_description = models.CharField(_("Short description"), max_length=64)
     description = tinymce_models.HTMLField(_("Description"), blank=True, null=True)
     email = models.EmailField(_("E-Mail"), blank=True, null=True)
@@ -492,7 +498,14 @@ class TimeSlot(models.Model):
         return reverse('timeslot-detail', args=[str(self.id)])
 
 
+def note_image_filename(instance, filename):
+    instance.image.open()
+    filename_base, filename_ext = os.path.splitext(filename)
+    return "notes/%s/%s%s" % (instance.show.slug, hash_file(instance.image.file), filename_ext)
+
+
 class Note(models.Model):
+
     STATUS_CHOICES = (
         (0, _("Cancellation")),
         (1, _("Recommendation")),
@@ -500,6 +513,7 @@ class Note(models.Model):
     )
     timeslot = models.OneToOneField(TimeSlot, verbose_name=_("Time slot"))
     title = models.CharField(_("Title"), max_length=128)
+    image = models.ImageField(_("Image"), blank=True, null=True, upload_to=note_image_filename)
     content = tinymce_models.HTMLField(_("Content"))
     status = models.IntegerField(_("Status"), choices=STATUS_CHOICES, default=1)
     start = models.DateTimeField(editable=False)
