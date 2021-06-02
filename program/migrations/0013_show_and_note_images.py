@@ -19,11 +19,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='show',
             name='image',
-            field=models.ImageField(upload_to=program.models.show_image_filename, null=True, verbose_name='Image', blank=True),
+            field=models.ImageField(max_length=350, upload_to=program.models.show_image_filename, null=True, verbose_name='Image', blank=True),
         ),
         migrations.AddField(
             model_name='note',
             name='image',
-            field=models.ImageField(upload_to=program.models.note_image_filename, null=True, verbose_name='Image', blank=True),
+            field=models.ImageField(max_length=350, upload_to=program.models.note_image_filename, null=True, verbose_name='Image', blank=True),
         ),
     ]
