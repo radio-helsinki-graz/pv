@@ -69,7 +69,7 @@
                 <div class="title">{{ note.title }}</div>
             </li>
 {%   endfor %}
-{%   if show.predecessor and show.predecessor.notes.all %}p
+{%   if show.predecessor and show.predecessor.notes.all %}
 {%     if show.name != show.predecessor.name %}
             <h3>Davor als <a href="/program/shows/{{ show.predecessor.slug }}">{{ show.predecessor.name }}</a></h3>
 {%     endif %}
