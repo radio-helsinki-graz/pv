@@ -105,13 +105,6 @@ TINYMCE_DEFAULT_CONFIG = {
 CACHE_BACKEND = 'locmem://'
 
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# AWS_ACCESS_KEY_ID = 'django'
-# AWS_SECRET_ACCESS_KEY = 'changeme'
-# AWS_S3_ENDPOINT_URL = 'http://172.17.0.1:9000'
-# AWS_STORAGE_BUCKET_NAME = 'program'
-
-
 MUSIKPROG_IDS = (
     1,    # unmodieriertes musikprogramm
 )
