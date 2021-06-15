@@ -5,5 +5,6 @@ pv/local_settings.py
 pv/site_media/buttons/b-*.png
 pv/site_media/buttons/s-*.png
 pv/site_media/buttons/r-*.png
-pv/site_media/show_images/*
+pv/site_media/shows/
+pv/site_media/notes/
 pv/cache/*
