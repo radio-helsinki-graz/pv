@@ -4,10 +4,6 @@ from django.views.decorators.cache import cache_page
 
 import views
 
-import os
-
-PROGRAM_SITE_MEDIA = os.path.join(os.path.dirname(__file__), '../site_media')
-
 urlpatterns = patterns('',
                        url(r'^today/?$', views.DayScheduleView.as_view()),
                        url(r'^week/?$', views.WeekScheduleView.as_view()),
@@ -36,4 +32,4 @@ urlpatterns = patterns('',
 if settings.DEBUG:
     urlpatterns += \
         patterns('',
-                 url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': PROGRAM_SITE_MEDIA}))
+                 url(r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}))

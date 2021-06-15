@@ -32,6 +32,10 @@
 
 {% if timeslot.note %}
         <div class="timeslot-note">{{ timeslot.note.content|safe }}</div>
+
+{%   if timeslot.note.image %}
+        <div id="timeslot-note-image"><img src="https://images.helsinki.at/program/{{ timeslot.note.image }}"></div>
+{%   endif %}
 {% endif %}
     </div>
 

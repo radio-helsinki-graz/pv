@@ -154,7 +154,7 @@ class ShowAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ('name', 'short_description', 'description')
     fields = (
-        'predecessor', 'broadcastformat', 'name', 'slug', 'image', 'image_enabled', 'short_description', 'description',
+        'predecessor', 'broadcastformat', 'name', 'slug', 'image', 'short_description', 'description',
         'email', 'website', 'hosts', 'owners', 'showinformation', 'showtopic', 'language',
         'musicfocus',
     )
