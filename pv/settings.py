@@ -41,6 +41,9 @@ LOCALE_PATHS = (
 MEDIA_ROOT = os.path.join(PROJECT_DIR, 'site_media')
 MEDIA_URL = '/site_media/'
 
+FILE_UPLOAD_PERMISSIONS = 0644
+FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0755
+
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 STATIC_URL = '/static/'
 
