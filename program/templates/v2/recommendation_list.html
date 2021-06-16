@@ -37,6 +37,15 @@
 {%   endif %}
                 </h3>
             </div>
+{%   if recommendation.show.image or (recommendation.note and recommendation.note.imnage) %}
+            <div class="images">
+{%       if recommendation.show.image %}
+                <img class="show-image" src="https://images.helsinki.at/program/{{ recommendation.show.image }}">
+{%       endif %}
+{%       if recommendation.note and recommendation.note.imnage %}
+                <img class="note-image" src="https://images.helsinki.at/program/{{ recommendation.note.image }}"></div>
+{%       endif %}
+{%   endif %}
         </div>
 {% endfor %}
     </div>
