@@ -8,6 +8,8 @@
     <h1>{{ show.name }}</h1>
 
     <div class="show">
+        <div id="short-description">{{ show.short_description }}</div>
+
         <div class="show-detail-header bf-{{ show.broadcastformat.slug }}">
             <div class="show-details">
 {% if show.id != 1 %}
@@ -37,14 +39,12 @@
             <div id="broadcastformat">{{ show.broadcastformat.format }}</div>
         </div>
 
-        <div id="short-description" class="documentDescription">{{ show.short_description }}</div>
+{% if show.image %}
+        <div id="image"><img src="https://images.helsinki.at/program/{{ show.image }}"></div>
+{% endif %}
 
 {% if show.description %}
         <div id="description">{{ show.description|safe }}</div>
-{% endif %}
-
-{% if show.image %}
-        <div id="image"><img src="https://images.helsinki.at/program/{{ show.image }}"></div>
 {% endif %}
 
         <p>
@@ -52,7 +52,7 @@
             <a href="/program/hosts/{{ host.id }}">{{ host }}</a><br/>
 {% endfor %}
 {% if show.email %}
-            <strong>Email:</strong> <a href="mailto:{{ show.email }}">{{ show.email }}</a><br/>
+            <strong>E-Mail:</strong> <a href="mailto:{{ show.email }}">{{ show.email }}</a><br/>
 {% endif %}
 {% if show.website %}
             <strong>Website:</strong> <a href="{{ show.website }}">{{ show.website }}</a><br/>
