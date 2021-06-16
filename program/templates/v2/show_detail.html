@@ -48,9 +48,13 @@
 {% endif %}
 
         <p>
-{% for host in show.hosts.all %}
-            <a href="/program/hosts/{{ host.id }}">{{ host }}</a><br/>
-{% endfor %}
+{% if show.hosts.all  %}
+            <strong>Redaktion:</strong>
+{%   for host in show.hosts.all %}
+            <a href="/program/hosts/{{ host.id }}">{{ host }}</a>{% if not forloop.last %}, {% endif %}
+{%   endfor %}
+            <br/>
+{% endif %}
 {% if show.email %}
             <strong>E-Mail:</strong> <a href="mailto:{{ show.email }}">{{ show.email }}</a><br/>
 {% endif %}
