@@ -55,6 +55,9 @@
 {%   else %}
                     <p class="show-description">{{ timeslot.show.short_description }}</p>
 {%   endif %}
+{%   if timeslot.show.image %}
+                    <img class="show-image" src="https://images.helsinki.at/program/{{ timeslot.show.image }}">
+{%   endif %}
                 </div>
             </div>
 {%   if timeslot.end != timeslot.get_next_by_start.start %}

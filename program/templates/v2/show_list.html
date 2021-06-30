@@ -32,6 +32,9 @@
 {% endfor %}
                 </ul>
                 <p class="show-description">{{ show.short_description }}</p>
+{%   if show.image %}
+                <img class="show-image" src="https://images.helsinki.at/program/{{ show.image }}">
+{%   endif %}
             </div>
         </div>
 {% endfor %}
