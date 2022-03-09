@@ -261,7 +261,8 @@ class Show(models.Model):
     musicfocus = models.ManyToManyField(MusicFocus, blank=True, related_name='shows', verbose_name=_("Music focus"))
     name = models.CharField(_("Name"), max_length=255)
     slug = models.CharField(_("Slug"), max_length=255, unique=True)
-    image = models.ImageField(_("Image"), max_length=350, blank=True, null=True, upload_to=show_image_filename)
+    image = models.ImageField(_("Image"), max_length=350, blank=True, null=True, upload_to=show_image_filename, help_text=_(
+        "optimal size 900x675 pixel or smaller, aspect ratio 4:3, file size should be smaller than 500kB"))
     short_description = models.CharField(_("Short description"), max_length=64)
     description = tinymce_models.HTMLField(_("Description"), blank=True, null=True)
     email = models.EmailField(_("E-Mail"), blank=True, null=True)
@@ -513,7 +514,8 @@ class Note(models.Model):
     )
     timeslot = models.OneToOneField(TimeSlot, verbose_name=_("Time slot"))
     title = models.CharField(_("Title"), max_length=128)
-    image = models.ImageField(_("Image"), max_length=350, blank=True, null=True, upload_to=note_image_filename)
+    image = models.ImageField(_("Image"), max_length=350, blank=True, null=True, upload_to=note_image_filename,
+                              help_text=_("optimal size 900x675 pixel or smaller, aspect ratio 4:3, file size should be smaller than 500kB"))
     content = tinymce_models.HTMLField(_("Content"))
     status = models.IntegerField(_("Status"), choices=STATUS_CHOICES, default=1)
     start = models.DateTimeField(editable=False)
