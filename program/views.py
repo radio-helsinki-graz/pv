@@ -233,7 +233,7 @@ class ShowListViewV2(ListView):
             language = get_object_or_404(Language, slug=self.request.GET['language'])
             queryset = queryset.filter(language=language)
 
-        return queryset
+        return queryset.order_by('name')
 
 
 class ShowDetailViewV2(DetailView):
