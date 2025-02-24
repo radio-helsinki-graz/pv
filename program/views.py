@@ -381,6 +381,7 @@ def search(request):
     if types is None or "note" in types:
         notes = list(
             Note.objects.filter(title__icontains=q)
+            .order_by("-start")
             .select_related("show", "timeslot")
             .values(
                 "content",
